@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # montugo
 
 A new Flutter project.
@@ -15,3 +16,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 "# MONTUGO" 
+=======
+# MONTUGO
+>>>>>>> 5c994ef29807bebbbfb3d7e6acf280a0bbc5379d
