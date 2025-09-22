@@ -16,7 +16,16 @@ class Rescue extends StatelessWidget {
           ),
         ),
       ),
-      // body: const ,
+       body: const keselamatan() ,
     );
+  }
+}
+
+class keselamatan extends StatelessWidget {
+  const keselamatan({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

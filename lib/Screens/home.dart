@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:montugo/Mechanic/UI/Carousel/CarouselController.dart';
+import 'package:montugo/Mechanic/UI/Carousel/carouselController.dart';
 import 'package:montugo/Screens/Information/Mountain/JawaBarat/gede.dart';
 import 'package:montugo/Screens/categoryEquipment.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
-import 'package:montugo/Screens/categorylogistic.dart';
+import 'package:montugo/Screens/categoryLogistic.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
