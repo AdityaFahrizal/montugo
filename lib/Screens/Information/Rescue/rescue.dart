@@ -16,7 +16,7 @@ class Rescue extends StatelessWidget {
           ),
         ),
       ),
-      body: const ,
+      // body: const ,
     );
   }
 }
