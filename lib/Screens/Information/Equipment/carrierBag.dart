@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GedeNav extends StatelessWidget {
-  const GedeNav({super.key});
+class KantongGunung extends StatelessWidget {
+  const KantongGunung({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Gunung Gede",
+          "Tas Carrier",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
       ),
-      body: const Gede(),
+      body: Carrier(),
     );
   }
 }
 
-class Gede extends StatelessWidget {
-  const Gede({super.key});
+class Carrier extends StatelessWidget {
+  const Carrier({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(padding: EdgeInsets.only(left: 15, top: 15)),
+          Padding(padding: EdgeInsets.only(left: 10, top: 20)),
           Container(
             width: 362,
             height: 227,
@@ -37,7 +37,7 @@ class Gede extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 image: DecorationImage(
                     image: AssetImage(
-                        'assets/images/mountainImage/JawaBaratImage/Papandayan.jpg'),
+                        'assets/images/equipmentImage/carrier.jpg'),
                     fit: BoxFit.cover)),
           ),
           SizedBox(
@@ -49,7 +49,7 @@ class Gede extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
-                  "Gunung Papandayan",
+                  "Tas Carrier Gunung",
                   style: GoogleFonts.istokWeb(
                       fontWeight: FontWeight.bold, fontSize: 20),
                 ),

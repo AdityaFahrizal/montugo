@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GedeNav extends StatelessWidget {
-  const GedeNav({super.key});
+class spatuGunung extends StatelessWidget {
+  const spatuGunung({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Gunung Gede",
+          "Spatu Gunung",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
       ),
-      body: const Gede(),
+      body: sepatudetail(),
     );
   }
 }
 
-class Gede extends StatelessWidget {
-  const Gede({super.key});
+class sepatudetail extends StatelessWidget {
+  const sepatudetail({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class Gede extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 image: DecorationImage(
                     image: AssetImage(
-                        'assets/images/mountainImage/JawaBaratImage/Papandayan.jpg'),
+                        'assets/images/equipmentImage/sepatu.jpg'),
                     fit: BoxFit.cover)),
           ),
           SizedBox(
@@ -49,7 +49,7 @@ class Gede extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
-                  "Gunung Papandayan",
+                  "Jaket",
                   style: GoogleFonts.istokWeb(
                       fontWeight: FontWeight.bold, fontSize: 20),
                 ),

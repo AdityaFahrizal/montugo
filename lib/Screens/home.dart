@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Mechanic/UI/Carousel/CarouselController.dart';
-import 'package:montugo/Screens/category.dart';
+import 'package:montugo/Screens/Information/Mountain/JawaBarat/gede.dart';
+import 'package:montugo/Screens/categoryEquipment.dart';
+import 'package:montugo/Screens/categoryMountain.dart';
+import 'package:montugo/Screens/categorylogistic.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -21,7 +24,7 @@ class Home extends StatelessWidget {
               child: Text(
                 "Hi, Senang Bertemu Denganmu Hari Ini",
                 style: GoogleFonts.istokWeb(
-                    fontWeight: FontWeight.bold, fontSize: 13),
+                    fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ),
           ],
@@ -34,7 +37,7 @@ class Home extends StatelessWidget {
           height: 50,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white, 
+              color: Colors.white,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: Color.fromARGB(255, 0, 0, 0),
@@ -45,9 +48,8 @@ class Home extends StatelessWidget {
               textInputAction: TextInputAction.search,
               hintText: "Cari di sini...",
               leading: Icon(Icons.search),
-              backgroundColor:
-                  WidgetStatePropertyAll(Colors.transparent), 
-              elevation: WidgetStatePropertyAll(0), 
+              backgroundColor: WidgetStatePropertyAll(Colors.transparent),
+              elevation: WidgetStatePropertyAll(0),
               shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -80,146 +82,150 @@ class Home extends StatelessWidget {
           height: 19,
         ),
         Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: [
-    // Gunung
-    InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Categorymountain()),
-        );
-      },
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        width: 76,
-        height: 80,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 4,
-              offset: Offset(0, 3),
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            // Gunung
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Categorymountain()),
+                );
+              },
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: 76,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.terrain, size: 28, color: Colors.black87),
+                    SizedBox(height: 4),
+                    Text("Gunung", style: TextStyle(fontSize: 12)),
+                  ],
+                ),
+              ),
+            ),
+
+            // Peralatan
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Categoryequipment()),
+                );
+              },
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: 76,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.handyman, size: 28, color: Colors.black87),
+                    SizedBox(height: 4),
+                    Text("Peralatan", style: TextStyle(fontSize: 12)),
+                  ],
+                ),
+              ),
+            ),
+
+            // Logistik
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Categorylogistic()),
+                );
+              },
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: 76,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.backpack, size: 28, color: Colors.black87),
+                    SizedBox(height: 4),
+                    Text("Logistik", style: TextStyle(fontSize: 12)),
+                  ],
+                ),
+              ),
+            ),
+
+            // Keselamatan
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Categorymountain()),
+                );
+              },
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: 76,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 4,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.health_and_safety,
+                        size: 28, color: Colors.black87),
+                    SizedBox(height: 4),
+                    Text("Safety", style: TextStyle(fontSize: 12)),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.terrain, size: 28, color: Colors.black87),
-            SizedBox(height: 4),
-            Text("Gunung", style: TextStyle(fontSize: 12)),
-          ],
-        ),
-      ),
-    ),
-
-    // Peralatan
-    InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Categorymountain()),
-        );
-      },
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        width: 76,
-        height: 80,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 4,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.handyman, size: 28, color: Colors.black87),
-            SizedBox(height: 4),
-            Text("Peralatan", style: TextStyle(fontSize: 12)),
-          ],
-        ),
-      ),
-    ),
-
-    // Logistik
-    InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Categorymountain()),
-        );
-      },
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        width: 76,
-        height: 80,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 4,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.backpack, size: 28, color: Colors.black87),
-            SizedBox(height: 4),
-            Text("Logistik", style: TextStyle(fontSize: 12)),
-          ],
-        ),
-      ),
-    ),
-
-    // Keselamatan
-    InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Categorymountain()),
-        );
-      },
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        width: 76,
-        height: 80,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 4,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.health_and_safety, size: 28, color: Colors.black87),
-            SizedBox(height: 4),
-            Text("Safety", style: TextStyle(fontSize: 12)),
-          ],
-        ),
-      ),
-    ),
-  ],
-),
-
         SizedBox(
           height: 19,
         ),
@@ -267,7 +273,8 @@ class Home extends StatelessWidget {
                         topRight: Radius.circular(10),
                       ),
                       image: DecorationImage(
-                          image: AssetImage('assets/images/equipmentImage/Gorpcore.jpg'),
+                          image: AssetImage(
+                              'assets/images/equipmentImage/Gorpcore.jpg'),
                           fit: BoxFit.cover)),
                 ),
                 Column(
@@ -311,7 +318,8 @@ class Home extends StatelessWidget {
                         topRight: Radius.circular(10),
                       ),
                       image: DecorationImage(
-                          image: AssetImage('assets/images/equipmentImage/Pole.png'),
+                          image: AssetImage(
+                              'assets/images/equipmentImage/Pole.png'),
                           fit: BoxFit.cover)),
                 ),
                 Column(
@@ -338,49 +346,63 @@ class Home extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Stack(
-              children: [
-                Container(
-                  width: 171,
-                  height: 180,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 54, 69, 79),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GedeNav(),
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(10),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 171,
+                    height: 180,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 54, 69, 79),
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.black.withOpacity(0.7),
-                            blurRadius: 4,
-                            offset: Offset(0, 5),
-                            spreadRadius: 0.5)
-                      ]),
-                ),
-                Container(
-                  width: 171,
-                  height: 100,
-                  decoration: const BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          blurRadius: 4,
+                          offset: const Offset(0, 5),
+                          spreadRadius: 0.5,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Gambar
+                  Container(
+                    width: 171,
+                    height: 100,
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
                       image: DecorationImage(
-                          image: AssetImage('assets/images/equipmentImage/Pole.png'),
-                          fit: BoxFit.cover)),
-                ),
-                Column(
-                  children: [
-                    Padding(padding: EdgeInsets.only(top: 110)),
-                    Row(
-                      children: [
-                        Padding(padding: EdgeInsets.only(left: 12)),
-                        Text(
-                          "Trekking Pole",
-                          style: GoogleFonts.istokWeb(color: Colors.white),
-                        ),
-                      ],
+                        image:
+                            AssetImage('assets/images/equipmentImage/Pole.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+
+                  // Text
+                  const Positioned(
+                    top: 110,
+                    left: 12,
+                    child: Text(
+                      "Trekking Pole",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Stack(
               children: [
@@ -399,7 +421,7 @@ class Home extends StatelessWidget {
                       ]),
                 ),
                 Container(
-                  width: 171,
+                  width: 171.1,
                   height: 100,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -407,7 +429,8 @@ class Home extends StatelessWidget {
                         topRight: Radius.circular(10),
                       ),
                       image: DecorationImage(
-                          image: AssetImage('assets/images/equipmentImage/Gorpcore.jpg'),
+                          image: AssetImage(
+                              'assets/images/equipmentImage/Gorpcore.jpg'),
                           fit: BoxFit.cover)),
                 ),
                 Column(

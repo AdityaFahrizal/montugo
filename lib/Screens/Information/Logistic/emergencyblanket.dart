@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GedeNav extends StatelessWidget {
-  const GedeNav({super.key});
+class Emergencyblanket extends StatelessWidget {
+  const Emergencyblanket({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Gunung Gede",
+          "Emergency Blanket",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
       ),
-      body: const Gede(),
+      body: Selimut(),
     );
   }
 }
 
-class Gede extends StatelessWidget {
-  const Gede({super.key});
+class Selimut extends StatelessWidget {
+  const Selimut({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class Gede extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 image: DecorationImage(
                     image: AssetImage(
-                        'assets/images/mountainImage/JawaBaratImage/Papandayan.jpg'),
+                        'assets/images/logisticImage/emergency.jpg'),
                     fit: BoxFit.cover)),
           ),
           SizedBox(
@@ -49,7 +49,7 @@ class Gede extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
-                  "Gunung Papandayan",
+                  "Emergency Blanket",
                   style: GoogleFonts.istokWeb(
                       fontWeight: FontWeight.bold, fontSize: 20),
                 ),

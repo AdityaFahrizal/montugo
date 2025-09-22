@@ -1,4 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+
+class PapandayanNav extends StatelessWidget {
+  const PapandayanNav({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Gunung Papandayan",
+          style: GoogleFonts.istokWeb(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+      ),
+      body: const Papandayan(),
+    );
+  }
+}
 
 class Papandayan extends StatelessWidget {
   const Papandayan({super.key});
@@ -8,7 +30,7 @@ class Papandayan extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(padding: EdgeInsets.all(15)),
+          Padding(padding: EdgeInsets.only(left: 15, top: 15)),
           Container(
             width: 362,
             height: 227,
@@ -19,6 +41,34 @@ class Papandayan extends StatelessWidget {
                         'assets/images/mountainImage/JawaBaratImage/Papandayan.jpg'),
                     fit: BoxFit.cover)),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  "Gunung Papandayan",
+                  style: GoogleFonts.istokWeb(
+                      fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 15),
+                child: Text(
+                  "Lorem Ipsum Dolor Sit Amet",
+                  style: GoogleFonts.istokWeb(fontSize: 15),
+                ),
+              )
+            ],
+          )
         ],
       ),
     );

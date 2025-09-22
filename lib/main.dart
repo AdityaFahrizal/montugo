@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:montugo/Mechanic/UI/NavigationBar/custom_bottom_navbar.dart';
-import 'package:montugo/Screens/Information/Mountain/JawaBarat/papandayan.dart';
+import 'package:montugo/Screens/Catalog/category_catalog.dart';
+import 'package:montugo/Screens/FaQ/faq.dart';
+import 'package:montugo/Screens/Favorite/favorite.dart';
 import 'package:montugo/Screens/home.dart';
-import 'package:montugo/Screens/category.dart';
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   runApp(const MyApp());
 }
 
@@ -25,10 +21,10 @@ class _MyAppState extends State<MyApp> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = const [
-    Home(),                 
-    Center(child: Text("Catalog")),     
-    Papandayan(),  
-    Categorymountain(),
+    Home(),
+    CategoryCatalog(),
+    Favorite(),
+    Faq(),
   ];
 
   void _onItemTapped(int index) {
@@ -42,13 +38,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: _pages[_selectedIndex],
-        backgroundColor: Colors.white,
-        bottomNavigationBar: CustomBottomNavbar(
-          currentIndex : _selectedIndex,
-          onTap: _onItemTapped,
-        )
-      ),
+          body: _pages[_selectedIndex],
+          backgroundColor: Colors.white,
+          bottomNavigationBar: CustomBottomNavbar(
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+          )),
     );
   }
 }
