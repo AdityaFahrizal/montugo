@@ -25,13 +25,14 @@ class Categorymountain extends StatelessWidget {
     );
   }
 }
+
 class kategorigunung extends StatelessWidget {
   const kategorigunung({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 10),
@@ -48,9 +49,10 @@ class kategorigunung extends StatelessWidget {
               child: SearchBar(
                 textInputAction: TextInputAction.search,
                 hintText: "Cari di sini...",
-                leading: Icon(Icons.search),
-                backgroundColor: WidgetStatePropertyAll(Colors.transparent),
-                elevation: WidgetStatePropertyAll(0),
+                leading: const Icon(Icons.search),
+                backgroundColor:
+                    const WidgetStatePropertyAll(Colors.transparent),
+                elevation: const WidgetStatePropertyAll(0),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -122,8 +124,7 @@ class kategorigunung extends StatelessWidget {
                 context,
                 title: "Gunung Gede",
                 height: "2.958 Mdpl",
-                imagePath:
-                    "assets/images/JawaBarat.jpg",
+                imagePath: "assets/images/JawaBarat.jpg",
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -135,10 +136,9 @@ class kategorigunung extends StatelessWidget {
           ),
         ),
       ],
-    )
-    );
+    ));
   }
-  
+
   Widget buildMountainCard(
     BuildContext context, {
     required String title,
@@ -203,7 +203,7 @@ class kategorigunung extends StatelessWidget {
                       ),
                       textStyle: const TextStyle(fontSize: 12),
                     ),
-                    onPressed: onPressed, 
+                    onPressed: onPressed,
                     child: const Text("See details"),
                   ),
                 ),

@@ -16,7 +16,7 @@ class Trekkingpole extends StatelessWidget {
           ),
         ),
       ),
-      body: Tongkat(),
+      body: const Tongkat(),
     );
   }
 }
@@ -29,25 +29,25 @@ class Tongkat extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(padding: EdgeInsets.only(left: 15, top: 15)),
+          const Padding(padding: EdgeInsets.only(left: 15, top: 15)),
           Container(
             width: 362,
             height: 227,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 image: DecorationImage(
                     image: AssetImage(
                         'assets/images/equipmentImage/Pole.png'),
                     fit: BoxFit.cover)),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20),
                 child: Text(
                   "Trekking Pole",
                   style: GoogleFonts.istokWeb(
@@ -60,7 +60,7 @@ class Tongkat extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 15),
+                padding: const EdgeInsets.only(left: 15),
                 child: Text(
                   "Lorem Ipsum Dolor Sit Amet",
                   style: GoogleFonts.istokWeb(fontSize: 15),

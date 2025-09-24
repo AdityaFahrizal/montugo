@@ -81,6 +81,7 @@ flutter:
     - assets/images/mountainImage/JawaTengahImage/Prau.jpg
     - assets/images/mountainImage/JawaTimurImage/bromo.jpg
     - assets/images/mountainImage/JawaTimurImage/semeru.jpg
+    - assets/images/Info.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PapandayanNav extends StatelessWidget {
   const PapandayanNav({super.key});
@@ -8,12 +8,15 @@ class PapandayanNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white, // background putih
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 54, 69, 79), // charcoal
         title: Text(
           "Gunung Papandayan",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
+            color: Colors.white,
           ),
         ),
       ),
@@ -28,48 +31,94 @@ class Papandayan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(padding: EdgeInsets.only(left: 15, top: 15)),
-          Container(
-            width: 362,
-            height: 227,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/mountainImage/JawaBaratImage/Papandayan.jpg'),
-                    fit: BoxFit.cover)),
+          // Gambar Utama
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              'assets/images/mountainImage/JawaBaratImage/Papandayan.jpg',
+              height: 220,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
-          SizedBox(
-            height: 20,
+          const SizedBox(height: 20),
+
+          // Judul
+          Text(
+            "Gunung Papandayan",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          const SizedBox(height: 8),
+
+          // Informasi Ringkas
+          Column(
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  "Gunung Papandayan",
-                  style: GoogleFonts.istokWeb(
-                      fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ),
+              infoItem(
+                  FontAwesomeIcons.mapMarkerAlt, "Lokasi: Garut, Jawa Barat"),
+              infoItem(FontAwesomeIcons.mountain, "Ketinggian: 2.665 mdpl"),
+              infoItem(FontAwesomeIcons.route, "Jalur Pendakian: Cisurupan"),
+              infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 4–5 jam"),
+              infoItem(FontAwesomeIcons.chartLine,
+                  "Tingkat Kesulitan: Mudah – Menengah"),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  "Lorem Ipsum Dolor Sit Amet",
-                  style: GoogleFonts.istokWeb(fontSize: 15),
-                ),
-              )
-            ],
-          )
+          const SizedBox(height: 20),
+
+          // Deskripsi
+          Text(
+            "Deskripsi",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Gunung Papandayan dikenal sebagai salah satu gunung yang ramah untuk pendaki pemula. "
+            "Dengan jalur utama di Cisurupan, pendaki hanya membutuhkan sekitar 4–5 jam perjalanan "
+            "untuk mencapai puncak. Keunikan Papandayan terletak pada kawah aktifnya yang mengeluarkan "
+            "asap belerang, serta hutan mati yang menjadi spot foto ikonik. Tak jauh dari jalur pendakian, "
+            "terdapat Tegal Alun, padang edelweiss luas yang sering disebut sebagai “surga bunga abadi.” "
+            "Jalur Papandayan relatif mudah dengan medan yang landai, sehingga cocok untuk pendaki pemula "
+            "maupun pendaki berpengalaman yang ingin menikmati keindahan alam tanpa trek terlalu berat.",
+            style: GoogleFonts.istokWeb(
+              fontSize: 15,
+              height: 1.6,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+          const SizedBox(height: 30),
         ],
+      ),
+    );
+  }
+
+  // Widget untuk baris info dengan icon
+  Widget infoItem(IconData icon, String text) {
+    return Card(
+      elevation: 2,
+      shadowColor: Colors.black26,
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        leading: Icon(icon, color: const Color.fromARGB(255, 54, 69, 79)),
+        title: Text(
+          text,
+          style: GoogleFonts.istokWeb(
+            fontSize: 15,
+            color: Colors.black87,
+          ),
+        ),
       ),
     );
   }

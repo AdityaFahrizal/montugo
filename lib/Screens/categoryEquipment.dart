@@ -33,7 +33,7 @@ class kategoriPeralatan extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(padding: EdgeInsets.only(top: 20, left: 10)),
+          const Padding(padding: EdgeInsets.only(top: 20, left: 10)),
           SizedBox(
             width: 362,
             height: 50,
@@ -42,16 +42,16 @@ class kategoriPeralatan extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  color: const Color.fromARGB(255, 0, 0, 0),
                   width: 1,
                 ),
               ),
               child: SearchBar(
                 textInputAction: TextInputAction.search,
                 hintText: "Cari di sini...",
-                leading: Icon(Icons.search),
-                backgroundColor: WidgetStatePropertyAll(Colors.transparent),
-                elevation: WidgetStatePropertyAll(0),
+                leading: const Icon(Icons.search),
+                backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
+                elevation: const WidgetStatePropertyAll(0),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -60,7 +60,7 @@ class kategoriPeralatan extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -69,7 +69,7 @@ class kategoriPeralatan extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Trekkingpole(),
+                      builder: (context) => const Trekkingpole(),
                     ),
                   );
                 },
@@ -127,7 +127,7 @@ class kategoriPeralatan extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => JaketGunung(),
+                      builder: (context) => const JaketGunung(),
                     ),
                   );
                 },
@@ -182,7 +182,7 @@ class kategoriPeralatan extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 19),
+          const SizedBox(height: 19),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -191,7 +191,7 @@ class kategoriPeralatan extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => KantongGunung(),
+                      builder: (context) => const KantongGunung(),
                     ),
                   );
                 },
@@ -249,7 +249,7 @@ class kategoriPeralatan extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => spatuGunung(),
+                      builder: (context) => const spatuGunung(),
                     ),
                   );
                 },

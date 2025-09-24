@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
     Home(),
     CategoryCatalog(),
     Favorite(),
-    Faq(),
+    FaqPage(),
   ];
 
   void _onItemTapped(int index) {

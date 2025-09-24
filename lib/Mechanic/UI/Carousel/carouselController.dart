@@ -9,7 +9,6 @@ class Carouselcontroller extends StatefulWidget {
 }
 
 class _CarouselcontrollerState extends State<Carouselcontroller> {
-  // Data gunung (nama, tinggi, gambar)
   final List<Map<String, String>> mountains = [
     {
       "name": "MT. Sindoro",
