@@ -195,8 +195,7 @@ class Home extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const Rescue()),
+                  MaterialPageRoute(builder: (context) => const Rescue()),
                 );
               },
               borderRadius: BorderRadius.circular(10),
@@ -285,7 +284,7 @@ class Home extends StatelessWidget {
                       children: [
                         const Padding(padding: EdgeInsets.only(left: 12)),
                         Text(
-                          "Trekking Pole",
+                          "Gorpcore",
                           style: GoogleFonts.istokWeb(color: Colors.white),
                         ),
                       ],
@@ -386,8 +385,8 @@ class Home extends StatelessWidget {
                         topRight: Radius.circular(10),
                       ),
                       image: DecorationImage(
-                        image:
-                            AssetImage('assets/images/equipmentImage/Pole.png'),
+                        image: AssetImage(
+                            'assets/images/equipmentImage/carrier.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -398,7 +397,7 @@ class Home extends StatelessWidget {
                     top: 110,
                     left: 12,
                     child: Text(
-                      "Trekking Pole",
+                      "Tas Carrier",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -431,7 +430,7 @@ class Home extends StatelessWidget {
                       ),
                       image: DecorationImage(
                           image: AssetImage(
-                              'assets/images/equipmentImage/Gorpcore.jpg'),
+                              'assets/images/equipmentImage/sepatu.jpg'),
                           fit: BoxFit.cover)),
                 ),
                 Column(
@@ -441,7 +440,7 @@ class Home extends StatelessWidget {
                       children: [
                         const Padding(padding: EdgeInsets.only(left: 12)),
                         Text(
-                          "Trekking Pole",
+                          "Sepatu Gunung",
                           style: GoogleFonts.istokWeb(color: Colors.white),
                         ),
                       ],
