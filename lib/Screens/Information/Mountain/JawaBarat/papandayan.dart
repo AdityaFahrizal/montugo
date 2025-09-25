@@ -10,13 +10,13 @@ class PapandayanNav extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white, // background putih
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 54, 69, 79), // charcoal
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255), // charcoal
         title: Text(
           "Gunung Papandayan",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: Colors.white,
+            color: const Color.fromARGB(255, 0, 0, 0),
           ),
         ),
       ),

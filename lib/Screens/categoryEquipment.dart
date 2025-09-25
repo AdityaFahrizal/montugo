@@ -50,7 +50,8 @@ class kategoriPeralatan extends StatelessWidget {
                 textInputAction: TextInputAction.search,
                 hintText: "Cari di sini...",
                 leading: const Icon(Icons.search),
-                backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
+                backgroundColor:
+                    const WidgetStatePropertyAll(Colors.transparent),
                 elevation: const WidgetStatePropertyAll(0),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(

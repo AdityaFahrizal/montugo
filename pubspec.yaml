@@ -79,6 +79,8 @@ flutter:
     - assets/images/
     - assets/images/mountainImage/JawaBaratImage/Papandayan.jpg
     - assets/images/mountainImage/JawaTengahImage/Prau.jpg
+    - assets/images/mountainImage/JawaTengahImage/Sindoroo.jpg
+    - assets/images/mountainImage/JawaTengahImage/merapii.jpg
     - assets/images/mountainImage/JawaTimurImage/bromo.jpg
     - assets/images/mountainImage/JawaTimurImage/semeru.jpg
     - assets/images/Info.png

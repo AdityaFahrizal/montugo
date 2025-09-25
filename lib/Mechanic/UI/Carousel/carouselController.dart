@@ -1,14 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class Carouselcontroller extends StatefulWidget {
-  const Carouselcontroller({super.key});
+class CarouselControllerWidget extends StatefulWidget {
+  const CarouselControllerWidget({super.key});
 
   @override
-  State<Carouselcontroller> createState() => _CarouselcontrollerState();
+  State<CarouselControllerWidget> createState() =>
+      _CarouselControllerWidgetState();
 }
 
-class _CarouselcontrollerState extends State<Carouselcontroller> {
+class _CarouselControllerWidgetState extends State<CarouselControllerWidget> {
   final List<Map<String, String>> mountains = [
     {
       "name": "MT. Sindoro",
@@ -47,6 +48,16 @@ class _CarouselcontrollerState extends State<Carouselcontroller> {
                       child: Image.network(
                         mountain["image"]!,
                         fit: BoxFit.cover,
+                        loadingBuilder: (context, child, progress) {
+                          if (progress == null) return child;
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(
+                              child: Icon(Icons.broken_image,
+                                  color: Colors.white));
+                        },
                       ),
                     ),
 
@@ -76,7 +87,7 @@ class _CarouselcontrollerState extends State<Carouselcontroller> {
                             mountain["name"]!,
                             style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -85,7 +96,7 @@ class _CarouselcontrollerState extends State<Carouselcontroller> {
                             mountain["height"]!,
                             style: const TextStyle(
                               color: Colors.white70,
-                              fontSize: 12,
+                              fontSize: 13,
                             ),
                           ),
                           const Spacer(),
@@ -106,7 +117,7 @@ class _CarouselcontrollerState extends State<Carouselcontroller> {
                                 ),
                               ),
                               onPressed: () {
-                                // Aksi klik
+                                // Nanti bisa diganti Navigator.push
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -126,7 +137,7 @@ class _CarouselcontrollerState extends State<Carouselcontroller> {
             );
           }).toList(),
           options: CarouselOptions(
-            height: 150,
+            height: 160,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 5),
             autoPlayAnimationDuration: const Duration(milliseconds: 800),

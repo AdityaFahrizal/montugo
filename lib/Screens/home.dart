@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Mechanic/UI/Carousel/carouselController.dart';
-import 'package:montugo/Screens/Information/Mountain/JawaBarat/gede.dart';
+import 'package:montugo/Screens/Information/Equipment/carrierBag.dart';
+import 'package:montugo/Screens/Information/Equipment/gorpcore.dart';
+import 'package:montugo/Screens/Information/Equipment/shoes.dart';
+import 'package:montugo/Screens/Information/Equipment/trackingPole.dart';
 import 'package:montugo/Screens/Information/Rescue/rescue.dart';
 import 'package:montugo/Screens/categoryEquipment.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
@@ -15,7 +18,7 @@ class Home extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(children: [
         const SizedBox(
-          height: 50,
+          height: 35,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -31,40 +34,11 @@ class Home extends StatelessWidget {
           ],
         ),
         const SizedBox(
-          height: 14,
+          height: 12,
         ),
-        SizedBox(
-          width: 362,
-          height: 50,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: const Color.fromARGB(255, 0, 0, 0),
-                width: 1,
-              ),
-            ),
-            child: SearchBar(
-              textInputAction: TextInputAction.search,
-              hintText: "Cari di sini...",
-              leading: const Icon(Icons.search),
-              backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
-              elevation: const WidgetStatePropertyAll(0),
-              shape: WidgetStatePropertyAll(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-          ),
-        ),
+        const CarouselControllerWidget(),
         const SizedBox(
-          height: 23,
-        ),
-        const Carouselcontroller(),
-        const SizedBox(
-          height: 19,
+          height: 17,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -119,7 +93,6 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-
             // Peralatan
             InkWell(
               onTap: () {
@@ -248,95 +221,121 @@ class Home extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Stack(
-              children: [
-                Container(
-                  width: 171,
-                  height: 180,
-                  decoration: BoxDecoration(
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const JaketGunung(),
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(10),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 171,
+                    height: 180,
+                    decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 54, 69, 79),
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.black.withOpacity(0.7),
-                            blurRadius: 4,
-                            offset: const Offset(0, 5),
-                            spreadRadius: 0.5)
-                      ]),
-                ),
-                Container(
-                  width: 171,
-                  height: 100,
-                  decoration: const BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          blurRadius: 4,
+                          offset: const Offset(0, 5),
+                          spreadRadius: 0.5,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Gambar
+                  Container(
+                    width: 171,
+                    height: 100,
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
                       image: DecorationImage(
-                          image: AssetImage(
-                              'assets/images/equipmentImage/Gorpcore.jpg'),
-                          fit: BoxFit.cover)),
-                ),
-                Column(
-                  children: [
-                    const Padding(padding: EdgeInsets.only(top: 110)),
-                    Row(
-                      children: [
-                        const Padding(padding: EdgeInsets.only(left: 12)),
-                        Text(
-                          "Gorpcore",
-                          style: GoogleFonts.istokWeb(color: Colors.white),
-                        ),
-                      ],
+                        image: AssetImage(
+                            'assets/images/equipmentImage/Gorpcore.jpg'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+
+                  // Text
+                  const Positioned(
+                    top: 110,
+                    left: 12,
+                    child: Text(
+                      "Trekking Pole",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Stack(
-              children: [
-                Container(
-                  width: 171,
-                  height: 180,
-                  decoration: BoxDecoration(
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Trekkingpole(),
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(10),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 171,
+                    height: 180,
+                    decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 54, 69, 79),
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.black.withOpacity(0.7),
-                            blurRadius: 4,
-                            offset: const Offset(0, 5),
-                            spreadRadius: 0.5)
-                      ]),
-                ),
-                Container(
-                  width: 171,
-                  height: 100,
-                  decoration: const BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          blurRadius: 4,
+                          offset: const Offset(0, 5),
+                          spreadRadius: 0.5,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Gambar
+                  Container(
+                    width: 171,
+                    height: 100,
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
                       image: DecorationImage(
-                          image: AssetImage(
-                              'assets/images/equipmentImage/Pole.png'),
-                          fit: BoxFit.cover)),
-                ),
-                Column(
-                  children: [
-                    const Padding(padding: EdgeInsets.only(top: 110)),
-                    Row(
-                      children: [
-                        const Padding(padding: EdgeInsets.only(left: 12)),
-                        Text(
-                          "Trekking Pole",
-                          style: GoogleFonts.istokWeb(color: Colors.white),
-                        ),
-                      ],
+                        image:
+                            AssetImage('assets/images/equipmentImage/Pole.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+
+                  // Text
+                  const Positioned(
+                    top: 110,
+                    left: 12,
+                    child: Text(
+                      "Trekking Pole",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -351,7 +350,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const GedeNav(),
+                    builder: (context) => const KantongGunung(),
                   ),
                 );
               },
@@ -404,50 +403,63 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            Stack(
-              children: [
-                Container(
-                  width: 171,
-                  height: 180,
-                  decoration: BoxDecoration(
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const spatuGunung(),
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(10),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 171,
+                    height: 180,
+                    decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 54, 69, 79),
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.black.withOpacity(0.7),
-                            blurRadius: 4,
-                            offset: const Offset(0, 5),
-                            spreadRadius: 0.5)
-                      ]),
-                ),
-                Container(
-                  width: 171.1,
-                  height: 100,
-                  decoration: const BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          blurRadius: 4,
+                          offset: const Offset(0, 5),
+                          spreadRadius: 0.5,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Gambar
+                  Container(
+                    width: 171,
+                    height: 100,
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
                       image: DecorationImage(
-                          image: AssetImage(
-                              'assets/images/equipmentImage/sepatu.jpg'),
-                          fit: BoxFit.cover)),
-                ),
-                Column(
-                  children: [
-                    const Padding(padding: EdgeInsets.only(top: 110)),
-                    Row(
-                      children: [
-                        const Padding(padding: EdgeInsets.only(left: 12)),
-                        Text(
-                          "Sepatu Gunung",
-                          style: GoogleFonts.istokWeb(color: Colors.white),
-                        ),
-                      ],
+                        image: AssetImage(
+                            'assets/images/equipmentImage/sepatu.jpg'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+
+                  // Text
+                  const Positioned(
+                    top: 110,
+                    left: 12,
+                    child: Text(
+                      "Sepatu Gunung",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
