@@ -165,7 +165,6 @@ class _KategoriGunungState extends State<KategoriGunung> {
                             ),
                           ),
                           const SizedBox(height: 10),
-
                           ListTile(
                             leading: const Icon(Icons.public,
                                 color: Color.fromARGB(255, 54, 69, 79)),
@@ -178,7 +177,6 @@ class _KategoriGunungState extends State<KategoriGunung> {
                               Navigator.pop(context);
                             },
                           ),
-
                           ...provinsiList.map((prov) => ListTile(
                                 leading: const Icon(Icons.terrain,
                                     color: Color.fromARGB(255, 54, 69, 79)),

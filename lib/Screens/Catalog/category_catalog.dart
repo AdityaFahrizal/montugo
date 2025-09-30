@@ -42,6 +42,12 @@ class CategoryCatalog extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(height: 15),
+          Row(
+            children: [
+              
+            ],
+          )
         ],
       ),
     );

@@ -8,14 +8,13 @@ class SemeruNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Gunung Semeru",
-          style: GoogleFonts.istokWeb(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        )
-      ),
+          title: Text(
+        "Gunung Semeru",
+        style: GoogleFonts.istokWeb(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      )),
       body: const Semeru(),
     );
   }
@@ -37,7 +36,7 @@ class Semeru extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 image: DecorationImage(
                     image: AssetImage(
-                        'assets/images/mountainImage/JawaTimurImage/Semeru.jpg'),
+                        'assets/images/mountainImage/JawaTimurImage/semeru.jpg'),
                     fit: BoxFit.cover)),
           ),
           const SizedBox(

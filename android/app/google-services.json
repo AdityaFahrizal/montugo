@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "842673728422",
-    "project_id": "montugo-e20be",
-    "storage_bucket": "montugo-e20be.firebasestorage.app"
+    "project_number": "484812476885",
+    "project_id": "moontogo-7cd33",
+    "storage_bucket": "moontogo-7cd33.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:842673728422:android:f60082e3a116fbab82bd67",
+        "mobilesdk_app_id": "1:484812476885:android:214f5e566bf666a79aed5c",
         "android_client_info": {
           "package_name": "com.example.montugo"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCJi0lLeGiOFfOmoqrDr2T1eTUE2O_OHWg"
+          "current_key": "AIzaSyDYfIBp-LakA7caF-GK0yaxrdO0FXSDicU"
         }
       ],
       "services": {
