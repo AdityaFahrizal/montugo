@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GedeNav extends StatelessWidget {
   const GedeNav({super.key});
@@ -7,18 +8,17 @@ class GedeNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, // background putih
       appBar: AppBar(
-        backgroundColor: const Color(0xFF36454F), // charcoal
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255), // putih
         title: Text(
-          "Gunung Gede Pangrango",
+          "Gunung Gede",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: Colors.white,
+            color: const Color.fromARGB(255, 0, 0, 0),
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: const Gede(),
     );
@@ -31,71 +31,73 @@ class Gede extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(padding: EdgeInsets.only(top: 15)),
-          Center(
-            child: Container(
-              width: 362,
-              height: 227,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/images/mountainImage/JawaBaratImage/Gede.jpg',
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
+          // Gambar Utama
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              'assets/images/mountainImage/JawaBaratImage/Gede.jpg',
+              height: 220,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
           ),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(
-              "Gunung Gede Pangrango",
-              style: GoogleFonts.istokWeb(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-              ),
+
+          // Judul
+          Text(
+            "Gunung Gede Pangrango",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: const Color.fromARGB(255, 54, 69, 79),
             ),
           ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                infoText("📍 Lokasi:", "Sukabumi–Cianjur–Bogor, Jawa Barat"),
-                infoText("⛰️ Ketinggian:", "2.958 mdpl"),
-                infoText("🚶 Jalur Pendakian:",
-                    "Cibodas, Gunung Putri, Selabintana"),
-                infoText("⏱️ Waktu Tempuh:", "± 6–8 jam"),
-                infoText("⚡ Tingkat Kesulitan:", "Menengah"),
-                const SizedBox(height: 15),
-                Text(
-                  "Deskripsi:",
-                  style: GoogleFonts.istokWeb(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  "Gunung Gede Pangrango merupakan bagian dari Taman Nasional Gede Pangrango "
-                  "yang terletak di kawasan Sukabumi, Cianjur, dan Bogor. Gunung ini populer di kalangan pendaki "
-                  "karena akses jalurnya yang cukup banyak, seperti Cibodas, Gunung Putri, dan Selabintana. "
-                  "Salah satu daya tarik utama Gunung Gede adalah Alun-alun Suryakencana, padang luas yang dipenuhi "
-                  "bunga edelweiss, serta pemandangan kawah aktif yang menakjubkan. "
-                  "Waktu tempuh menuju puncak rata-rata 6–8 jam dengan tingkat kesulitan menengah. "
-                  "Karena letaknya strategis dekat dengan Jabodetabek, gunung ini selalu ramai dan menjadi salah satu "
-                  "destinasi favorit pendaki di Jawa Barat.",
-                  style: GoogleFonts.istokWeb(fontSize: 15, height: 1.5),
-                  textAlign: TextAlign.justify,
-                ),
-              ],
+          const SizedBox(height: 8),
+
+          // Informasi Ringkas
+          Column(
+            children: [
+              infoItem(FontAwesomeIcons.mapMarkerAlt,
+                  "Lokasi: Sukabumi–Cianjur–Bogor, Jawa Barat"),
+              infoItem(FontAwesomeIcons.mountain, "Ketinggian: 2.958 mdpl"),
+              infoItem(FontAwesomeIcons.route,
+                  "Jalur Pendakian: Cibodas, Gunung Putri, Selabintana"),
+              infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 6–8 jam"),
+              infoItem(FontAwesomeIcons.chartLine,
+                  "Tingkat Kesulitan: Menengah – Tinggi"),
+            ],
+          ),
+          const SizedBox(height: 20),
+
+          // Deskripsi
+          Text(
+            "Deskripsi",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: const Color.fromARGB(255, 54, 69, 79),
             ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Gunung Gede Pangrango merupakan salah satu gunung paling populer di Jawa Barat, "
+            "berada dalam kawasan Taman Nasional Gunung Gede Pangrango. Gunung ini memiliki "
+            "dua puncak utama, yaitu Puncak Gede dan Puncak Pangrango. Jalur pendakian yang "
+            "paling terkenal adalah Cibodas, Gunung Putri, dan Selabintana, dengan waktu tempuh "
+            "sekitar 6–8 jam menuju puncak. Sepanjang jalur, pendaki dapat menikmati keindahan "
+            "air terjun, alun-alun surya kencana yang luas dengan hamparan bunga edelweiss, serta "
+            "pemandangan kawah aktif. Tingkat kesulitannya cukup menantang, cocok untuk pendaki "
+            "berpengalaman maupun mereka yang ingin menguji kemampuan fisik dan mental.",
+            style: GoogleFonts.istokWeb(
+              fontSize: 15,
+              height: 1.6,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.justify,
           ),
           const SizedBox(height: 30),
         ],
@@ -103,28 +105,21 @@ class Gede extends StatelessWidget {
     );
   }
 
-  Widget infoText(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: "$title ",
-              style: GoogleFonts.istokWeb(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                fontSize: 16,
-              ),
-            ),
-            TextSpan(
-              text: value,
-              style: GoogleFonts.istokWeb(
-                color: Colors.black87,
-                fontSize: 15,
-              ),
-            ),
-          ],
+  // Widget untuk baris info dengan icon
+  Widget infoItem(IconData icon, String text) {
+    return Card(
+      elevation: 2,
+      shadowColor: Colors.black26,
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        leading: Icon(icon, color: const Color.fromARGB(255, 54, 69, 79)),
+        title: Text(
+          text,
+          style: GoogleFonts.istokWeb(
+            fontSize: 15,
+            color: Colors.black87,
+          ),
         ),
       ),
     );
