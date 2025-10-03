@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:montugo/Screens/Information/Mountain/JawaBarat/ciremai.dart';
 import 'package:montugo/Screens/Information/Mountain/JawaBarat/gede.dart';
 import 'package:montugo/Screens/Information/Mountain/JawaBarat/papandayan.dart';
+import 'package:montugo/Screens/Information/Mountain/JawaTengah/merapi.dart';
 import 'package:montugo/Screens/Information/Mountain/JawaTengah/prau.dart';
+import 'package:montugo/Screens/Information/Mountain/JawaTengah/sindoro.dart';
 import 'package:montugo/Screens/Information/Mountain/JawaTimur/bromo.dart';
 import 'package:montugo/Screens/Information/Mountain/JawaTimur/semeru.dart';
 
@@ -70,6 +73,27 @@ class _KategoriGunungState extends State<KategoriGunung> {
       "provinsi": "Jawa Barat",
       "image": "assets/images/JawaBarat.jpg",
       "page": const GedeNav(),
+    },
+    {
+      "nama": "Gunung Ciremai",
+      "tinggi": "3.078 Mdpl",
+      "provinsi": "Jawa Barat",
+      "image": "assets/images/mountainImage/JawaBaratImage/ciremai.jpg",
+      "page": const CiremaiNav(),
+    },
+    {
+      "nama": "Gunung Sindoro",
+      "tinggi": "3.150 Mdpl",
+      "provinsi": "Jawa Tengah",
+      "image": "assets/images/mountainImage/JawaTengahImage/Sindoroo.jpg",
+      "page": const SindoroNav(),
+    },
+    {
+      "nama": "Gunung Merapi",
+      "tinggi": "2.930 Mdpl",
+      "provinsi": "Jawa Tengah",
+      "image": "assets/images/mountainImage/JawaTengahImage/merapii.jpg",
+      "page": const MerapiNav(),
     },
   ];
 

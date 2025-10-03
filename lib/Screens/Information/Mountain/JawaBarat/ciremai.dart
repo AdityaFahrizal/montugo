@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MerapiNav extends StatelessWidget {
-  const MerapiNav({super.key});
+class CiremaiNav extends StatelessWidget {
+  const CiremaiNav({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class MerapiNav extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
-          "Gunung Merapi",
+          "Gunung Ciremai",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -20,13 +20,13 @@ class MerapiNav extends StatelessWidget {
           ),
         ),
       ),
-      body: const Merapi(),
+      body: const Ciremai(),
     );
   }
 }
 
-class Merapi extends StatelessWidget {
-  const Merapi({super.key});
+class Ciremai extends StatelessWidget {
+  const Ciremai({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class Merapi extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
-              'assets/images/mountainImage/JawaTengahImage/merapii.jpg',
+              'assets/images/mountainImage/JawaBaratImage/ciremai.jpg',
               height: 220,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -49,7 +49,7 @@ class Merapi extends StatelessWidget {
 
           // Judul
           Text(
-            "Gunung Merapi",
+            "Gunung Ciremai",
             style: GoogleFonts.istokWeb(
               fontWeight: FontWeight.bold,
               fontSize: 22,
@@ -62,13 +62,12 @@ class Merapi extends StatelessWidget {
           Column(
             children: [
               infoItem(FontAwesomeIcons.mapMarkerAlt,
-                  "Lokasi: Sleman (DIY) & Magelang, Boyolali, Klaten (Jawa Tengah)"),
-              infoItem(FontAwesomeIcons.mountain, "Ketinggian: 2.930 mdpl"),
+                  "Lokasi: Kuningan & Majalengka, Jawa Barat"),
+              infoItem(FontAwesomeIcons.mountain, "Ketinggian: 3.078 mdpl"),
               infoItem(FontAwesomeIcons.route,
-                  "Jalur Pendakian: Selo, Babadan, Kaliurang"),
-              infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 4–6 jam"),
-              infoItem(FontAwesomeIcons.chartLine,
-                  "Tingkat Kesulitan: Menengah – Sulit"),
+                  "Jalur Pendakian: Apuy, Linggarjati, Palutungan, Linggasana"),
+              infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 8–12 jam"),
+              infoItem(FontAwesomeIcons.chartLine, "Tingkat Kesulitan: Sulit – Menengah"),
             ],
           ),
           const SizedBox(height: 20),
@@ -84,12 +83,12 @@ class Merapi extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            "Gunung Merapi adalah salah satu gunung berapi paling aktif di Indonesia dan dunia, "
-            "dengan ketinggian sekitar 2.930 mdpl. Merapi terkenal karena aktivitas vulkaniknya yang tinggi "
-            "dan keindahan panorama dari puncaknya. Jalur Selo menjadi jalur favorit para pendaki karena aksesnya mudah "
-            "dan jalurnya relatif jelas. Dari puncak Merapi, pendaki dapat menyaksikan pemandangan gunung-gunung lain "
-            "seperti Merbabu, Sumbing, dan Sindoro. Meski jalurnya tidak terlalu panjang, medan curam dan kondisi cuaca "
-            "yang cepat berubah membuat pendakian Merapi tetap menantang dan membutuhkan kewaspadaan tinggi.",
+            "Gunung Ciremai adalah gunung tertinggi di Jawa Barat dengan ketinggian 3.078 mdpl. "
+            "Gunung ini termasuk gunung berapi aktif dan menjadi salah satu destinasi populer bagi pendaki "
+            "yang mencari tantangan. Jalur yang terkenal adalah Apuy dan Linggarjati, dengan karakteristik "
+            "pendakian yang cukup panjang dan menantang. Dari puncak, pendaki bisa menikmati panorama 360° "
+            "yang memperlihatkan Gunung Slamet, Pangrango, Cikuray, hingga laut Jawa di kejauhan. "
+            "Karena jalurnya panjang dan curam, Ciremai lebih cocok untuk pendaki yang sudah memiliki pengalaman.",
             style: GoogleFonts.istokWeb(
               fontSize: 15,
               height: 1.6,

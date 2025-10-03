@@ -134,7 +134,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const Categorylogistic()),
+                      builder: (context) => const CategoryLogistic()),
                 );
               },
               borderRadius: BorderRadius.circular(10),
