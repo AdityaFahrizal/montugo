@@ -49,7 +49,7 @@ class JaketGunung extends StatelessWidget {
 
           // Judul
           Text(
-            "Jaket Gunung (GORPCore)",
+            "Jaket Gunung (GorpCore)",
             style: GoogleFonts.istokWeb(
               fontWeight: FontWeight.bold,
               fontSize: 22,
