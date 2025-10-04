@@ -209,7 +209,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const JaketGunung(),
+                    builder: (context) => const JaketGunungNav(),
                   ),
                 );
               },
