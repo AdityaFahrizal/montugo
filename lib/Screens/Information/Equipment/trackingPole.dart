@@ -1,74 +1,122 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Trekkingpole extends StatelessWidget {
-  const Trekkingpole({super.key});
+class TrekkingPoleNav extends StatelessWidget {
+  const TrekkingPoleNav({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
           "Trekking Pole",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
+            color: const Color.fromARGB(255, 0, 0, 0),
           ),
         ),
       ),
-      body: const Tongkat(),
+      body: const TrekkingPole(),
     );
   }
 }
 
-class Tongkat extends StatelessWidget {
-  const Tongkat({super.key});
+class TrekkingPole extends StatelessWidget {
+  const TrekkingPole({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(padding: EdgeInsets.only(left: 15, top: 15)),
-          Container(
-            width: 362,
-            height: 227,
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/equipmentImage/Pole.png'),
-                    fit: BoxFit.cover)),
+          // Gambar Utama
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              'assets/images/equipmentImage/Pole.png',
+              height: 220,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
-          const SizedBox(
-            height: 20,
+          const SizedBox(height: 20),
+
+          // Judul
+          Text(
+            "Trekking Pole",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          const SizedBox(height: 8),
+
+          // Informasi Ringkas
+          Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  "Trekking Pole",
-                  style: GoogleFonts.istokWeb(
-                      fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ),
+              infoItem(FontAwesomeIcons.tag, "Harga: Rp 150.000"),
+              infoItem(
+                  FontAwesomeIcons.weightHanging, "Berat: ± 250 gram / batang"),
+              infoItem(
+                  FontAwesomeIcons.boxOpen, "Bahan: Alumunium alloy / karbon"),
+              infoItem(FontAwesomeIcons.personHiking,
+                  "Fungsi: Membantu keseimbangan saat mendaki/menurun"),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  "Lorem Ipsum Dolor Sit Amet",
-                  style: GoogleFonts.istokWeb(fontSize: 15),
-                ),
-              )
-            ],
-          )
+          const SizedBox(height: 20),
+
+          // Deskripsi
+          Text(
+            "Deskripsi",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Trekking pole adalah tongkat bantu yang digunakan pendaki untuk menjaga keseimbangan "
+            "dan mengurangi beban pada lutut saat mendaki maupun menuruni jalur terjal. "
+            "Dengan desain lipat atau teleskopik, trekking pole mudah disimpan dan dibawa. "
+            "Bahan yang umum digunakan adalah alumunium alloy (kuat dan ekonomis) atau karbon (lebih ringan). "
+            "Peralatan ini sangat disarankan terutama pada jalur panjang, berbatu, atau curam.",
+            style: GoogleFonts.istokWeb(
+              fontSize: 15,
+              height: 1.6,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+          const SizedBox(height: 30),
         ],
+      ),
+    );
+  }
+
+  // Widget untuk baris info dengan icon
+  Widget infoItem(IconData icon, String text) {
+    return Card(
+      elevation: 2,
+      shadowColor: Colors.black26,
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        leading: Icon(icon, color: const Color.fromARGB(255, 54, 69, 79)),
+        title: Text(
+          text,
+          style: GoogleFonts.istokWeb(
+            fontSize: 15,
+            color: Colors.black87,
+          ),
+        ),
       ),
     );
   }

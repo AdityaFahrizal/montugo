@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Screens/Information/Logistic/emergencyblanket.dart';
+import 'package:montugo/Screens/Information/Logistic/nesting.dart';
+import 'package:montugo/Screens/Information/Logistic/p3k.dart';
 import 'package:montugo/Screens/Information/Logistic/raincoat.dart';
 import 'package:montugo/Screens/Information/Logistic/sleepingbag.dart';
 import 'package:montugo/Screens/Information/Logistic/tent.dart';
+import 'package:montugo/Screens/Information/Logistic/gloves.dart';
+import 'package:montugo/Screens/Information/Logistic/lamp.dart';
+import 'package:montugo/Screens/Information/Logistic/stove.dart';
 
 class CategoryLogistic extends StatefulWidget {
   const CategoryLogistic({super.key});
@@ -20,26 +25,56 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
     {
       "name": "Emergency Blanket",
       "image": "assets/images/logisticImage/emergency.jpg",
-      "page": const Emergencyblanket(),
+      "page": const EmergencyBlanketNav(),
       "category": "Pelindung",
     },
     {
       "name": "Sleeping Bag",
       "image": "assets/images/logisticImage/Sleeping.jpg",
-      "page": const Sleepingbag(),
+      "page": const SleepingBagNav(),
       "category": "Tidur",
     },
     {
       "name": "Tenda",
       "image": "assets/images/logisticImage/tenda.jpg",
-      "page": const Tenda(),
+      "page": const TendaNav(),
       "category": "Tidur",
     },
     {
       "name": "Jas Hujan",
       "image": "assets/images/logisticImage/poncho.png",
-      "page": const JasHujan(),
+      "page": const PonchoNav(),
       "category": "Pelindung",
+    },
+    {
+      "name": "Sarung Tangan",
+      "image": "assets/images/logisticImage/sarung.png",
+      "page": const SarungTanganNav(),
+      "category": "Pelindung",
+    },
+    {
+      "name": "Lampu",
+      "image": "assets/images/logisticImage/lampu.png",
+      "page": const LampuNav(),
+      "category": "Penerangan",
+    },
+    {
+      "name": "Peralatan Makanan",
+      "image": "assets/images/logisticImage/cookset.png",
+      "page": const CooksetNav(),
+      "category": "Masak",
+    },
+    {
+      "name": "P3K",
+      "image": "assets/images/logisticImage/p3k.png",
+      "page": const P3KNav(),
+      "category": "Kesehatan",
+    },
+    {
+      "name": "Kompor Portable",
+      "image": "assets/images/logisticImage/kompor.png",
+      "page": const KomporPortableNav(),
+      "category": "Masak",
     },
   ];
 
@@ -100,6 +135,12 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
                 _buildFilterChip("Pelindung"),
                 const SizedBox(width: 8),
                 _buildFilterChip("Tidur"),
+                const SizedBox(width: 8),
+                _buildFilterChip("Penerangan"),
+                const SizedBox(width: 8),
+                _buildFilterChip("Masak"),
+                const SizedBox(width: 8),
+                _buildFilterChip("Kesehatan"),
               ],
             ),
           ),
@@ -112,7 +153,7 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
               padding: const EdgeInsets.all(16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.85,
+                childAspectRatio: 171 / 140, // ✅ sama persis ukuran card
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
               ),
@@ -127,42 +168,56 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
                     );
                   },
                   borderRadius: BorderRadius.circular(10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 54, 69, 79),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          blurRadius: 4,
-                          offset: const Offset(0, 5),
+                  child: Stack(
+                    children: [
+                      // 🔳 Background Card
+                      Container(
+                        width: 171,
+                        height: 140,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 54, 69, 79),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.7),
+                              blurRadius: 4,
+                              offset: const Offset(0, 5),
+                              spreadRadius: 0.5,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Gambar
-                        ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(10),
+                      ),
+
+                      // 🖼️ Gambar
+                      Container(
+                        width: 171,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
                           ),
-                          child: Image.asset(
-                            item["image"],
-                            width: double.infinity,
-                            height: 100,
+                          image: DecorationImage(
+                            image: AssetImage(item["image"]),
                             fit: BoxFit.cover,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            item["name"],
-                            style: const TextStyle(color: Colors.white),
+                      ),
+
+                      // 📝 Nama item
+                      Positioned(
+                        top: 110,
+                        left: 12,
+                        child: Text(
+                          item["name"],
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14, // ✅ sesuai contoh
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
               },

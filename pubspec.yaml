@@ -77,6 +77,11 @@ flutter:
     - assets/images/logisticImage/Sleeping.jpg
     - assets/images/logisticImage/emergency.jpg
     - assets/images/logisticImage/poncho.png
+    - assets/images/logisticImage/sarung.png
+    - assets/images/logisticImage/lampu.png
+    - assets/images/logisticImage/p3k.png
+    - assets/images/logisticImage/kompor.png
+    - assets/images/logisticImage/cookset.png
     - assets/images/JawaBarat.jpg
     - assets/images/mountainImage/JawaBaratImage/Papandayan.jpg
     - assets/images/mountainImage/JawaBaratImage/Gede.jpg

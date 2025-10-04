@@ -20,22 +20,6 @@ class Home extends StatelessWidget {
         const SizedBox(
           height: 35,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                "Hi, Senang Bertemu Denganmu Hari Ini",
-                style: GoogleFonts.istokWeb(
-                    fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 12,
-        ),
         const CarouselControllerWidget(),
         const SizedBox(
           height: 17,
@@ -127,7 +111,6 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-
             // Logistik
             InkWell(
               onTap: () {
@@ -235,7 +218,7 @@ class Home extends StatelessWidget {
                 children: [
                   Container(
                     width: 171,
-                    height: 180,
+                    height: 140,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 54, 69, 79),
                       borderRadius: BorderRadius.circular(10),
@@ -272,8 +255,11 @@ class Home extends StatelessWidget {
                     top: 110,
                     left: 12,
                     child: Text(
-                      "Trekking Pole",
-                      style: TextStyle(color: Colors.white),
+                      "Jaket Gunung",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -284,7 +270,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Trekkingpole(),
+                    builder: (context) => const TrekkingPoleNav(),
                   ),
                 );
               },
@@ -293,7 +279,7 @@ class Home extends StatelessWidget {
                 children: [
                   Container(
                     width: 171,
-                    height: 180,
+                    height: 140,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 54, 69, 79),
                       borderRadius: BorderRadius.circular(10),
@@ -331,7 +317,10 @@ class Home extends StatelessWidget {
                     left: 12,
                     child: Text(
                       "Trekking Pole",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -350,7 +339,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const KantongGunung(),
+                    builder: (context) => const TasCarrierNav(),
                   ),
                 );
               },
@@ -359,7 +348,7 @@ class Home extends StatelessWidget {
                 children: [
                   Container(
                     width: 171,
-                    height: 180,
+                    height: 140,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 54, 69, 79),
                       borderRadius: BorderRadius.circular(10),
@@ -397,7 +386,10 @@ class Home extends StatelessWidget {
                     left: 12,
                     child: Text(
                       "Tas Carrier",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -408,7 +400,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const spatuGunung(),
+                    builder: (context) => const SepatuGunungNav(),
                   ),
                 );
               },
@@ -417,7 +409,7 @@ class Home extends StatelessWidget {
                 children: [
                   Container(
                     width: 171,
-                    height: 180,
+                    height: 140,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 54, 69, 79),
                       borderRadius: BorderRadius.circular(10),
@@ -455,7 +447,10 @@ class Home extends StatelessWidget {
                     left: 12,
                     child: Text(
                       "Sepatu Gunung",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

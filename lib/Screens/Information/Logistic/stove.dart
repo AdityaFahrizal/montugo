@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class P3KNav extends StatelessWidget {
-  const P3KNav({super.key});
+class KomporPortableNav extends StatelessWidget {
+  const KomporPortableNav({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class P3KNav extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
-          "First Aid Kit (P3K)",
+          "Kompor Portable",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -20,13 +20,13 @@ class P3KNav extends StatelessWidget {
           ),
         ),
       ),
-      body: const P3K(),
+      body: const KomporPortable(),
     );
   }
 }
 
-class P3K extends StatelessWidget {
-  const P3K({super.key});
+class KomporPortable extends StatelessWidget {
+  const KomporPortable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class P3K extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
-              'assets/images/logisticImage/p3k.png',
+              'assets/images/logisticImage/kompor.png',
               height: 220,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -49,7 +49,7 @@ class P3K extends StatelessWidget {
 
           // Judul
           Text(
-            "First Aid Kit (P3K)",
+            "Kompor Portable",
             style: GoogleFonts.istokWeb(
               fontWeight: FontWeight.bold,
               fontSize: 22,
@@ -61,12 +61,12 @@ class P3K extends StatelessWidget {
           // Informasi Ringkas
           Column(
             children: [
-              infoItem(FontAwesomeIcons.tag, "Harga: Rp 65.000"),
-              infoItem(FontAwesomeIcons.weightHanging, "Berat: ± 400 gram"),
+              infoItem(FontAwesomeIcons.tag, "Harga: Rp 120.000"),
+              infoItem(FontAwesomeIcons.weightHanging, "Berat: ± 350 gram"),
               infoItem(FontAwesomeIcons.boxOpen,
-                  "Isi: Plester, Betadine, Perban, Kasa, Obat pribadi"),
-              infoItem(FontAwesomeIcons.clipboardList,
-                  "Bahan Kotak: Nylon tahan air"),
+                  "Bahan: Stainless steel + alumunium"),
+              infoItem(FontAwesomeIcons.fire,
+                  "Bahan bakar: Gas kaleng butane/propane"),
             ],
           ),
           const SizedBox(height: 20),
@@ -82,12 +82,11 @@ class P3K extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            "First Aid Kit (P3K) adalah perlengkapan wajib dalam pendakian yang berfungsi untuk "
-            "menangani cedera ringan hingga darurat sebelum mendapatkan bantuan medis. "
-            "Isi standar biasanya meliputi plester, perban, kasa steril, cairan antiseptik, gunting kecil, "
-            "dan obat-obatan pribadi sesuai kebutuhan pendaki. "
-            "Kotaknya dibuat dari bahan tahan air sehingga isi tetap aman meski terkena hujan. "
-            "Membawa P3K sangat penting untuk keselamatan dan bisa menjadi penolong pertama di tengah perjalanan gunung.",
+            "Kompor portable adalah peralatan masak utama untuk kegiatan camping dan pendakian. "
+            "Dengan desain ringkas dan bobot ringan, kompor ini mudah dibawa dan dirakit di atas gunung. "
+            "Biasanya menggunakan bahan bakar gas kaleng (butane/propane) yang mudah ditemukan. "
+            "Terbuat dari bahan stainless steel dan alumunium tahan panas sehingga awet dan stabil digunakan. "
+            "Kompor ini sangat penting untuk memasak makanan hangat dan membuat minuman panas di alam terbuka.",
             style: GoogleFonts.istokWeb(
               fontSize: 15,
               height: 1.6,

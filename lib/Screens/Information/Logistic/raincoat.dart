@@ -1,74 +1,121 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class JasHujan extends StatelessWidget {
-  const JasHujan({super.key});
+class PonchoNav extends StatelessWidget {
+  const PonchoNav({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
-          "Jas Hujan",
+          "Jas Hujan Poncho",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
+            color: const Color.fromARGB(255, 0, 0, 0),
           ),
         ),
       ),
-      body: const Raincoat(),
+      body: const Poncho(),
     );
   }
 }
 
-class Raincoat extends StatelessWidget {
-  const Raincoat({super.key});
+class Poncho extends StatelessWidget {
+  const Poncho({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(padding: EdgeInsets.only(left: 15, top: 15)),
-          Container(
-            width: 362,
-            height: 227,
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/logisticImage/poncho.png'),
-                    fit: BoxFit.cover)),
+          // Gambar Utama
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              'assets/images/logisticImage/poncho.png',
+              height: 220,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
-          const SizedBox(
-            height: 20,
+          const SizedBox(height: 20),
+
+          // Judul
+          Text(
+            "Jas Hujan Poncho",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          const SizedBox(height: 8),
+
+          // Informasi Ringkas
+          Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  "Jas Hujan",
-                  style: GoogleFonts.istokWeb(
-                      fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ),
+              infoItem(FontAwesomeIcons.tag, "Harga: Rp 10.000 - 45.000"),
+              infoItem(FontAwesomeIcons.weightHanging, "Berat: 250 gram"),
+              infoItem(
+                  FontAwesomeIcons.rulerCombined, "Ukuran: All Size (dewasa)"),
+              infoItem(FontAwesomeIcons.clipboardList,
+                  "Bahan: PVC / Polyester anti air"),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  "Lorem Ipsum Dolor Sit Amet",
-                  style: GoogleFonts.istokWeb(fontSize: 15),
-                ),
-              )
-            ],
-          )
+          const SizedBox(height: 20),
+
+          // Deskripsi
+          Text(
+            "Deskripsi",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Jas hujan poncho adalah pelindung tubuh dari hujan dengan model longgar "
+            "seperti mantel yang menutupi hingga lutut. Cocok digunakan saat mendaki gunung "
+            "karena praktis, mudah dipakai, dan dapat melindungi tubuh serta tas dari hujan. "
+            "Bahan anti airnya membuat pendaki tetap kering dan nyaman meskipun hujan deras. "
+            "Poncho juga bisa difungsikan sebagai flysheet darurat untuk melindungi barang bawaan.",
+            style: GoogleFonts.istokWeb(
+              fontSize: 15,
+              height: 1.6,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+          const SizedBox(height: 30),
         ],
+      ),
+    );
+  }
+
+  // Widget untuk baris info dengan icon
+  Widget infoItem(IconData icon, String text) {
+    return Card(
+      elevation: 2,
+      shadowColor: Colors.black26,
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        leading: Icon(icon, color: const Color.fromARGB(255, 54, 69, 79)),
+        title: Text(
+          text,
+          style: GoogleFonts.istokWeb(
+            fontSize: 15,
+            color: Colors.black87,
+          ),
+        ),
       ),
     );
   }
