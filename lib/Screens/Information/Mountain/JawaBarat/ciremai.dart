@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class CiremaiNav extends StatelessWidget {
   const CiremaiNav({super.key});
@@ -67,7 +69,10 @@ class Ciremai extends StatelessWidget {
               infoItem(FontAwesomeIcons.route,
                   "Jalur Pendakian: Apuy, Linggarjati, Palutungan, Linggasana"),
               infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 8–12 jam"),
-              infoItem(FontAwesomeIcons.chartLine, "Tingkat Kesulitan: Sulit – Menengah"),
+              infoItem(FontAwesomeIcons.chartLine,
+                  "Tingkat Kesulitan: Sulit – Menengah"),
+              infoItem(FontAwesomeIcons.ticket,
+                  "Tiket Masuk: 7.500(Senin - Jum'at) / 15.000 (Sabtu - Minggu / Libur)"),
             ],
           ),
           const SizedBox(height: 20),
@@ -96,7 +101,48 @@ class Ciremai extends StatelessWidget {
             ),
             textAlign: TextAlign.justify,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
+
+          // Peta
+          Text(
+            "Peta Lokasi",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 300,
+            child: FlutterMap(
+              options: MapOptions(
+                initialCenter: LatLng(-6.892, 108.400), // Koordinat Gunung Ciremai
+                initialZoom: 13.0,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  subdomains: ['a', 'b', 'c'],
+                ),
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: LatLng(-6.892, 108.400),
+                      child: Column(
+                        children: [
+                          Icon(FontAwesomeIcons.mountain, color: Colors.red),
+                          Text("Ciremai")
+                        ]
+                      )
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

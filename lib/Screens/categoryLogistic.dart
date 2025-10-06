@@ -103,7 +103,7 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
       body: Column(
         children: [
           const SizedBox(height: 15),
-          // 🔍 Search
+          //  Search
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
@@ -124,7 +124,6 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
 
           const SizedBox(height: 10),
 
-          // 🏷️ Filter Chips
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -147,13 +146,12 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
 
           const SizedBox(height: 10),
 
-          // 📦 Grid Logistic
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 171 / 140, // ✅ sama persis ukuran card
+                childAspectRatio: 171 / 140, 
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
               ),
@@ -188,7 +186,7 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
                         ),
                       ),
 
-                      // 🖼️ Gambar
+                      // Gambar
                       Container(
                         width: 171,
                         height: 100,
@@ -212,7 +210,7 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
                           item["name"],
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 14, // ✅ sesuai contoh
+                            fontSize: 14, 
                             fontWeight: FontWeight.bold,
                           ),
                         ),

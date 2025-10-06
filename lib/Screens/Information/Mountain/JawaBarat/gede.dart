@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class GedeNav extends StatelessWidget {
   const GedeNav({super.key});
@@ -69,6 +71,8 @@ class Gede extends StatelessWidget {
               infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 6–8 jam"),
               infoItem(FontAwesomeIcons.chartLine,
                   "Tingkat Kesulitan: Menengah – Tinggi"),
+              infoItem(FontAwesomeIcons.ticket,
+                  "Tiket Masuk: 72.000(Senin - Jum'at) / 92.000 (Sabtu - Minggu / Libur)"),
             ],
           ),
           const SizedBox(height: 20),
@@ -99,7 +103,48 @@ class Gede extends StatelessWidget {
             ),
             textAlign: TextAlign.justify,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
+
+          // Peta
+          Text(
+            "Peta Lokasi",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 300,
+            child: FlutterMap(
+              options: MapOptions(
+                initialCenter: LatLng(-6.78, 106.97), // Koordinat Gunung Gede
+                initialZoom: 13.0,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  subdomains: ['a', 'b', 'c'],
+                ),
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: LatLng(-6.78, 106.97),
+                      child: Column(
+                        children: [
+                          Icon(FontAwesomeIcons.mountain, color: Colors.red),
+                          Text("Gede")
+                        ]
+                      )
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
