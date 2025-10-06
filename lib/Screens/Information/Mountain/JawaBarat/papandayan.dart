@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class PapandayanNav extends StatelessWidget {
   const PapandayanNav({super.key});
@@ -8,9 +10,9 @@ class PapandayanNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // background putih
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255), // charcoal
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
           "Gunung Papandayan",
           style: GoogleFonts.istokWeb(
@@ -68,6 +70,7 @@ class Papandayan extends StatelessWidget {
               infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 4–5 jam"),
               infoItem(FontAwesomeIcons.chartLine,
                   "Tingkat Kesulitan: Mudah – Menengah"),
+              infoItem(FontAwesomeIcons.ticket, "Tiket Masuk: 30.000 - 40.000"),
             ],
           ),
           const SizedBox(height: 20),
@@ -97,13 +100,52 @@ class Papandayan extends StatelessWidget {
             ),
             textAlign: TextAlign.justify,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
+
+          // Peta
+          Text(
+            "Peta Lokasi",
+            style: GoogleFonts.istokWeb(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: const Color.fromARGB(255, 54, 69, 79),
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 300,
+            child: FlutterMap(
+              options: MapOptions(
+                initialCenter:
+                    LatLng(-7.32, 107.73), // Koordinat Gunung Papandayan
+                initialZoom: 13.0,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  subdomains: ['a', 'b', 'c'],
+                ),
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(-7.32, 107.73),
+                        child: Column(children: [
+                          Icon(FontAwesomeIcons.mountain,
+                              color: const Color.fromARGB(255, 54, 69, 79)),
+                          Text("Papandayan")
+                        ])),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,

@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:montugo/Screens/Information/Mountain/JawaTengah/merapi.dart';
+import 'package:montugo/Screens/Information/Mountain/JawaTengah/sindoro.dart';
+import 'package:montugo/Screens/Information/Mountain/JawaTimur/bromo.dart';
 
 class CarouselControllerWidget extends StatefulWidget {
   const CarouselControllerWidget({super.key});
@@ -30,6 +33,24 @@ class _CarouselControllerWidgetState extends State<CarouselControllerWidget> {
           "https://media.istockphoto.com/id/494386476/id/foto/matahari-terbit-di-gunung-bromo.jpg?b=1&s=612x612&w=0&k=20&c=oZdFwq-jJ1HoMcxzO-IyXbvbo_nKkKQfk9aWs2LbrsI="
     },
   ];
+
+  void navigateToMountainDetail(String mountainName) {
+    Widget? destination;
+    if (mountainName == "MT. Sindoro") {
+      destination = const SindoroNav();
+    } else if (mountainName == "MT. Merapi") {
+      destination = const MerapiNav();
+    } else if (mountainName == "MT. Bromo") {
+      destination = const BromoNav();
+    }
+
+    if (destination != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => destination!),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +116,7 @@ class _CarouselControllerWidgetState extends State<CarouselControllerWidget> {
                           Text(
                             mountain["height"]!,
                             style: const TextStyle(
-                              color: Colors.white70,
+                              color: Colors.amber,
                               fontSize: 13,
                             ),
                           ),
@@ -117,13 +138,7 @@ class _CarouselControllerWidgetState extends State<CarouselControllerWidget> {
                                 ),
                               ),
                               onPressed: () {
-                                // Nanti bisa diganti Navigator.push
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        "Detail ${mountain["name"]} ditekan"),
-                                  ),
-                                );
+                                navigateToMountainDetail(mountain["name"]!);
                               },
                               child: const Text("See details"),
                             ),

@@ -25,7 +25,7 @@ class _CategoryequipmentState extends State<Categoryequipment> {
     {
       "title": "Jaket Gunung",
       "image": "assets/images/equipmentImage/Gorpcore.jpg",
-      "page": const JaketGunung(),
+      "page": const JaketGunungNav(),
     },
     {
       "title": "Tas Carrier",
