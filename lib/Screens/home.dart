@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:montugo/Mechanic/UI/Carousel/carouselController.dart';
+import 'package:montugo/Mechanic/UI/Carousel/carousel_controller.dart';
 import 'package:montugo/Screens/Information/Equipment/carrierBag.dart';
 import 'package:montugo/Screens/Information/Equipment/gorpcore.dart';
 import 'package:montugo/Screens/Information/Equipment/shoes.dart';

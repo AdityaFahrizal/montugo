@@ -116,7 +116,7 @@ class Semeru extends StatelessWidget {
           SizedBox(
             height: 300,
             child: FlutterMap(
-              options: MapOptions(
+              options: const MapOptions(
                 initialCenter:
                     LatLng(-8.108, 112.923), // Koordinat Gunung Semeru
                 initialZoom: 13.0,
@@ -125,11 +125,11 @@ class Semeru extends StatelessWidget {
                 TileLayer(
                   urlTemplate:
                       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: ['a', 'b', 'c'],
+                  subdomains: const ['a', 'b', 'c'],
                 ),
-                MarkerLayer(
+                const MarkerLayer(
                   markers: [
-                    Marker(
+                     Marker(
                         width: 80.0,
                         height: 80.0,
                         point: LatLng(-8.108, 112.923),

@@ -115,7 +115,7 @@ class Papandayan extends StatelessWidget {
           SizedBox(
             height: 300,
             child: FlutterMap(
-              options: MapOptions(
+              options: const MapOptions(
                 initialCenter:
                     LatLng(-7.32, 107.73), // Koordinat Gunung Papandayan
                 initialZoom: 13.0,
@@ -123,9 +123,9 @@ class Papandayan extends StatelessWidget {
               children: [
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: ['a', 'b', 'c'],
+                  subdomains: const ['a', 'b', 'c'],
                 ),
-                MarkerLayer(
+                const MarkerLayer(
                   markers: [
                     Marker(
                         width: 80.0,
@@ -133,7 +133,7 @@ class Papandayan extends StatelessWidget {
                         point: LatLng(-7.32, 107.73),
                         child: Column(children: [
                           Icon(FontAwesomeIcons.mountain,
-                              color: const Color.fromARGB(255, 54, 69, 79)),
+                              color: Color.fromARGB(255, 54, 69, 79)),
                           Text("Papandayan")
                         ])),
                   ],

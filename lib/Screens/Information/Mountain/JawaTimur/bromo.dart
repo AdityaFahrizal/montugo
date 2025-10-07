@@ -117,16 +117,16 @@ class Bromo extends StatelessWidget {
           SizedBox(
             height: 300,
             child: FlutterMap(
-              options: MapOptions(
+              options: const MapOptions(
                 initialCenter: LatLng(-7.942, 112.953), // Koordinat Gunung Bromo
                 initialZoom: 13.0,
               ),
               children: [
                 TileLayer(
                   urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: ['a', 'b', 'c'],
+                  subdomains: const ['a', 'b', 'c'],
                 ),
-                MarkerLayer(
+                const MarkerLayer(
                   markers: [
                     Marker(
                       width: 80.0,
