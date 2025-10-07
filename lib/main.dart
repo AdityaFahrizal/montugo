@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:montugo/Mechanic/UI/NavigationBar/custom_bottom_navbar.dart';
 import 'package:montugo/Screens/Catalog/category_catalog.dart';
 import 'package:montugo/Screens/FaQ/faq.dart';
-import 'package:montugo/Screens/Favorite/favorite.dart';
+// import 'package:montugo/Screens/Favorite/favorite.dart';
 import 'package:montugo/Screens/home.dart';
 
 void main() async {
@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   final List<Widget> _pages = const [
     Home(),
     CategoryCatalog(),
-    Favorite(),
+    // Favorite(),
     FaqPage(),
   ];
 

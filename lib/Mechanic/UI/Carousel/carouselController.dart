@@ -156,7 +156,7 @@ class _CarouselControllerWidgetState extends State<CarouselControllerWidget> {
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 5),
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
-            aspectRatio: 16 / 9,
+            aspectRatio: 1.91 / 1,
             viewportFraction: 0.8,
             enlargeCenterPage: true,
           ),
