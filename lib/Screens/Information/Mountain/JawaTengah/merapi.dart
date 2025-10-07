@@ -115,7 +115,7 @@ class Merapi extends StatelessWidget {
           SizedBox(
             height: 300,
             child: FlutterMap(
-              options: MapOptions(
+              options: const MapOptions(
                 initialCenter:
                     LatLng(-7.541, 110.446), // Koordinat Gunung Merapi
                 initialZoom: 13.0,
@@ -124,9 +124,9 @@ class Merapi extends StatelessWidget {
                 TileLayer(
                   urlTemplate:
                       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: ['a', 'b', 'c'],
+                  subdomains: const ['a', 'b', 'c'],
                 ),
-                MarkerLayer(
+                const MarkerLayer(
                   markers: [
                     Marker(
                         width: 80.0,
