@@ -28,10 +28,10 @@ class CustomBottomNavbar extends StatelessWidget {
           icon: Icon(Icons.shopping_bag),
           label: "Catalog",
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: "Favorit",
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.favorite),
+        //   label: "Favorit",
+        // ),
         BottomNavigationBarItem(
           icon: Icon(Icons.info),
           label: "Informasi",
