@@ -124,22 +124,21 @@ class Gede extends StatelessWidget {
               ),
               children: [
                 TileLayer(
-                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  urlTemplate:
+                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   subdomains: const ['a', 'b', 'c'],
                 ),
                 const MarkerLayer(
                   markers: [
                     Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(-6.78, 106.97),
-                      child: Column(
-                        children: [
-                          Icon(FontAwesomeIcons.mountain, color: Colors.red),
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(-6.78, 106.97),
+                        child: Column(children: [
+                          Icon(FontAwesomeIcons.mountain,
+                              color: Color.fromARGB(255, 54, 69, 79)),
                           Text("Gede")
-                        ]
-                      )
-                    ),
+                        ])),
                   ],
                 ),
               ],

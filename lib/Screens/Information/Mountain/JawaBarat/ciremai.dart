@@ -117,27 +117,26 @@ class Ciremai extends StatelessWidget {
             height: 300,
             child: FlutterMap(
               options: const MapOptions(
-                initialCenter: LatLng(-6.892, 108.400), // Koordinat Gunung Ciremai
+                initialCenter: LatLng(-6.892, 108.400),
                 initialZoom: 13.0,
               ),
               children: [
                 TileLayer(
-                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  urlTemplate:
+                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   subdomains: const ['a', 'b', 'c'],
                 ),
                 const MarkerLayer(
                   markers: [
                     Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(-6.892, 108.400),
-                      child: Column(
-                        children: [
-                          Icon(FontAwesomeIcons.mountain, color: Colors.red),
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(-6.892, 108.400),
+                        child: Column(children: [
+                          Icon(FontAwesomeIcons.mountain,
+                              color: Color.fromARGB(255, 54, 69, 79)),
                           Text("Ciremai")
-                        ]
-                      )
-                    ),
+                        ])),
                   ],
                 ),
               ],
@@ -148,7 +147,6 @@ class Ciremai extends StatelessWidget {
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,

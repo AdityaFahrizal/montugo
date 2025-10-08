@@ -133,7 +133,8 @@ class Merapi extends StatelessWidget {
                         height: 80.0,
                         point: LatLng(-7.541, 110.446),
                         child: Column(children: [
-                          Icon(FontAwesomeIcons.mountain, color: Colors.red),
+                          Icon(FontAwesomeIcons.mountain,
+                              color: Color.fromARGB(255, 54, 69, 79)),
                           Text("Merapi")
                         ])),
                   ],

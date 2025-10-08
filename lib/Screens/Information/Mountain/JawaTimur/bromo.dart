@@ -70,9 +70,9 @@ class Bromo extends StatelessWidget {
                   "Jalur Pendakian: Cemoro Lawang, Wonokitri, Jemplang"),
               infoItem(FontAwesomeIcons.clock,
                   "Waktu Tempuh: ± 1–2 jam (dari basecamp)"),
-              infoItem(FontAwesomeIcons.chartLine,
-                  "Tingkat Kesulitan: Mudah"),
-              infoItem(FontAwesomeIcons.ticket, "Tiket Masuk: 54.000(Senin - Jum'at) / 79.000 (Sabtu - Minggu / Libur)"),
+              infoItem(FontAwesomeIcons.chartLine, "Tingkat Kesulitan: Mudah"),
+              infoItem(FontAwesomeIcons.ticket,
+                  "Tiket Masuk: 54.000(Senin - Jum'at) / 79.000 (Sabtu - Minggu / Libur)"),
             ],
           ),
           const SizedBox(height: 20),
@@ -102,7 +102,7 @@ class Bromo extends StatelessWidget {
             ),
             textAlign: TextAlign.justify,
           ),
-           const SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Peta
           Text(
@@ -118,27 +118,27 @@ class Bromo extends StatelessWidget {
             height: 300,
             child: FlutterMap(
               options: const MapOptions(
-                initialCenter: LatLng(-7.942, 112.953), // Koordinat Gunung Bromo
+                initialCenter:
+                    LatLng(-7.942, 112.953), // Koordinat Gunung Bromo
                 initialZoom: 13.0,
               ),
               children: [
                 TileLayer(
-                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  urlTemplate:
+                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   subdomains: const ['a', 'b', 'c'],
                 ),
                 const MarkerLayer(
                   markers: [
                     Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(-7.942, 112.953),
-                      child: Column(
-                        children: [
-                          Icon(FontAwesomeIcons.mountain, color: Colors.red),
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(-7.942, 112.953),
+                        child: Column(children: [
+                          Icon(FontAwesomeIcons.mountain,
+                              color: Color.fromARGB(255, 54, 69, 79)),
                           Text("Bromo")
-                        ]
-                      )
-                    ),
+                        ])),
                   ],
                 ),
               ],

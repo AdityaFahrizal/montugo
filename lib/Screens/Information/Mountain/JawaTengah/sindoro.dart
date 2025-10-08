@@ -67,7 +67,8 @@ class Sindoro extends StatelessWidget {
               infoItem(FontAwesomeIcons.route,
                   "Jalur Pendakian: Kledung, Alang-alang Sewu, Bansari"),
               infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 6–8 jam"),
-              infoItem(FontAwesomeIcons.chartLine, "Tingkat Kesulitan: Menengah – Sulit"),
+              infoItem(FontAwesomeIcons.chartLine,
+                  "Tingkat Kesulitan: Menengah – Sulit"),
               infoItem(FontAwesomeIcons.ticket, "Tiket Masuk: 30.000 - 35.000"),
             ],
           ),
@@ -113,27 +114,27 @@ class Sindoro extends StatelessWidget {
             height: 300,
             child: FlutterMap(
               options: const MapOptions(
-                initialCenter: LatLng(-7.295, 109.993), // Koordinat Gunung Sindoro
+                initialCenter:
+                    LatLng(-7.295, 109.993), // Koordinat Gunung Sindoro
                 initialZoom: 13.0,
               ),
               children: [
                 TileLayer(
-                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  urlTemplate:
+                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   subdomains: const ['a', 'b', 'c'],
                 ),
                 const MarkerLayer(
                   markers: [
                     Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(-7.295, 109.993),
-                      child: Column(
-                        children: [
-                          Icon(FontAwesomeIcons.mountain, color: Colors.red),
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(-7.295, 109.993),
+                        child: Column(children: [
+                          Icon(FontAwesomeIcons.mountain,
+                              color: Color.fromARGB(255, 54, 69, 79)),
                           Text("Sindoro")
-                        ]
-                      )
-                    ),
+                        ])),
                   ],
                 ),
               ],

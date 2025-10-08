@@ -129,12 +129,13 @@ class Semeru extends StatelessWidget {
                 ),
                 const MarkerLayer(
                   markers: [
-                     Marker(
+                    Marker(
                         width: 80.0,
                         height: 80.0,
                         point: LatLng(-8.108, 112.923),
                         child: Column(children: [
-                          Icon(FontAwesomeIcons.mountain, color: Colors.red),
+                          Icon(FontAwesomeIcons.mountain,
+                              color: Color.fromARGB(255, 54, 69, 79)),
                           Text("Semeru")
                         ])),
                   ],
