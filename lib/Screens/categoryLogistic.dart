@@ -202,7 +202,7 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
                         ),
                       ),
 
-                      // 📝 Nama item
+                      //  Nama item
                       Positioned(
                         top: 110,
                         left: 12,
@@ -226,7 +226,7 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
     );
   }
 
-  // 🔹 Widget Filter Chip
+  //  Widget Filter Chip
   Widget _buildFilterChip(String label) {
     final isSelected = selectedFilter == label;
     return ChoiceChip(

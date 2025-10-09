@@ -133,7 +133,7 @@ class _KategoriGunungState extends State<KategoriGunung> {
           children: [
             const SizedBox(height: 10),
 
-            // 🔎 SearchBar
+            //  SearchBar
             Container(
               height: 48,
               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -255,7 +255,7 @@ class _KategoriGunungState extends State<KategoriGunung> {
 
             const SizedBox(height: 20),
 
-            // 📌 List Gunung
+            //  List Gunung
             Column(
               children: hasilPencarian.map((item) {
                 return buildMountainCard(
@@ -278,7 +278,7 @@ class _KategoriGunungState extends State<KategoriGunung> {
     );
   }
 
-  // 🔹 Card Gunung
+  // Card Gunung
   Widget buildMountainCard(
     BuildContext context, {
     required String title,

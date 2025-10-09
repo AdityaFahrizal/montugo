@@ -62,7 +62,7 @@ class _CategoryequipmentState extends State<Categoryequipment> {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            // 🔎 Search Bar
+
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -88,7 +88,6 @@ class _CategoryequipmentState extends State<Categoryequipment> {
             ),
             const SizedBox(height: 20),
 
-            // 📦 Grid Items
             filteredItems.isNotEmpty
                 ? GridView.builder(
                     shrinkWrap: true,
@@ -129,7 +128,7 @@ class _CategoryequipmentState extends State<Categoryequipment> {
                                 ],
                               ),
                             ),
-                            // 🖼️ Gambar
+  
                             Container(
                               height: 100,
                               decoration: BoxDecoration(
@@ -143,7 +142,7 @@ class _CategoryequipmentState extends State<Categoryequipment> {
                                 ),
                               ),
                             ),
-                            // 📝 Text
+
                             Positioned(
                               top: 110,
                               left: 12,

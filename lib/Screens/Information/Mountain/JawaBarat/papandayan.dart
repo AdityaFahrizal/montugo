@@ -23,7 +23,7 @@ class PapandayanNav extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(onPressed: () => _editPop, icon: const Icon(Icons.edit))
+          IconButton(onPressed: () => _editPop(context), icon: const Icon(Icons.edit))
         ],
       ),
       body: const Papandayan(),
