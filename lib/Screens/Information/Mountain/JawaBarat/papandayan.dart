@@ -23,10 +23,7 @@ class PapandayanNav extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () => _showEditSheet(context),
-          ),
+          IconButton(onPressed: () => _editPop, icon: const Icon(Icons.edit))
         ],
       ),
       body: const Papandayan(),
@@ -71,7 +68,6 @@ class _PapandayanState extends State<Papandayan> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.asset(
-                  data['imageUrl'] ??
                       'assets/images/mountainImage/JawaBaratImage/Papandayan.jpg',
                   height: 220,
                   width: double.infinity,
@@ -95,7 +91,7 @@ class _PapandayanState extends State<Papandayan> {
               Column(
                 children: [
                   infoItem(FontAwesomeIcons.sign,
-                      "Status: ${data['penanda'] ?? '-'}"),
+                      "Status: ${data['status'] ?? '-'}"),
                   infoItem(FontAwesomeIcons.mapMarkerAlt,
                       "Lokasi: ${data['lokasi'] ?? '-'}"),
                   infoItem(FontAwesomeIcons.mountain,
@@ -201,7 +197,7 @@ class _PapandayanState extends State<Papandayan> {
   }
 }
 
-void _showEditSheet(BuildContext context) {
+void _editPop (BuildContext context) {
   final DocumentReference papandayanRef =
       FirebaseFirestore.instance.collection('gunung').doc('papandayan');
 
@@ -214,9 +210,10 @@ void _showEditSheet(BuildContext context) {
   final tiketController = TextEditingController();
   final deskripsiController = TextEditingController();
 
-  papandayanRef.get().then((doc) {
-    if (doc.exists) {
-      var data = doc.data() as Map<String, dynamic>;
+  papandayanRef.get().then((Doc){
+    if (Doc.exists) {
+      final data = Doc.data() as Map<String, dynamic>;
+      statusController.text = data['status'] ?? '';
       lokasiController.text = data['lokasi'] ?? '';
       ketinggianController.text = data['ketinggian'] ?? '';
       jalurController.text = data['jalur'] ?? '';
@@ -227,7 +224,7 @@ void _showEditSheet(BuildContext context) {
     }
   });
 
-  showModalBottomSheet(
+showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     builder: (context) {
