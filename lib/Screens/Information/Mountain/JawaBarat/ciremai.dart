@@ -22,12 +22,12 @@ class CiremaiNav extends StatelessWidget {
               color: const Color.fromARGB(255, 0, 0, 0),
             ),
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () => _editPop(context),
-            ),
-          ]),
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(Icons.edit),
+          //     onPressed: () => _editPop(context),
+          //   ),
+          ),
       body: const Ciremai(),
     );
   }
@@ -79,7 +79,7 @@ class _CiremaiState extends State<Ciremai> {
               const SizedBox(height: 20),
               // Judul
               Text(
-                "Gunung Ciremai",
+                data['nama'] ?? '-',
                 style: GoogleFonts.istokWeb(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
@@ -196,91 +196,3 @@ class _CiremaiState extends State<Ciremai> {
   }
 }
 
-void _editPop(BuildContext context) {
-  final DocumentReference ciremaiRef =
-      FirebaseFirestore.instance.collection('gunung').doc('ciremai');
-
-  final statusController = TextEditingController();
-  final lokasiController = TextEditingController();
-  final ketinggianController = TextEditingController();
-  final jalurController = TextEditingController();
-  final waktuController = TextEditingController();
-  final kesulitanController = TextEditingController();
-  final tiketController = TextEditingController();
-  final deskripsiController = TextEditingController();
-
-  ciremaiRef.get().then((doc) {
-    if (doc.exists) {
-      final data = doc.data() as Map<String, dynamic>;
-      statusController.text = doc['status'] ?? ' ';
-      lokasiController.text = doc['lokasi'] ?? '';
-      ketinggianController.text = doc['ketinggian'] ?? '';
-      jalurController.text = doc['jalur'] ?? '';
-      waktuController.text = doc['waktu'] ?? '';
-      kesulitanController.text = doc['kesulitan'] ?? '';
-      tiketController.text = doc['tiket'] ?? '';
-      deskripsiController.text = doc['deskripsi'] ?? '';
-    }
-  });
-
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (context) {
-      return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-                controller: statusController,
-                decoration: const InputDecoration(labelText: 'Status')),
-            TextField(
-                controller: lokasiController,
-                decoration: const InputDecoration(labelText: 'Lokasi')),
-            TextField(
-                controller: ketinggianController,
-                decoration: const InputDecoration(labelText: 'Ketinggian')),
-            TextField(
-                controller: jalurController,
-                decoration: const InputDecoration(labelText: 'Jalur')),
-            TextField(
-                controller: waktuController,
-                decoration: const InputDecoration(labelText: 'Waktu Tempuh')),
-            TextField(
-                controller: kesulitanController,
-                decoration:
-                    const InputDecoration(labelText: 'Tingkat Kesulitan')),
-            TextField(
-                controller: tiketController,
-                decoration: const InputDecoration(labelText: 'Tiket Masuk')),
-            TextField(
-                controller: deskripsiController,
-                decoration: const InputDecoration(labelText: 'Deskripsi')),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    ciremaiRef.update({
-                      'status': statusController.text,
-                      'lokasi': lokasiController.text,
-                      'ketinggian': ketinggianController.text,
-                      'jalur': jalurController.text,
-                      'waktu': waktuController.text,
-                      'kesulitan': kesulitanController.text,
-                      'tiket': tiketController.text,
-                      'deskripsi': deskripsiController.text,
-                    }).then((_) => Navigator.pop(context));
-                  },
-                  child: const Text('Update'),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}

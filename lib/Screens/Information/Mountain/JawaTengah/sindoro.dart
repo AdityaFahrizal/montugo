@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SindoroNav extends StatelessWidget {
   const SindoroNav({super.key});
@@ -27,125 +28,149 @@ class SindoroNav extends StatelessWidget {
   }
 }
 
-class Sindoro extends StatelessWidget {
+class Sindoro extends StatefulWidget {
   const Sindoro({super.key});
 
   @override
+  _SindoroState createState() => _SindoroState();
+}
+
+class _SindoroState extends State<Sindoro> {
+  final DocumentReference SindoroRef =
+      FirebaseFirestore.instance.collection('gunung').doc('sindoro');
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar Utama
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/mountainImage/JawaTengahImage/Sindoroo.jpg',
-              height: 220,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: SindoroRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        ;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('Data tidak ditemukan.'));
+        }
 
-          Text(
-            "Gunung Sindoro",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          Column(
+        var data = snapshot.data!.data() as Map<String, dynamic>;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              infoItem(FontAwesomeIcons.mapMarkerAlt,
-                  "Lokasi: Wonosobo & Temanggung, Jawa Tengah"),
-              infoItem(FontAwesomeIcons.mountain, "Ketinggian: 3.150 mdpl"),
-              infoItem(FontAwesomeIcons.route,
-                  "Jalur Pendakian: Kledung, Alang-alang Sewu, Bansari"),
-              infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 6–8 jam"),
-              infoItem(FontAwesomeIcons.chartLine,
-                  "Tingkat Kesulitan: Menengah – Sulit"),
-              infoItem(FontAwesomeIcons.ticket, "Tiket Masuk: 30.000 - 35.000"),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // Deskripsi
-          Text(
-            "Deskripsi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Gunung Sindoro merupakan gunung berapi aktif yang berdiri megah berdampingan dengan Gunung Sumbing. "
-            "Dengan ketinggian 3.150 mdpl, Sindoro menawarkan panorama alam yang memukau, termasuk lautan awan "
-            "dan sunrise yang terkenal indah. Jalur Kledung menjadi jalur favorit karena aksesnya mudah dan trek "
-            "yang jelas, meskipun tetap menantang dengan tanjakan terjal menjelang puncak. "
-            "Di puncaknya, pendaki bisa menyaksikan kawah luas dengan aktivitas vulkanik berupa asap belerang, "
-            "serta pemandangan gunung-gunung lain di sekitarnya seperti Merbabu, Merapi, dan Slamet.",
-            style: GoogleFonts.istokWeb(
-              fontSize: 15,
-              height: 1.6,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 20),
-
-          // Peta
-          Text(
-            "Peta Lokasi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            height: 300,
-            child: FlutterMap(
-              options: const MapOptions(
-                initialCenter:
-                    LatLng(-7.295, 109.993), // Koordinat Gunung Sindoro
-                initialZoom: 13.0,
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate:
-                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: const ['a', 'b', 'c'],
+              // Gambar Utama
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  data['imageUrl'] ??
+                      'assets/images/mountainImage/JawaTengahImage/Sindoroo.jpg',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                const MarkerLayer(
-                  markers: [
-                    Marker(
-                        width: 80.0,
-                        height: 80.0,
-                        point: LatLng(-7.295, 109.993),
-                        child: Column(children: [
-                          Icon(FontAwesomeIcons.mountain,
-                              color: Color.fromARGB(255, 54, 69, 79)),
-                          Text("Sindoro")
-                        ])),
+              ),
+              const SizedBox(height: 20),
+              // Judul
+              Text(
+                data['nama'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              Column(
+                children: [
+                  infoItem(FontAwesomeIcons.sign,
+                      "Status: ${data['status'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mapMarkerAlt,
+                      "Lokasi: ${data['lokasi'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mountain,
+                      "Ketinggian: ${data['ketinggian'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.route,
+                      "Jalur Pendakian: ${data['jalur'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.clock,
+                      "Waktu Tempuh: ${data['waktu'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.chartLine,
+                      "Tingkat Kesulitan: ${data['kesulitan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.ticket,
+                      "Tiket Masuk: ${data['tiket'] ?? '-'}"),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Deskripsi
+              Text(
+                "Deskripsi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                data['deskripsi'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(height: 20),
+
+              Text(
+                "Peta Lokasi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 300,
+                child: FlutterMap(
+                  options: MapOptions(
+                    initialCenter: LatLng(data['latitude'] ?? -7.295,
+                        data['longitude'] ?? 109.993),
+                    initialZoom: 13.0,
+                  ),
+                  children: [
+                    TileLayer(
+                      urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      subdomains: const ['a', 'b', 'c'],
+                    ),
+                    MarkerLayer(
+                      markers: [
+                        Marker(
+                            width: 80.0,
+                            height: 80.0,
+                            point: LatLng(data['latitude'] ?? -7.295,
+                                data['longitude'] ?? 109.993),
+                            child: const Column(children: [
+                              Icon(FontAwesomeIcons.mountain,
+                                  color: Color.fromARGB(255, 54, 69, 79)),
+                              Text("Gede")
+                            ])),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,
@@ -165,3 +190,4 @@ class Sindoro extends StatelessWidget {
     );
   }
 }
+

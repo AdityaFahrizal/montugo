@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BromoNav extends StatelessWidget {
   const BromoNav({super.key});
@@ -10,9 +11,9 @@ class BromoNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // background putih
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255), // putih
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
           "Gunung Bromo",
           style: GoogleFonts.istokWeb(
@@ -27,129 +28,149 @@ class BromoNav extends StatelessWidget {
   }
 }
 
-class Bromo extends StatelessWidget {
+class Bromo extends StatefulWidget {
   const Bromo({super.key});
 
   @override
+  _BromoState createState() => _BromoState();
+}
+
+class _BromoState extends State<Bromo> {
+  final DocumentReference BromoRef =
+      FirebaseFirestore.instance.collection('gunung').doc('bromo');
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar Utama
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/mountainImage/JawaTimurImage/bromo.jpg',
-              height: 220,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: BromoRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        ;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('Data tidak ditemukan.'));
+        }
 
-          // Judul
-          Text(
-            "Gunung Bromo",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Informasi Ringkas
-          Column(
+        var data = snapshot.data!.data() as Map<String, dynamic>;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              infoItem(FontAwesomeIcons.mapMarkerAlt,
-                  "Lokasi: Probolinggo–Pasuruan–Lumajang–Malang, Jawa Timur"),
-              infoItem(FontAwesomeIcons.mountain, "Ketinggian: 2.329 mdpl"),
-              infoItem(FontAwesomeIcons.route,
-                  "Jalur Pendakian: Cemoro Lawang, Wonokitri, Jemplang"),
-              infoItem(FontAwesomeIcons.clock,
-                  "Waktu Tempuh: ± 1–2 jam (dari basecamp)"),
-              infoItem(FontAwesomeIcons.chartLine, "Tingkat Kesulitan: Mudah"),
-              infoItem(FontAwesomeIcons.ticket,
-                  "Tiket Masuk: 54.000(Senin - Jum'at) / 79.000 (Sabtu - Minggu / Libur)"),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // Deskripsi
-          Text(
-            "Deskripsi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Gunung Bromo merupakan salah satu destinasi wisata gunung paling terkenal di Indonesia, "
-            "terletak di kawasan Taman Nasional Bromo Tengger Semeru. Gunung ini terkenal dengan kawah "
-            "aktifnya yang mengeluarkan asap belerang, serta panorama Lautan Pasir yang luas. Pendaki dan "
-            "wisatawan biasanya datang untuk menikmati keindahan matahari terbit dari Penanjakan, "
-            "yang menawarkan pemandangan menakjubkan Gunung Semeru, Gunung Batok, dan Bromo sekaligus. "
-            "Jalur menuju puncak Bromo relatif mudah, sehingga lebih populer sebagai wisata alam daripada "
-            "pendakian ekstrem. Suasana khas suku Tengger juga menambah daya tarik budaya di sekitar Bromo.",
-            style: GoogleFonts.istokWeb(
-              fontSize: 15,
-              height: 1.6,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 20),
-
-          // Peta
-          Text(
-            "Peta Lokasi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            height: 300,
-            child: FlutterMap(
-              options: const MapOptions(
-                initialCenter:
-                    LatLng(-7.942, 112.953), // Koordinat Gunung Bromo
-                initialZoom: 13.0,
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate:
-                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: const ['a', 'b', 'c'],
+              // Gambar Utama
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  data['imageUrl'] ??
+                      'assets/images/mountainImage/JawaTimurImage/bromo.jpg',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                const MarkerLayer(
-                  markers: [
-                    Marker(
-                        width: 80.0,
-                        height: 80.0,
-                        point: LatLng(-7.942, 112.953),
-                        child: Column(children: [
-                          Icon(FontAwesomeIcons.mountain,
-                              color: Color.fromARGB(255, 54, 69, 79)),
-                          Text("Bromo")
-                        ])),
+              ),
+              const SizedBox(height: 20),
+              // Judul
+              Text(
+                data['nama'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              Column(
+                children: [
+                  infoItem(FontAwesomeIcons.sign,
+                      "Status: ${data['status'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mapMarkerAlt,
+                      "Lokasi: ${data['lokasi'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mountain,
+                      "Ketinggian: ${data['ketinggian'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.route,
+                      "Jalur Pendakian: ${data['jalur'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.clock,
+                      "Waktu Tempuh: ${data['waktu'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.chartLine,
+                      "Tingkat Kesulitan: ${data['kesulitan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.ticket,
+                      "Tiket Masuk: ${data['tiket'] ?? '-'}"),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Deskripsi
+              Text(
+                "Deskripsi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                data['deskripsi'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(height: 20),
+
+              Text(
+                "Peta Lokasi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 300,
+                child: FlutterMap(
+                  options: MapOptions(
+                    initialCenter: LatLng(data['latitude'] ?? -7.942,
+                        data['longitude'] ?? 112.953),
+                    initialZoom: 13.0,
+                  ),
+                  children: [
+                    TileLayer(
+                      urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      subdomains: const ['a', 'b', 'c'],
+                    ),
+                    MarkerLayer(
+                      markers: [
+                        Marker(
+                            width: 80.0,
+                            height: 80.0,
+                            point: LatLng(data['latitude'] ?? -7.942,
+                                data['longitude'] ?? 112.953),
+                            child: const Column(children: [
+                              Icon(FontAwesomeIcons.mountain,
+                                  color: Color.fromARGB(255, 54, 69, 79)),
+                              Text("Bromo")
+                            ])),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,

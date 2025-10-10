@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MerapiNav extends StatelessWidget {
   const MerapiNav({super.key});
@@ -27,127 +28,149 @@ class MerapiNav extends StatelessWidget {
   }
 }
 
-class Merapi extends StatelessWidget {
+class Merapi extends StatefulWidget {
   const Merapi({super.key});
 
   @override
+  _MerapiState createState() => _MerapiState();
+}
+
+class _MerapiState extends State<Merapi> {
+  final DocumentReference MerapiRef =
+      FirebaseFirestore.instance.collection('gunung').doc('merapi');
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar Utama
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/mountainImage/JawaTengahImage/merapii.jpg',
-              height: 220,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: MerapiRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        ;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('Data tidak ditemukan.'));
+        }
 
-          // Judul
-          Text(
-            "Gunung Merapi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Informasi Ringkas
-          Column(
+        var data = snapshot.data!.data() as Map<String, dynamic>;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              infoItem(FontAwesomeIcons.mapMarkerAlt,
-                  "Lokasi: Sleman (DIY) & Magelang, Boyolali, Klaten (Jawa Tengah)"),
-              infoItem(FontAwesomeIcons.mountain, "Ketinggian: 2.930 mdpl"),
-              infoItem(FontAwesomeIcons.route,
-                  "Jalur Pendakian: Selo, Babadan, Kaliurang"),
-              infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ± 4–6 jam"),
-              infoItem(FontAwesomeIcons.chartLine,
-                  "Tingkat Kesulitan: Menengah – Sulit"),
-              infoItem(FontAwesomeIcons.ticket, "Tiket Masuk: 16.000"),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // Deskripsi
-          Text(
-            "Deskripsi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Gunung Merapi adalah salah satu gunung berapi paling aktif di Indonesia dan dunia, "
-            "dengan ketinggian sekitar 2.930 mdpl. Merapi terkenal karena aktivitas vulkaniknya yang tinggi "
-            "dan keindahan panorama dari puncaknya. Jalur Selo menjadi jalur favorit para pendaki karena aksesnya mudah "
-            "dan jalurnya relatif jelas. Dari puncak Merapi, pendaki dapat menyaksikan pemandangan gunung-gunung lain "
-            "seperti Merbabu, Sumbing, dan Sindoro. Meski jalurnya tidak terlalu panjang, medan curam dan kondisi cuaca "
-            "yang cepat berubah membuat pendakian Merapi tetap menantang dan membutuhkan kewaspadaan tinggi.",
-            style: GoogleFonts.istokWeb(
-              fontSize: 15,
-              height: 1.6,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 20),
-
-          // Peta
-          Text(
-            "Peta Lokasi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            height: 300,
-            child: FlutterMap(
-              options: const MapOptions(
-                initialCenter:
-                    LatLng(-7.541, 110.446), // Koordinat Gunung Merapi
-                initialZoom: 13.0,
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate:
-                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: const ['a', 'b', 'c'],
+              // Gambar Utama
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  data['imageUrl'] ??
+                      'assets/images/mountainImage/JawaTengahImage/merapii.jpg',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                const MarkerLayer(
-                  markers: [
-                    Marker(
-                        width: 80.0,
-                        height: 80.0,
-                        point: LatLng(-7.541, 110.446),
-                        child: Column(children: [
-                          Icon(FontAwesomeIcons.mountain,
-                              color: Color.fromARGB(255, 54, 69, 79)),
-                          Text("Merapi")
-                        ])),
+              ),
+              const SizedBox(height: 20),
+              // Judul
+              Text(
+                data['nama'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              Column(
+                children: [
+                  infoItem(FontAwesomeIcons.sign,
+                      "Status: ${data['status'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mapMarkerAlt,
+                      "Lokasi: ${data['lokasi'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mountain,
+                      "Ketinggian: ${data['ketinggian'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.route,
+                      "Jalur Pendakian: ${data['jalur'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.clock,
+                      "Waktu Tempuh: ${data['waktu'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.chartLine,
+                      "Tingkat Kesulitan: ${data['kesulitan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.ticket,
+                      "Tiket Masuk: ${data['tiket'] ?? '-'}"),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Deskripsi
+              Text(
+                "Deskripsi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                data['deskripsi'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(height: 20),
+
+              Text(
+                "Peta Lokasi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 300,
+                child: FlutterMap(
+                  options: MapOptions(
+                    initialCenter: LatLng(data['latitude'] ?? -7.541,
+                        data['longitude'] ?? 110.446),
+                    initialZoom: 13.0,
+                  ),
+                  children: [
+                    TileLayer(
+                      urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      subdomains: const ['a', 'b', 'c'],
+                    ),
+                    MarkerLayer(
+                      markers: [
+                        Marker(
+                            width: 80.0,
+                            height: 80.0,
+                            point: LatLng(data['latitude'] ?? -7.541,
+                                data['longitude'] ?? 110.446),
+                            child: const Column(children: [
+                              Icon(FontAwesomeIcons.mountain,
+                                  color: Color.fromARGB(255, 54, 69, 79)),
+                              Text("Merapi")
+                            ])),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,
