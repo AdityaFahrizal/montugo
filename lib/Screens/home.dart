@@ -5,6 +5,7 @@ import 'package:montugo/Screens/Information/Rescue/rescue.dart';
 import 'package:montugo/Screens/categoryEquipment.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
 import 'package:montugo/Screens/categoryLogistic.dart';
+import 'package:montugo/Screens/Berita/berita.dart'; // Import news section
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -181,19 +182,9 @@ class Home extends StatelessWidget {
         const SizedBox(
           height: 19,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                "Berita",
-                style: GoogleFonts.istokWeb(
-                    fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-            ),
-          ],
-        ),
+        // This is where the news section is added
+        const NewsSection(),
+
         const SizedBox(
           height: 19,
         ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CooksetNav extends StatelessWidget {
-  const CooksetNav({super.key});
+class CookSetNav extends StatelessWidget {
+  const CookSetNav({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class CooksetNav extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
-          "Cookset Gunung",
+          "Cook Set",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -20,86 +21,106 @@ class CooksetNav extends StatelessWidget {
           ),
         ),
       ),
-      body: const Cookset(),
+      body: const CookSet(),
     );
   }
 }
 
-class Cookset extends StatelessWidget {
-  const Cookset({super.key});
+class CookSet extends StatefulWidget {
+  const CookSet({super.key});
 
   @override
+  _CookSetState createState() => _CookSetState();
+}
+
+class _CookSetState extends State<CookSet> {
+  final DocumentReference masakRef =
+      FirebaseFirestore.instance.collection('barang').doc('masak');
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar Utama
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/logisticImage/cookset.png',
-              height: 220,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: masakRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        ;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('Data tidak ditemukan.'));
+        }
 
-          // Judul
-          Text(
-            "Cookset Gunung",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Informasi Ringkas
-          Column(
+        var data = snapshot.data!.data() as Map<String, dynamic>;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              infoItem(FontAwesomeIcons.tag, "Harga: Rp 180.000"),
-              infoItem(FontAwesomeIcons.weightHanging, "Berat: ± 600 gram"),
-              infoItem(FontAwesomeIcons.boxOpen,
-                  "Isi: Panci, Wajan, Tutup, Gelas, Sendok, Garpu"),
-              infoItem(FontAwesomeIcons.clipboardList,
-                  "Bahan: Aluminium anti lengket"),
+              // Gambar Utama
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  data['imageUrl'] ?? '-',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Judul
+              Text(
+                data['nama'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              Column(
+                children: [
+                  infoItem(
+                      FontAwesomeIcons.tag, "Harga: ${data['harga'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.clipboardList,
+                      "Bahan: ${data['bahan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.weightHanging,
+                      "Berat: ${data['berat'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.boxOpen,
+                      "Isi: ${data['isi'] ?? '-'}"),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Deskripsi
+              Text(
+                "Deskripsi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                data['deskripsi'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(height: 20),
             ],
           ),
-          const SizedBox(height: 20),
-
-          // Deskripsi
-          Text(
-            "Deskripsi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Cookset gunung adalah perlengkapan masak portable yang wajib dibawa saat pendakian. "
-            "Biasanya terdiri dari panci, wajan kecil, tutup, gelas, sendok, dan garpu yang bisa ditumpuk menjadi satu set compact. "
-            "Bahan aluminium anti lengket membuat masakan cepat matang dan mudah dibersihkan. "
-            "Dengan bobot ringan dan desain lipat, cookset sangat praktis untuk tim pendaki dalam menyiapkan makanan hangat di gunung.",
-            style: GoogleFonts.istokWeb(
-              fontSize: 15,
-              height: 1.6,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 30),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,

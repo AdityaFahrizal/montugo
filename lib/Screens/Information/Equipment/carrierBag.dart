@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TasCarrierNav extends StatelessWidget {
   const TasCarrierNav({super.key});
@@ -25,84 +26,101 @@ class TasCarrierNav extends StatelessWidget {
   }
 }
 
-class TasCarrier extends StatelessWidget {
+class TasCarrier extends StatefulWidget {
   const TasCarrier({super.key});
 
   @override
+  _TasCarrierState createState() => _TasCarrierState();
+}
+
+class _TasCarrierState extends State<TasCarrier> {
+  final DocumentReference kantongRef =
+      FirebaseFirestore.instance.collection('barang').doc('kantong');
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar Utama
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/equipmentImage/carrier.jpg',
-              height: 220,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: kantongRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        ;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('Data tidak ditemukan.'));
+        }
 
-          // Judul
-          Text(
-            "Tas Carrier",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Informasi Ringkas
-          Column(
+        var data = snapshot.data!.data() as Map<String, dynamic>;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              infoItem(FontAwesomeIcons.tag, "Harga: Rp 600.000"),
-              infoItem(
-                  FontAwesomeIcons.weightHanging, "Kapasitas: 50–70 liter"),
-              infoItem(FontAwesomeIcons.boxOpen,
-                  "Bahan: Nylon + Polyester waterproof"),
-              infoItem(FontAwesomeIcons.mountain,
-                  "Fungsi: Membawa perlengkapan pendakian dengan nyaman"),
+              // Gambar Utama
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  data['imageUrl'] ?? '-',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Judul
+              Text(
+                data['nama'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              Column(
+                children: [
+                  infoItem(
+                      FontAwesomeIcons.tag, "Harga: ${data['harga'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.clipboardList,
+                      "Bahan: ${data['bahan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.weightHanging,
+                      "Isi Tas: ${data['berat'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.personHiking,
+                      "Fungsi: ${data['fungsi'] ?? '-'}"),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Deskripsi
+              Text(
+                "Deskripsi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                data['deskripsi'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(height: 20),
             ],
           ),
-          const SizedBox(height: 20),
-
-          // Deskripsi
-          Text(
-            "Deskripsi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Tas carrier adalah tas besar yang dirancang khusus untuk membawa perlengkapan mendaki gunung. "
-            "Dengan kapasitas mulai dari 50 liter hingga 70 liter, tas ini mampu menampung tenda, matras, pakaian, "
-            "makanan, hingga peralatan logistik lainnya. "
-            "Carrier dilengkapi dengan frame internal untuk menjaga bentuk, bantalan punggung, serta tali pinggang "
-            "yang membantu mendistribusikan beban agar lebih nyaman saat perjalanan panjang. "
-            "Bahan waterproof juga menjaga isi tas tetap kering meskipun hujan turun di jalur pendakian.",
-            style: GoogleFonts.istokWeb(
-              fontSize: 15,
-              height: 1.6,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 30),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,

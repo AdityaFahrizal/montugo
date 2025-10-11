@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PonchoNav extends StatelessWidget {
   const PonchoNav({super.key});
@@ -12,7 +13,7 @@ class PonchoNav extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
-          "Jas Hujan Poncho",
+          "Jas Hujan",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -25,82 +26,101 @@ class PonchoNav extends StatelessWidget {
   }
 }
 
-class Poncho extends StatelessWidget {
+class Poncho extends StatefulWidget {
   const Poncho({super.key});
 
   @override
+  _PonchoState createState() => _PonchoState();
+}
+
+class _PonchoState extends State<Poncho> {
+  final DocumentReference jashujanRef =
+      FirebaseFirestore.instance.collection('barang').doc('jashujan');
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar Utama
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/logisticImage/poncho.png',
-              height: 220,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: jashujanRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        ;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('Data tidak ditemukan.'));
+        }
 
-          // Judul
-          Text(
-            "Jas Hujan Poncho",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Informasi Ringkas
-          Column(
+        var data = snapshot.data!.data() as Map<String, dynamic>;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              infoItem(FontAwesomeIcons.tag, "Harga: Rp 10.000 - 45.000"),
-              infoItem(FontAwesomeIcons.weightHanging, "Berat: 250 gram"),
-              infoItem(
-                  FontAwesomeIcons.rulerCombined, "Ukuran: All Size (dewasa)"),
-              infoItem(FontAwesomeIcons.clipboardList,
-                  "Bahan: PVC / Polyester anti air"),
+              // Gambar Utama
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  data['imageUrl'] ?? '-',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Judul
+              Text(
+                data['nama'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              Column(
+                children: [
+                  infoItem(
+                      FontAwesomeIcons.tag, "Harga: ${data['harga'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.boxOpen,
+                      "Bahan: ${data['bahan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.weightHanging,
+                      "Berat: ${data['berat'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.rulerCombined,
+                      "Ukuran: ${data['ukuran'] ?? '-'}"),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Deskripsi
+              Text(
+                "Deskripsi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                data['deskripsi'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(height: 20),
             ],
           ),
-          const SizedBox(height: 20),
-
-          // Deskripsi
-          Text(
-            "Deskripsi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Jas hujan poncho adalah pelindung tubuh dari hujan dengan model longgar "
-            "seperti mantel yang menutupi hingga lutut. Cocok digunakan saat mendaki gunung "
-            "karena praktis, mudah dipakai, dan dapat melindungi tubuh serta tas dari hujan. "
-            "Bahan anti airnya membuat pendaki tetap kering dan nyaman meskipun hujan deras. "
-            "Poncho juga bisa difungsikan sebagai flysheet darurat untuk melindungi barang bawaan.",
-            style: GoogleFonts.istokWeb(
-              fontSize: 15,
-              height: 1.6,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 30),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,

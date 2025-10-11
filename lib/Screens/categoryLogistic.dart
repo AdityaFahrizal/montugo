@@ -53,7 +53,7 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
       "category": "Pelindung",
     },
     {
-      "name": "Lampu",
+      "name": "HeadLamp",
       "image": "assets/images/logisticImage/lampu.png",
       "page": const LampuNav(),
       "category": "Penerangan",
@@ -61,7 +61,7 @@ class _CategoryLogisticState extends State<CategoryLogistic> {
     {
       "name": "Peralatan Makanan",
       "image": "assets/images/logisticImage/cookset.png",
-      "page": const CooksetNav(),
+      "page": const CookSetNav(),
       "category": "Masak",
     },
     {

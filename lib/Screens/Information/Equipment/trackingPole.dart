@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TrekkingPoleNav extends StatelessWidget {
   const TrekkingPoleNav({super.key});
@@ -25,83 +26,101 @@ class TrekkingPoleNav extends StatelessWidget {
   }
 }
 
-class TrekkingPole extends StatelessWidget {
+class TrekkingPole extends StatefulWidget {
   const TrekkingPole({super.key});
 
   @override
+  _TrekkingPoleState createState() => _TrekkingPoleState();
+}
+
+class _TrekkingPoleState extends State<TrekkingPole> {
+  final DocumentReference trekkingRef =
+      FirebaseFirestore.instance.collection('barang').doc('trekking');
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar Utama
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/equipmentImage/Pole.png',
-              height: 220,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: trekkingRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        ;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('Data tidak ditemukan.'));
+        }
 
-          // Judul
-          Text(
-            "Trekking Pole",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Informasi Ringkas
-          Column(
+        var data = snapshot.data!.data() as Map<String, dynamic>;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              infoItem(FontAwesomeIcons.tag, "Harga: Rp 150.000"),
-              infoItem(
-                  FontAwesomeIcons.weightHanging, "Berat: ± 250 gram / batang"),
-              infoItem(
-                  FontAwesomeIcons.boxOpen, "Bahan: Alumunium alloy / karbon"),
-              infoItem(FontAwesomeIcons.personHiking,
-                  "Fungsi: Membantu keseimbangan saat mendaki/menurun"),
+              // Gambar Utama
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  data['imageUrl'] ?? '-',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Judul
+              Text(
+                data['nama'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              Column(
+                children: [
+                  infoItem(
+                      FontAwesomeIcons.tag, "Harga: ${data['harga'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.boxOpen,
+                      "Bahan: ${data['bahan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.weightHanging,
+                      "Berat: ${data['berat'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.shoePrints,
+                      "Fungsi: ${data['fungsi'] ?? '-'}"),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Deskripsi
+              Text(
+                "Deskripsi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                data['deskripsi'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(height: 20),
             ],
           ),
-          const SizedBox(height: 20),
-
-          // Deskripsi
-          Text(
-            "Deskripsi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Trekking pole adalah tongkat bantu yang digunakan pendaki untuk menjaga keseimbangan "
-            "dan mengurangi beban pada lutut saat mendaki maupun menuruni jalur terjal. "
-            "Dengan desain lipat atau teleskopik, trekking pole mudah disimpan dan dibawa. "
-            "Bahan yang umum digunakan adalah alumunium alloy (kuat dan ekonomis) atau karbon (lebih ringan). "
-            "Peralatan ini sangat disarankan terutama pada jalur panjang, berbatu, atau curam.",
-            style: GoogleFonts.istokWeb(
-              fontSize: 15,
-              height: 1.6,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 30),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,

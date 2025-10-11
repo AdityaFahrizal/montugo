@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SleepingBagNav extends StatelessWidget {
   const SleepingBagNav({super.key});
@@ -25,81 +26,101 @@ class SleepingBagNav extends StatelessWidget {
   }
 }
 
-class SleepingBag extends StatelessWidget {
+class SleepingBag extends StatefulWidget {
   const SleepingBag({super.key});
 
   @override
+  _SleepingBagState createState() => _SleepingBagState();
+}
+
+class _SleepingBagState extends State<SleepingBag> {
+  final DocumentReference sleepingbagRef =
+      FirebaseFirestore.instance.collection('barang').doc('sleepingbag');
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar Utama
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/logisticImage/Sleeping.jpg',
-              height: 220,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
+    return StreamBuilder<DocumentSnapshot>(
+      stream: sleepingbagRef.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        ;
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('Data tidak ditemukan.'));
+        }
 
-          // Judul
-          Text(
-            "Sleeping Bag",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Informasi Ringkas
-          Column(
+        var data = snapshot.data!.data() as Map<String, dynamic>;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              infoItem(FontAwesomeIcons.tag, "Harga: Rp 250.000"),
-              infoItem(FontAwesomeIcons.weightHanging, "Berat: 1 kg"),
-              infoItem(FontAwesomeIcons.rulerVertical, "Ukuran: 210 x 75 cm"),
-              infoItem(FontAwesomeIcons.thermometerHalf,
-                  "Suhu Rekomendasi: 5°C – 15°C"),
+              // Gambar Utama
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  data['imageUrl'] ?? '-',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Judul
+              Text(
+                data['nama'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              Column(
+                children: [
+                  infoItem(
+                      FontAwesomeIcons.tag, "Harga: ${data['harga'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.thermometer,
+                      "Suhu: ${data['suhu'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.weightHanging,
+                      "Berat: ${data['berat'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.rulerCombined,
+                      "Ukuran: ${data['Ukuran'] ?? '-'}"),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Deskripsi
+              Text(
+                "Deskripsi",
+                style: GoogleFonts.istokWeb(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: const Color.fromARGB(255, 54, 69, 79),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                data['deskripsi'] ?? '-',
+                style: GoogleFonts.istokWeb(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(height: 20),
             ],
           ),
-          const SizedBox(height: 20),
-
-          // Deskripsi
-          Text(
-            "Deskripsi",
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: const Color.fromARGB(255, 54, 69, 79),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Sleeping bag adalah perlengkapan penting untuk pendaki saat bermalam di gunung. "
-            "Berfungsi menjaga tubuh tetap hangat saat suhu malam turun drastis. "
-            "Dengan bahan insulasi khusus, sleeping bag mampu menahan dingin dan angin. "
-            "Desainnya yang compact membuatnya mudah dibawa dan disimpan dalam carrier. "
-            "Beberapa sleeping bag juga sudah dilengkapi dengan lapisan anti-air sehingga aman digunakan di alam terbuka.",
-            style: GoogleFonts.istokWeb(
-              fontSize: 15,
-              height: 1.6,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 30),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  // Widget untuk baris info dengan icon
   Widget infoItem(IconData icon, String text) {
     return Card(
       elevation: 2,

@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class TendaNav extends StatelessWidget {
-  const TendaNav({super.key});
+class JaketGunungNav extends StatelessWidget {
+  const JaketGunungNav({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class TendaNav extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
-          "Tenda",
+          "Jaket Gunung Gorpcore",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -21,25 +21,25 @@ class TendaNav extends StatelessWidget {
           ),
         ),
       ),
-      body: const Tenda(),
+      body: const JaketGunung(),
     );
   }
 }
 
-class Tenda extends StatefulWidget {
-  const Tenda({super.key});
+class JaketGunung extends StatefulWidget {
+  const JaketGunung({super.key});
 
   @override
-  _TendaState createState() => _TendaState();
+  _JaketGunungState createState() => _JaketGunungState();
 }
 
-class _TendaState extends State<Tenda> {
-  final DocumentReference tendaRef =
-      FirebaseFirestore.instance.collection('barang').doc('tenda');
+class _JaketGunungState extends State<JaketGunung> {
+  final DocumentReference jaketRef =
+      FirebaseFirestore.instance.collection('barang').doc('jaket');
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-      stream: tendaRef.snapshots(),
+      stream: jaketRef.snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -83,13 +83,13 @@ class _TendaState extends State<Tenda> {
               Column(
                 children: [
                   infoItem(
-                      FontAwesomeIcons.tag, "Harga: ${data['harga'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.warehouse,
-                      "Kapasitas: ${data['kapasitas'] ?? '-'}"),
+                      FontAwesomeIcons.tag, "Status: ${data['harga'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.boxOpen,
+                      "Bahan: ${data['bahan'] ?? '-'}"),
                   infoItem(FontAwesomeIcons.weightHanging,
                       "Berat: ${data['berat'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.rulerCombined,
-                      "Ukuran: ${data['Ukuran'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.personHiking,
+                      "Fungsi: ${data['fungsi'] ?? '-'}"),
                 ],
               ),
               const SizedBox(height: 20),

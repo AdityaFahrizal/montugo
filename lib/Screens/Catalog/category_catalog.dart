@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:montugo/data/catalog_data.dart';
 import 'package:montugo/models/catalog_item_model.dart';
-import 'package:montugo/Screens/Information/Equipment/carrierBag.dart';
-import 'package:montugo/Screens/Information/Equipment/gorpcore.dart';
-import 'package:montugo/Screens/Information/Equipment/shoes.dart';
-import 'package:montugo/Screens/Information/Equipment/trackingPole.dart';
-import 'package:montugo/Screens/Information/Logistic/tent.dart';
-import 'package:montugo/Screens/Information/Logistic/stove.dart';
-import 'package:montugo/Screens/Information/Logistic/nesting.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryCatalog extends StatefulWidget {
   const CategoryCatalog({super.key});
@@ -23,14 +17,6 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
 
   @override
   Widget build(BuildContext context) {
-    List<CatalogItemModel> filteredItems = catalogItems.where((item) {
-      final matchesCategory =
-          _selectedCategory == 'All' || item.category == _selectedCategory;
-      final matchesSearch =
-          item.title.toLowerCase().contains(_searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
-    }).toList();
-
     return Column(
       children: [
         const SizedBox(
@@ -42,14 +28,39 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
         _buildCategoryButtons(),
         const SizedBox(height: 15),
         Expanded(
-          child: ListView.builder(
-            itemCount: filteredItems.length,
-            itemBuilder: (context, index) {
-              final item = filteredItems[index];
-              return CatalogListItem(
-                item: item,
-                onTap: () {
-                  _navigateToDetail(context, item.title);
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('katalog').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              final catalogItems = snapshot.data!.docs.map((doc) {
+                final data = doc.data() as Map<String, dynamic>;
+                return CatalogItemModel.fromMap(data);
+              }).toList();
+
+              List<CatalogItemModel> filteredItems = catalogItems.where((item) {
+                final matchesCategory =
+                    _selectedCategory == 'All' || item.category == _selectedCategory;
+                final matchesSearch =
+                    item.title.toLowerCase().contains(_searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+              }).toList();
+
+              return ListView.builder(
+                itemCount: filteredItems.length,
+                itemBuilder: (context, index) {
+                  final item = filteredItems[index];
+                  return CatalogListItem(
+                    item: item,
+                    onTap: () {
+                      _launchURL(item.url);
+                    },
+                  );
                 },
               );
             },
@@ -129,33 +140,14 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
     );
   }
 
-  void _navigateToDetail(BuildContext context, String title) {
-    Widget? page;
-    switch (title) {
-      case 'Tas Carrier':
-        page = const TasCarrierNav();
-        break;
-      case 'Jaket Gunung (GORPCore)':
-        page = const JaketGunungNav();
-        break;
-      case 'Sepatu Gunung':
-        page = const SepatuGunungNav();
-        break;
-      case 'Trekking Pole':
-        page = const TrekkingPoleNav();
-        break;
-      case 'Tenda Dome Camping 2P':
-        page = const TendaNav();
-        break;
-      case 'Kompor Portable':
-        page = const KomporPortableNav();
-        break;
-      case 'Cookset Gunung':
-        page = const CooksetNav();
-        break;
-    }
-    if (page != null) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => page!));
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch $url')),
+      );
     }
   }
 }
@@ -182,11 +174,22 @@ class CatalogListItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
+                child: Image.network(
                   item.imagePath,
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.error, size: 100);
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: 12),
