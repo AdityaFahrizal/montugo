@@ -6,6 +6,7 @@ import 'package:montugo/Screens/categoryEquipment.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
 import 'package:montugo/Screens/categoryLogistic.dart';
 import 'package:montugo/Screens/Berita/berita.dart'; // Import news section
+import 'package:montugo/Screens/tips_and_tricks.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -188,6 +189,9 @@ class Home extends StatelessWidget {
         const SizedBox(
           height: 19,
         ),
+
+        const TipsAndTricks(),
+
       ]),
     );
   }

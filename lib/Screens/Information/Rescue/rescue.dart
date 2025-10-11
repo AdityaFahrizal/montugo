@@ -7,17 +7,18 @@ class Rescue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, 
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 54, 69, 79), // charcoal
+        backgroundColor: const Color(0xFF36454F), // Charcoal
         title: Text(
-          "Halaman Keselamatan",
+          "Informasi Keselamatan",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
             color: Colors.white,
           ),
         ),
+        elevation: 0,
       ),
       body: const Keselamatan(),
     );
@@ -27,53 +28,63 @@ class Rescue extends StatelessWidget {
 class Keselamatan extends StatelessWidget {
   const Keselamatan({super.key});
 
-  final List<Map<String, String>> data = const [
+  final List<Map<String, dynamic>> data = const [
     {
+      "icon": Icons.fitness_center,
       "title": "Persiapan Fisik & Mental",
       "desc":
           "Latihan fisik (jogging, bersepeda, naik tangga) akan meningkatkan stamina. Mental kuat membantu menghadapi lelah, takut, atau kondisi darurat."
     },
     {
+      "icon": Icons.map,
       "title": "Navigasi & Peta Jalur",
       "desc":
           "Gunakan peta, aplikasi GPS offline, atau kompas. Jangan hanya mengandalkan orang lain agar risiko tersesat berkurang."
     },
     {
+      "icon": Icons.access_time,
       "title": "Manajemen Waktu & Cuaca",
       "desc":
           "Mulai pagi hari agar aman sampai pos atau puncak sebelum gelap. Cuaca di gunung dinamis, cek prakiraan dan berhenti bila memburuk."
     },
     {
+      "icon": Icons.group,
       "title": "Etika & Komunikasi Kelompok",
       "desc":
           "Mendaki bersama lebih aman. Gunakan tanda sederhana/peluit, jangan meninggalkan anggota yang kelelahan, utamakan keselamatan tim."
     },
     {
+      "icon": Icons.medical_services,
       "title": "Pertolongan Pertama (P3K)",
       "desc":
           "Bawa P3K lengkap: obat nyeri, betadine, perban, obat diare. Pengetahuan dasar P3K penting untuk mencegah cedera makin parah."
     },
     {
+      "icon": Icons.help_outline,
       "title": "Tindakan Saat Tersesat",
       "desc":
           "Jangan panik. Berhenti, buat tanda lokasi, gunakan peluit/senter, hubungi basecamp bila bisa, dan tunggu bantuan di satu titik."
     },
     {
+      "icon": Icons.ac_unit,
       "title": "Bahaya Hipotermia",
       "desc":
           "Segera ganti pakaian basah, masuk sleeping bag, bungkus dengan emergency blanket, dan beri minuman hangat."
     },
     {
+      "icon": Icons.pets,
       "title": "Menghadapi Fauna Liar",
       "desc":
           "Hormati satwa liar. Jangan beri makan, simpan makanan rapat, dan hindari kontak langsung. Ingat, kita tamu di habitat mereka."
     },
     {
+      "icon": Icons.support,
       "title": "Prosedur Evakuasi",
       "desc":
           "Hubungi basecamp atau SAR jika ada cedera parah. Jangan memaksakan evakuasi tanpa teknik benar. Jaga korban tetap hangat & aman."
     },
     {
+      "icon": Icons.phone,
       "title": "Nomor Darurat & Kontak Basecamp",
       "desc":
           "Catat nomor darurat basecamp sebelum mendaki. Simpan di ponsel & catatan fisik karena sinyal sering hilang."
@@ -83,103 +94,78 @@ class Keselamatan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
       itemCount: data.length,
       itemBuilder: (context, index) {
-        return AnimatedSafetyCard(
-          title: data[index]["title"]!,
-          desc: data[index]["desc"]!,
-          index: index + 1,
+        return SafetyInfoCard(
+          icon: data[index]['icon'],
+          title: data[index]['title'],
+          desc: data[index]['desc'],
         );
       },
     );
   }
 }
 
-class AnimatedSafetyCard extends StatefulWidget {
+class SafetyInfoCard extends StatelessWidget {
+  final IconData icon;
   final String title;
   final String desc;
-  final int index;
 
-  const AnimatedSafetyCard({
+  const SafetyInfoCard({
     super.key,
+    required this.icon,
     required this.title,
     required this.desc,
-    required this.index,
   });
 
   @override
-  State<AnimatedSafetyCard> createState() => _AnimatedSafetyCardState();
-}
-
-class _AnimatedSafetyCardState extends State<AnimatedSafetyCard> {
-  bool _expanded = false;
-
-  @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.15),
+            spreadRadius: 1,
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: () => setState(() => _expanded = !_expanded),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: const Color(0xFF36454F),
-                    child: Text(
-                      widget.index.toString(),
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      widget.title,
-                      style: GoogleFonts.istokWeb(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: const Color(0xFF36454F),
-                      ),
-                    ),
-                  ),
-                  AnimatedRotation(
-                    turns: _expanded ? 0.5 : 0,
-                    duration: const Duration(milliseconds: 300),
-                    child: const Icon(Icons.keyboard_arrow_down,
-                        color: Colors.black54),
-                  ),
-                ],
-              ),
-              AnimatedCrossFade(
-                firstChild: const SizedBox.shrink(),
-                secondChild: Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Text(
-                    widget.desc,
-                    style: GoogleFonts.istokWeb(
-                      fontSize: 14,
-                      color: Colors.black87,
-                      height: 1.5,
-                    ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: const Color(0xFF36454F), size: 32),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.istokWeb(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: const Color(0xFF36454F),
                   ),
                 ),
-                crossFadeState: _expanded
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 300),
-              ),
-            ],
+                const SizedBox(height: 5),
+                Text(
+                  desc,
+                  style: GoogleFonts.istokWeb(
+                    fontSize: 14,
+                    color: Colors.black87,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
