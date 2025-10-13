@@ -48,6 +48,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+    
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -55,6 +56,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: "^0.13.1"
+  flutter_native_splash: ^2.3.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -94,6 +97,7 @@ flutter:
     - assets/images/mountainImage/JawaTimurImage/bromo.jpg
     - assets/images/mountainImage/JawaTimurImage/semeru.jpg
     - assets/images/Info.png
+    - assets/images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -120,3 +124,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  android: "launcher_icon" # Atau ganti dengan true
+  ios: true
+  image_path: "assets/images/logo.png"
+
+flutter_native_splash:
+  color: "#FFFFFF" 
+  image: assets/images/logo.png
+  android_gravity: fill
+  ios_content_mode: scaleAspectFit
