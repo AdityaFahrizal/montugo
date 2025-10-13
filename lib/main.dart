@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart'; // 💡 Tambahkan ini
+import 'package:flutter_native_splash/flutter_native_splash.dart'; 
 import 'package:montugo/Mechanic/UI/NavigationBar/custom_bottom_navbar.dart';
 import 'package:montugo/Screens/Catalog/category_catalog.dart';
 import 'package:montugo/Screens/FaQ/faq.dart';

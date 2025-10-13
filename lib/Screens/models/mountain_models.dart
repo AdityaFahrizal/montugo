@@ -1,12 +1,17 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer' as developer;
 
-class SindoroNav extends StatelessWidget {
-  const SindoroNav({super.key});
+class MountainDetailPage extends StatelessWidget {
+  final String mountainId;
+
+  const MountainDetailPage({super.key, required this.mountainId});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,7 @@ class SindoroNav extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(
-          "Gunung Sindoro",
+          "Detail Gunung",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -23,30 +28,38 @@ class SindoroNav extends StatelessWidget {
           ),
         ),
       ),
-      body: const Sindoro(),
+      body: MountainDetail(mountainId: mountainId),
     );
   }
 }
 
-class Sindoro extends StatefulWidget {
-  const Sindoro({super.key});
+class MountainDetail extends StatefulWidget {
+  final String mountainId;
+
+  const MountainDetail({super.key, required this.mountainId});
 
   @override
-  _SindoroState createState() => _SindoroState();
+  _MountainDetailState createState() => _MountainDetailState();
 }
 
-class _SindoroState extends State<Sindoro> {
-  final DocumentReference SindoroRef =
-      FirebaseFirestore.instance.collection('gunung').doc('sindoro');
+class _MountainDetailState extends State<MountainDetail> {
+  late final DocumentReference mountainRef;
+
+  @override
+  void initState() {
+    super.initState();
+    mountainRef =
+        FirebaseFirestore.instance.collection('gunung').doc(widget.mountainId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-      stream: SindoroRef.snapshots(),
+      stream: mountainRef.snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        ;
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
@@ -55,26 +68,60 @@ class _SindoroState extends State<Sindoro> {
         }
 
         var data = snapshot.data!.data() as Map<String, dynamic>;
+        developer.log('DATA DARI FIRESTORE UNTUK ID (${widget.mountainId}): $data', name: 'FirestoreDebug');
+
+        final latitude = data['latitude'] is num ? data['latitude'] as double : -8.108;
+        final longitude = data['longitude'] is num ? data['longitude'] as double : 112.923;
+        final namaGunung = data['nama'] as String? ?? 'Nama tidak tersedia';
+
+        // Widget to build image from Base64 or show a placeholder
+        Widget buildImage(String? base64String) {
+          Widget placeholder = Container(
+            height: 220,
+            color: Colors.grey[300],
+            child: const Center(
+              child: Icon(Icons.image_not_supported, color: Colors.grey, size: 50),
+            ),
+          );
+
+          if (base64String == null || base64String.isEmpty) {
+            return placeholder;
+          }
+
+          try {
+            // The actual image data is after the comma
+            final cleanBase64 = base64String.split(',').last;
+            final Uint8List decodedBytes = base64.decode(cleanBase64);
+            return Image.memory(
+              decodedBytes,
+              height: 220,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                developer.log('Error rendering image from memory: $error', name: 'ImageError');
+                return placeholder;
+              },
+            );
+          } catch (e) {
+            developer.log('Could not decode base64 string: $e', name: 'ImageError');
+            return placeholder;
+          }
+        }
+
         return SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Gambar Utama
+              // Main Image from Base64
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  data['imageUrl'] ??
-                      'assets/images/mountainImage/JawaTengahImage/Sindoroo.jpg',
-                  height: 220,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                child: buildImage(data['image'] as String?),
               ),
               const SizedBox(height: 20),
-              // Judul
+              // Title
               Text(
-                data['nama'] ?? '-',
+                namaGunung,
                 style: GoogleFonts.istokWeb(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
@@ -85,25 +132,18 @@ class _SindoroState extends State<Sindoro> {
 
               Column(
                 children: [
-                  infoItem(FontAwesomeIcons.sign,
-                      "Status: ${data['status'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.mapMarkerAlt,
-                      "Lokasi: ${data['lokasi'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.mountain,
-                      "Ketinggian: ${data['ketinggian'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.route,
-                      "Jalur Pendakian: ${data['jalur'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.clock,
-                      "Waktu Tempuh: ${data['waktu'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.chartLine,
-                      "Tingkat Kesulitan: ${data['kesulitan'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.ticket,
-                      "Tiket Masuk: ${data['tiket'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.solidFlag, "Status: ${data['status'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mapMarkerAlt, "Lokasi: ${data['lokasi'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mountain, "Ketinggian: ${data['ketinggian'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.route, "Jalur Pendakian: ${data['jalur'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ${data['waktu'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.chartLine, "Tingkat Kesulitan: ${data['kesulitan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.ticketAlt, "Tiket Masuk: ${data['tiket'] ?? '-'}"),
                 ],
               ),
               const SizedBox(height: 20),
 
-              // Deskripsi
+              // Description
               Text(
                 "Deskripsi",
                 style: GoogleFonts.istokWeb(
@@ -114,7 +154,7 @@ class _SindoroState extends State<Sindoro> {
               ),
               const SizedBox(height: 8),
               Text(
-                data['deskripsi'] ?? '-',
+                data['deskripsi'] ?? 'Deskripsi tidak tersedia.',
                 style: GoogleFonts.istokWeb(
                   fontSize: 15,
                   height: 1.6,
@@ -137,27 +177,24 @@ class _SindoroState extends State<Sindoro> {
                 height: 300,
                 child: FlutterMap(
                   options: MapOptions(
-                    initialCenter: LatLng(data['latitude'] ?? -7.295,
-                        data['longitude'] ?? 109.993),
+                    initialCenter: LatLng(latitude, longitude),
                     initialZoom: 13.0,
                   ),
                   children: [
                     TileLayer(
                       urlTemplate:
                           'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      subdomains: const ['a', 'b', 'c'],
                     ),
                     MarkerLayer(
                       markers: [
                         Marker(
                             width: 80.0,
                             height: 80.0,
-                            point: LatLng(data['latitude'] ?? -7.295,
-                                data['longitude'] ?? 109.993),
-                            child: const Column(children: [
-                              Icon(FontAwesomeIcons.mountain,
+                            point: LatLng(latitude, longitude),
+                            child: Column(children: [
+                              const Icon(FontAwesomeIcons.mountain,
                                   color: Color.fromARGB(255, 54, 69, 79)),
-                              Text("Gede")
+                              Text(namaGunung, style: const TextStyle(fontWeight: FontWeight.bold,))
                             ])),
                       ],
                     ),
@@ -178,7 +215,7 @@ class _SindoroState extends State<Sindoro> {
       margin: const EdgeInsets.symmetric(vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: ListTile(
-        leading: Icon(icon, color: const Color.fromARGB(255, 54, 69, 79)),
+        leading: Icon(icon, color: const Color.fromARGB(255, 54, 69, 79), size: 20),
         title: Text(
           text,
           style: GoogleFonts.istokWeb(
@@ -190,4 +227,3 @@ class _SindoroState extends State<Sindoro> {
     );
   }
 }
-

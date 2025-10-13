@@ -1,171 +1,154 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:montugo/Screens/Information/Equipment/carrierBag.dart';
-import 'package:montugo/Screens/Information/Equipment/jacket.dart';
-import 'package:montugo/Screens/Information/Equipment/shoes.dart';
-import 'package:montugo/Screens/Information/Equipment/trackingPole.dart';
+import 'dart:convert';
+import 'dart:typed_data';
 
-class Categoryequipment extends StatefulWidget {
-  const Categoryequipment({super.key});
+import 'package:montugo/Screens/models/equipment_models.dart';
 
-  @override
-  State<Categoryequipment> createState() => _CategoryequipmentState();
-}
+class EquipmentListPage extends StatelessWidget {
+  final String jenis;
 
-class _CategoryequipmentState extends State<Categoryequipment> {
-  final TextEditingController _searchController = TextEditingController();
-  String searchQuery = "";
-
-  final List<Map<String, dynamic>> equipmentItems = [
-    {
-      "title": "Trekking Pole",
-      "image": "assets/images/equipmentImage/Pole.png",
-      "page": const TrekkingPoleNav(),
-    },
-    {
-      "title": "Jaket Gunung",
-      "image": "assets/images/equipmentImage/Gorpcore.jpg",
-      "page": const JaketGunungNav(),
-    },
-    {
-      "title": "Tas Carrier",
-      "image": "assets/images/equipmentImage/carrier.jpg",
-      "page": const TasCarrierNav(),
-    },
-    {
-      "title": "Sepatu Gunung",
-      "image": "assets/images/equipmentImage/sepatu.jpg",
-      "page": const SepatuGunungNav(),
-    },
-  ];
+  const EquipmentListPage({super.key, required this.jenis});
 
   @override
   Widget build(BuildContext context) {
-    final filteredItems = equipmentItems.where((item) {
-      return item["title"]
-          .toString()
-          .toLowerCase()
-          .contains(searchQuery.toLowerCase());
-    }).toList();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Menu Peralatan",
+          "Daftar $jenis", // Title dinamis
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
+            color: Colors.black,
           ),
         ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.black, width: 1),
-                ),
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: (value) {
-                    setState(() => searchQuery = value);
-                  },
-                  decoration: const InputDecoration(
-                    hintText: "Cari di sini...",
-                    prefixIcon: Icon(Icons.search),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 12),
-                  ),
-                ),
+      backgroundColor: Colors.white,
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('barang')
+            .where('jenis', isEqualTo: jenis) // Filter berdasarkan jenis
+            .orderBy('kategori')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text("Error: ${snapshot.error}"));
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text(
+                "Belum ada $jenis yang ditambahkan.",
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
               ),
-            ),
-            const SizedBox(height: 20),
+            );
+          }
 
-            filteredItems.isNotEmpty
-                ? GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 16,
-                      childAspectRatio: 171 / 140,
-                    ),
-                    itemCount: filteredItems.length,
-                    itemBuilder: (context, index) {
-                      final item = filteredItems[index];
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => item["page"]),
-                          );
-                        },
-                        borderRadius: BorderRadius.circular(10),
-                        child: Stack(
-                          children: [
-                            // 🔳 Background Card
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 54, 69, 79),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.7),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 5),
-                                    spreadRadius: 0.5,
-                                  ),
-                                ],
-                              ),
-                            ),
-  
-                            Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
-                                image: DecorationImage(
-                                  image: AssetImage(item["image"]),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+          var documents = snapshot.data!.docs;
 
-                            Positioned(
-                              top: 110,
-                              left: 12,
-                              child: Text(
-                                item["title"],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+          return ListView.builder(
+            padding: const EdgeInsets.all(10),
+            itemCount: documents.length,
+            itemBuilder: (context, index) {
+              var doc = documents[index];
+              var data = doc.data() as Map<String, dynamic>;
+              final barangId = doc.id;
+
+              // Widget to build image from Base64 or show a placeholder
+              Widget imageWidget = Container(
+                width: 100,
+                height: 100,
+                color: Colors.grey[200],
+                child: const Icon(Icons.image_not_supported, color: Colors.grey, size: 40),
+              );
+
+              if (data.containsKey('image') && data['image'] != null && (data['image'] as String).isNotEmpty) {
+                try {
+                  final cleanBase64 = (data['image'] as String).split(',').last;
+                  final Uint8List decodedBytes = base64.decode(cleanBase64);
+                  imageWidget = Image.memory(
+                    decodedBytes,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  );
+                } catch (e) {
+                  // Placeholder remains if decoding fails
+                }
+              }
+
+              // Logic to show a category header
+              bool showHeader = false;
+              if (index == 0) {
+                showHeader = true;
+              } else {
+                var prevData = documents[index - 1].data() as Map<String, dynamic>;
+                if (data['kategori'] != prevData['kategori']) {
+                  showHeader = true;
+                }
+              }
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (showHeader)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+                      child: Text(
+                        data['kategori'] ?? 'Lainnya',
+                        style: GoogleFonts.istokWeb(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: const Color.fromARGB(255, 54, 69, 79),
                         ),
-                      );
-                    },
-                  )
-                : const Padding(
-                    padding: EdgeInsets.only(top: 40),
-                    child: Text("Data tidak ditemukan"),
+                      ),
+                    ),
+                  Card(
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: imageWidget,
+                      ),
+                      title: Text(
+                        data['nama'] ?? 'Nama tidak tersedia',
+                        style: GoogleFonts.istokWeb(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "${data['bahan'] ?? '-'}\n${data['harga'] ?? 'Harga tidak tersedia'}",
+                        style: GoogleFonts.istokWeb(fontSize: 14, color: Colors.black54),
+                      ),
+                      isThreeLine: true,
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EquipmentDetailPage(barangId: barangId),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-          ],
-        ),
+                ],
+              );
+            },
+          );
+        },
       ),
     );
   }

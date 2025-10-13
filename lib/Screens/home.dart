@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Mechanic/UI/Carousel/carousel_controller.dart';
-import 'package:montugo/Screens/Information/Rescue/rescue.dart';
 import 'package:montugo/Screens/categoryEquipment.dart';
+import 'package:montugo/Screens/Information/Rescue/rescue.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
-import 'package:montugo/Screens/categoryLogistic.dart';
-import 'package:montugo/Screens/Berita/berita.dart'; // Import news section
+import 'package:montugo/Screens/Berita/berita.dart'; 
 import 'package:montugo/Screens/tips_and_tricks.dart';
 
 class Home extends StatelessWidget {
@@ -75,13 +74,13 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            // Peralatan
+
             InkWell(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const Categoryequipment()),
+                      builder: (context) => const EquipmentListPage(jenis: "Peralatan")),
                 );
               },
               borderRadius: BorderRadius.circular(10),
@@ -109,13 +108,13 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            // Logistik
+
             InkWell(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const CategoryLogistic()),
+                      builder: (context) => const EquipmentListPage(jenis: "Logistik")),
                 );
               },
               borderRadius: BorderRadius.circular(10),
@@ -144,7 +143,6 @@ class Home extends StatelessWidget {
               ),
             ),
 
-            // Keselamatan
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -183,7 +181,7 @@ class Home extends StatelessWidget {
         const SizedBox(
           height: 19,
         ),
-        // This is where the news section is added
+        
         const NewsSection(),
 
         const SizedBox(

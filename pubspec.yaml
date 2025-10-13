@@ -98,6 +98,7 @@ flutter:
     - assets/images/mountainImage/JawaTimurImage/semeru.jpg
     - assets/images/Info.png
     - assets/images/logo.png
+    - assets/images/bg_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -131,7 +132,4 @@ flutter_icons:
   image_path: "assets/images/logo.png"
 
 flutter_native_splash:
-  color: "#FFFFFF" 
-  image: assets/images/logo.png
-  android_gravity: fill
-  ios_content_mode: scaleAspectFit
+  colour: "#FFFFFF"
