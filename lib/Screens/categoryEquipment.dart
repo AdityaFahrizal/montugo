@@ -6,17 +6,21 @@ import 'dart:typed_data';
 
 import 'package:montugo/Screens/models/equipment_models.dart';
 
+// Nama kelas tetap EquipmentListPage
 class EquipmentListPage extends StatelessWidget {
+  // Constructor diubah kembali untuk menerima parameter 'jenis'
   final String jenis;
-
-  const EquipmentListPage({super.key, required this.jenis});
+  const EquipmentListPage({required this.jenis, super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Judul AppBar menjadi dinamis berdasarkan parameter 'jenis'
+    String title = "Daftar $jenis";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Daftar $jenis", // Title dinamis
+          title,
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -31,7 +35,8 @@ class EquipmentListPage extends StatelessWidget {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('barang')
-            .where('jenis', isEqualTo: jenis) // Filter berdasarkan jenis
+            // Filter menggunakan parameter 'jenis' yang diterima
+            .where('jenis', isEqualTo: jenis)
             .orderBy('kategori')
             .snapshots(),
         builder: (context, snapshot) {
@@ -42,6 +47,7 @@ class EquipmentListPage extends StatelessWidget {
             return Center(child: Text("Error: ${snapshot.error}"));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            // Pesan menjadi dinamis
             return Center(
               child: Text(
                 "Belum ada $jenis yang ditambahkan.",
@@ -60,7 +66,6 @@ class EquipmentListPage extends StatelessWidget {
               var data = doc.data() as Map<String, dynamic>;
               final barangId = doc.id;
 
-              // Widget to build image from Base64 or show a placeholder
               Widget imageWidget = Container(
                 width: 100,
                 height: 100,
@@ -79,11 +84,10 @@ class EquipmentListPage extends StatelessWidget {
                     fit: BoxFit.cover,
                   );
                 } catch (e) {
-                  // Placeholder remains if decoding fails
+                  // Placeholder
                 }
               }
 
-              // Logic to show a category header
               bool showHeader = false;
               if (index == 0) {
                 showHeader = true;
@@ -129,7 +133,7 @@ class EquipmentListPage extends StatelessWidget {
                         ),
                       ),
                       subtitle: Text(
-                        "${data['bahan'] ?? '-'}\n${data['harga'] ?? 'Harga tidak tersedia'}",
+                        "${data['bahan'] ?? '-'}${data['harga'] ?? 'Harga tidak tersedia'}",
                         style: GoogleFonts.istokWeb(fontSize: 14, color: Colors.black54),
                       ),
                       isThreeLine: true,

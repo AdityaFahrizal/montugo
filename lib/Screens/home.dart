@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Mechanic/UI/Carousel/carousel_controller.dart';
-import 'package:montugo/Screens/categoryEquipment.dart';
+import 'package:montugo/Screens/categoryEquipment.dart'; // Hanya import ini yang dibutuhkan
 import 'package:montugo/Screens/Information/Rescue/rescue.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
-import 'package:montugo/Screens/Berita/berita.dart'; 
+import 'package:montugo/Screens/Berita/berita.dart';
 import 'package:montugo/Screens/tips_and_tricks.dart';
 
 class Home extends StatelessWidget {
@@ -75,6 +75,7 @@ class Home extends StatelessWidget {
               ),
             ),
 
+            // Peralatan - DIPERBAIKI: Mengirim parameter jenis
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -109,6 +110,7 @@ class Home extends StatelessWidget {
               ),
             ),
 
+            // Logistik - DIPERBAIKI: Menggunakan EquipmentListPage dengan parameter jenis
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -181,7 +183,7 @@ class Home extends StatelessWidget {
         const SizedBox(
           height: 19,
         ),
-        
+
         const NewsSection(),
 
         const SizedBox(
