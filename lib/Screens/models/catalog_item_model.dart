@@ -21,7 +21,7 @@ class CatalogItemModel {
       title: map['nama'] ?? 'Judul Tidak Tersedia',
       category: map['kategori'] ?? 'Lainnya',
       description: map['deskripsi'] ?? 'Deskripsi tidak tersedia.',
-      price: map['harga'] ?? 'Harga tidak tersedia',
+      price: map['harga'].toString() ?? 'Harga tidak tersedia',
       imagePath: map['imagePath'] ?? '', 
       url: map['link'] ?? '', 
     );

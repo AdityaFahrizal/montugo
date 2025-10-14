@@ -124,7 +124,7 @@ class EquipmentDetailPage extends StatelessWidget {
           children: [
             _buildInfoRow(Icons.category_outlined, "Kategori", data['kategori'] ?? '-'),
             _buildInfoRow(Icons.scale_outlined, "Berat", data['berat'] ?? '-'),
-            _buildInfoRow(Icons.paid_outlined, "Harga", data['harga'] ?? '-'),
+            _buildInfoRow(Icons.paid_outlined, "Harga", data['harga'].toString() ?? '-'),
             _buildInfoRow(Icons.texture_outlined, "Bahan", data['bahan'] ?? '-'),
           ],
         ),
