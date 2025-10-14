@@ -45,7 +45,7 @@ class TipsAndTricks extends StatelessWidget {
             children: [
               Text(
                 "Tips & Trik Mendaki",
-                style: GoogleFonts.istokWeb(
+                style: GoogleFonts.poppins( 
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFF36454F),
@@ -60,10 +60,10 @@ class TipsAndTricks extends StatelessWidget {
                 },
                 child: Text(
                   "Lihat Semua",
-                  style: GoogleFonts.istokWeb(
+                  style: GoogleFonts.poppins( 
                     fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF36454F),
                   ),
                 ),
               ),
@@ -74,13 +74,13 @@ class TipsAndTricks extends StatelessWidget {
           height: 180, 
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20, right: 5),
             itemCount: tipsData.length,
             itemBuilder: (context, index) {
               return TipCard(
-                icon: tipsData[index]['icon'],
-                title: tipsData[index]['title'],
-                desc: tipsData[index]['desc'],
+                icon: tipsData[index]['icon'] as IconData,
+                title: tipsData[index]['title']! as String,
+                desc: tipsData[index]['desc']! as String,
               );
             },
           ),
@@ -111,12 +111,12 @@ class TipCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -124,23 +124,24 @@ class TipCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: const Color(0xFF36454F), size: 30),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           Text(
             title,
-            style: GoogleFonts.istokWeb(
-              fontWeight: FontWeight.bold,
+            style: GoogleFonts.poppins( 
+              fontWeight: FontWeight.w600,
               fontSize: 14,
               color: const Color(0xFF36454F),
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 6),
           Text(
             desc,
-            style: GoogleFonts.istokWeb(
+            style: GoogleFonts.roboto( 
               fontSize: 12,
               color: Colors.black54,
+              height: 1.4,
             ),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,

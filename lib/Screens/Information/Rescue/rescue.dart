@@ -7,20 +7,21 @@ class Rescue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF36454F), // Charcoal
         title: Text(
           "Informasi Keselamatan",
-          style: GoogleFonts.istokWeb(
+          style: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
             color: Colors.white,
           ),
         ),
-        elevation: 0,
+        backgroundColor: const Color(0xFF36454F),
+        elevation: 2,
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: const Keselamatan(),
+      body: const Keselamatan(), 
     );
   }
 }
@@ -36,55 +37,55 @@ class Keselamatan extends StatelessWidget {
           "Latihan fisik (jogging, bersepeda, naik tangga) akan meningkatkan stamina. Mental kuat membantu menghadapi lelah, takut, atau kondisi darurat."
     },
     {
-      "icon": Icons.map,
+      "icon": Icons.map_outlined,
       "title": "Navigasi & Peta Jalur",
       "desc":
           "Gunakan peta, aplikasi GPS offline, atau kompas. Jangan hanya mengandalkan orang lain agar risiko tersesat berkurang."
     },
     {
-      "icon": Icons.access_time,
+      "icon": Icons.access_time_outlined,
       "title": "Manajemen Waktu & Cuaca",
       "desc":
           "Mulai pagi hari agar aman sampai pos atau puncak sebelum gelap. Cuaca di gunung dinamis, cek prakiraan dan berhenti bila memburuk."
     },
     {
-      "icon": Icons.group,
+      "icon": Icons.group_outlined,
       "title": "Etika & Komunikasi Kelompok",
       "desc":
           "Mendaki bersama lebih aman. Gunakan tanda sederhana/peluit, jangan meninggalkan anggota yang kelelahan, utamakan keselamatan tim."
     },
     {
-      "icon": Icons.medical_services,
+      "icon": Icons.medical_services_outlined,
       "title": "Pertolongan Pertama (P3K)",
       "desc":
           "Bawa P3K lengkap: obat nyeri, betadine, perban, obat diare. Pengetahuan dasar P3K penting untuk mencegah cedera makin parah."
     },
     {
-      "icon": Icons.help_outline,
+      "icon": Icons.help_outline_rounded,
       "title": "Tindakan Saat Tersesat",
       "desc":
           "Jangan panik. Berhenti, buat tanda lokasi, gunakan peluit/senter, hubungi basecamp bila bisa, dan tunggu bantuan di satu titik."
     },
     {
-      "icon": Icons.ac_unit,
+      "icon": Icons.ac_unit_outlined,
       "title": "Bahaya Hipotermia",
       "desc":
           "Segera ganti pakaian basah, masuk sleeping bag, bungkus dengan emergency blanket, dan beri minuman hangat."
     },
     {
-      "icon": Icons.pets,
+      "icon": Icons.pets_outlined,
       "title": "Menghadapi Fauna Liar",
       "desc":
           "Hormati satwa liar. Jangan beri makan, simpan makanan rapat, dan hindari kontak langsung. Ingat, kita tamu di habitat mereka."
     },
     {
-      "icon": Icons.support,
+      "icon": Icons.support_agent_outlined,
       "title": "Prosedur Evakuasi",
       "desc":
           "Hubungi basecamp atau SAR jika ada cedera parah. Jangan memaksakan evakuasi tanpa teknik benar. Jaga korban tetap hangat & aman."
     },
     {
-      "icon": Icons.phone,
+      "icon": Icons.phone_in_talk_outlined,
       "title": "Nomor Darurat & Kontak Basecamp",
       "desc":
           "Catat nomor darurat basecamp sebelum mendaki. Simpan di ponsel & catatan fisik karena sinyal sering hilang."
@@ -93,14 +94,15 @@ class Keselamatan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       itemCount: data.length,
+      separatorBuilder: (context, index) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         return SafetyInfoCard(
-          icon: data[index]['icon'],
-          title: data[index]['title'],
-          desc: data[index]['desc'],
+          icon: data[index]['icon']! as IconData,
+          title: data[index]['title']! as String,
+          desc: data[index]['desc']! as String,
         );
       },
     );
@@ -122,43 +124,43 @@ class SafetyInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.15),
-            spreadRadius: 1,
-            blurRadius: 8,
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
             offset: const Offset(0, 4),
-          ),
+          )
         ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: const Color(0xFF36454F), size: 32),
-          const SizedBox(width: 15),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: GoogleFonts.istokWeb(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                  style: GoogleFonts.poppins(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
                     color: const Color(0xFF36454F),
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 8),
                 Text(
                   desc,
-                  style: GoogleFonts.istokWeb(
-                    fontSize: 14,
-                    color: Colors.black87,
+                  textAlign: TextAlign.start,
+                  style: GoogleFonts.roboto(
+                    fontSize: 14.5,
+                    color: Colors.black.withOpacity(0.7),
                     height: 1.5,
                   ),
                 ),

@@ -68,19 +68,23 @@ class _MountainDetailState extends State<MountainDetail> {
         }
 
         var data = snapshot.data!.data() as Map<String, dynamic>;
-        developer.log('DATA DARI FIRESTORE UNTUK ID (${widget.mountainId}): $data', name: 'FirestoreDebug');
+        developer.log(
+            'DATA DARI FIRESTORE UNTUK ID (${widget.mountainId}): $data',
+            name: 'FirestoreDebug');
 
-        final latitude = data['latitude'] is num ? data['latitude'] as double : -8.108;
-        final longitude = data['longitude'] is num ? data['longitude'] as double : 112.923;
+        final latitude =
+            data['latitude'] is num ? data['latitude'] as double : -8.108;
+        final longitude =
+            data['longitude'] is num ? data['longitude'] as double : 112.923;
         final namaGunung = data['nama'] as String? ?? 'Nama tidak tersedia';
 
-        // Widget to build image from Base64 or show a placeholder
         Widget buildImage(String? base64String) {
           Widget placeholder = Container(
             height: 220,
             color: Colors.grey[300],
             child: const Center(
-              child: Icon(Icons.image_not_supported, color: Colors.grey, size: 50),
+              child:
+                  Icon(Icons.image_not_supported, color: Colors.grey, size: 50),
             ),
           );
 
@@ -89,7 +93,6 @@ class _MountainDetailState extends State<MountainDetail> {
           }
 
           try {
-            // The actual image data is after the comma
             final cleanBase64 = base64String.split(',').last;
             final Uint8List decodedBytes = base64.decode(cleanBase64);
             return Image.memory(
@@ -98,12 +101,14 @@ class _MountainDetailState extends State<MountainDetail> {
               width: double.infinity,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                developer.log('Error rendering image from memory: $error', name: 'ImageError');
+                developer.log('Error rendering image from memory: $error',
+                    name: 'ImageError');
                 return placeholder;
               },
             );
           } catch (e) {
-            developer.log('Could not decode base64 string: $e', name: 'ImageError');
+            developer.log('Could not decode base64 string: $e',
+                name: 'ImageError');
             return placeholder;
           }
         }
@@ -113,7 +118,6 @@ class _MountainDetailState extends State<MountainDetail> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Main Image from Base64
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: buildImage(data['image'] as String?),
@@ -132,13 +136,20 @@ class _MountainDetailState extends State<MountainDetail> {
 
               Column(
                 children: [
-                  infoItem(FontAwesomeIcons.solidFlag, "Status: ${data['status'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.mapMarkerAlt, "Lokasi: ${data['lokasi'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.mountain, "Ketinggian: ${data['ketinggian'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.route, "Jalur Pendakian: ${data['jalur'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.clock, "Waktu Tempuh: ${data['waktu'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.chartLine, "Tingkat Kesulitan: ${data['kesulitan'] ?? '-'}"),
-                  infoItem(FontAwesomeIcons.ticketAlt, "Tiket Masuk: ${data['tiket'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.solidFlag,
+                      "Status: ${data['status'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mapMarkerAlt,
+                      "Lokasi: ${data['lokasi'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.mountain,
+                      "Ketinggian: ${data['ketinggian'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.route,
+                      "Jalur Pendakian: ${data['jalur'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.clock,
+                      "Waktu Tempuh: ${data['waktu'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.chartLine,
+                      "Tingkat Kesulitan: ${data['kesulitan'] ?? '-'}"),
+                  infoItem(FontAwesomeIcons.ticketAlt,
+                      "Tiket Masuk: ${data['tiket'] ?? '-'}"),
                 ],
               ),
               const SizedBox(height: 20),
@@ -194,7 +205,10 @@ class _MountainDetailState extends State<MountainDetail> {
                             child: Column(children: [
                               const Icon(FontAwesomeIcons.mountain,
                                   color: Color.fromARGB(255, 54, 69, 79)),
-                              Text(namaGunung, style: const TextStyle(fontWeight: FontWeight.bold,))
+                              Text(namaGunung,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ))
                             ])),
                       ],
                     ),
@@ -215,7 +229,8 @@ class _MountainDetailState extends State<MountainDetail> {
       margin: const EdgeInsets.symmetric(vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: ListTile(
-        leading: Icon(icon, color: const Color.fromARGB(255, 54, 69, 79), size: 20),
+        leading:
+            Icon(icon, color: const Color.fromARGB(255, 54, 69, 79), size: 20),
         title: Text(
           text,
           style: GoogleFonts.istokWeb(

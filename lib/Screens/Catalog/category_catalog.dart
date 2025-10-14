@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:montugo/models/catalog_item_model.dart';
+import 'package:montugo/Screens/models/catalog_item_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert'; 
+import 'dart:typed_data';
 
 class CategoryCatalog extends StatefulWidget {
   const CategoryCatalog({super.key});
@@ -17,7 +19,6 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
 
   @override
   Widget build(BuildContext context) {
-    // DIBUNGKUS DENGAN SCAFFOLD untuk struktur halaman yang benar
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -32,11 +33,11 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black), // Pastikan tombol kembali terlihat
+        iconTheme: const IconThemeData(color: Colors.black), 
       ),
       body: Column(
         children: [
-          const SizedBox(height: 10), // Mengurangi padding atas karena sudah ada AppBar
+          const SizedBox(height: 10),
           _buildSearchBar(),
           const SizedBox(height: 15),
           _buildCategoryButtons(),
@@ -57,6 +58,7 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
 
                 final catalogItems = snapshot.data!.docs.map((doc) {
                   final data = doc.data() as Map<String, dynamic>;
+                  data['imagePath'] = data['image']; 
                   return CatalogItemModel.fromMap(data);
                 }).toList();
 
@@ -158,12 +160,9 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
     );
   }
 
-  // FUNGSI LAUNCHURL DIPERBARUI ke metode modern dan lebih aman
   void _launchURL(String urlString) async {
     final Uri url = Uri.parse(urlString);
-    // Menggunakan metode baru yang lebih aman dan direkomendasikan
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      // Cek apakah widget masih ada sebelum menampilkan SnackBar
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Could not launch $urlString')),
@@ -181,6 +180,32 @@ class CatalogListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget imageWidget;
+    if (item.imagePath.isNotEmpty) {
+      try {
+        final cleanBase64 = item.imagePath.split(',').last;
+        final Uint8List decodedBytes = base64.decode(cleanBase64);
+        imageWidget = Image.memory(
+          decodedBytes,
+          width: 100,
+          height: 100,
+          fit: BoxFit.cover,
+        );
+      } catch (e) {
+        imageWidget = const SizedBox(
+          width: 100,
+          height: 100,
+          child: Icon(Icons.broken_image, size: 40, color: Colors.grey),
+        );
+      }
+    } else {
+      imageWidget = const SizedBox(
+        width: 100,
+        height: 100,
+        child: Icon(Icons.image_not_supported, size: 40, color: Colors.grey),
+      );
+    }
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 4,
@@ -196,34 +221,7 @@ class CatalogListItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                // Periksa jika imagePath kosong, tampilkan placeholder
-                child: item.imagePath.isNotEmpty
-                    ? Image.network(
-                        item.imagePath,
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Icon(Icons.error, size: 50, color: Colors.grey),
-                          );
-                        },
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return const SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(child: CircularProgressIndicator()),
-                          );
-                        },
-                      )
-                    : const SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
-                      ),
+                child: imageWidget, 
               ),
               const SizedBox(width: 12),
               Expanded(

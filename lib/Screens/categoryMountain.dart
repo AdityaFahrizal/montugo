@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Screens/models/mountain_models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert'; 
 
 class Categorymountain extends StatelessWidget {
   const Categorymountain({super.key});
@@ -15,10 +16,15 @@ class Categorymountain extends StatelessWidget {
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
+            color: Colors.black, 
           ),
         ),
+        backgroundColor: Colors.white, 
+        elevation: 0, 
+        iconTheme: const IconThemeData(color: Colors.black), 
       ),
       body: const KategoriGunung(),
+      backgroundColor: Colors.white, 
     );
   }
 }
@@ -44,7 +50,6 @@ class _KategoriGunungState extends State<KategoriGunung> {
           children: [
             const SizedBox(height: 10),
 
-            // SearchBar
             Container(
               height: 48,
               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -75,7 +80,6 @@ class _KategoriGunungState extends State<KategoriGunung> {
             ),
             const SizedBox(height: 15),
 
-            // StreamBuilder for dynamic filter options and mountain list
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance.collection('gunung').snapshots(),
               builder: (context, snapshot) {
@@ -91,13 +95,11 @@ class _KategoriGunungState extends State<KategoriGunung> {
 
                 var allMountains = snapshot.data!.docs;
                 
-                // Get unique provinces for the filter dropdown
                 final provinsiList = allMountains
                     .map((doc) => (doc.data() as Map<String, dynamic>)['provinsi'] as String)
                     .toSet()
                     .toList();
                 
-                // Apply filtering
                 var filteredMountains = allMountains.where((doc) {
                   final data = doc.data() as Map<String, dynamic>;
                   final cocokKeyword = data['nama']
@@ -109,8 +111,8 @@ class _KategoriGunungState extends State<KategoriGunung> {
                 }).toList();
 
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Filter Provinsi
                     GestureDetector(
                       onTap: () {
                         showModalBottomSheet(
@@ -193,12 +195,10 @@ class _KategoriGunungState extends State<KategoriGunung> {
                     ),
                     const SizedBox(height: 20),
 
-                    // List Gunung
                     Column(
                       children: filteredMountains.map((doc) {
                         final data = doc.data() as Map<String, dynamic>;
-                        // Use data from Firestore, but ensure there are default values
-                        final imageUrl = data['image'] as String? ?? '-';
+                        final imageUrl = data['image'] as String? ?? ''; 
                         final nama = data['nama'] as String? ?? 'Nama tidak tersedia';
                         final tinggi = data['ketinggian'] as String? ?? 'Data tidak tersedia';
                         
@@ -206,7 +206,7 @@ class _KategoriGunungState extends State<KategoriGunung> {
                           context,
                           title: nama,
                           height: tinggi,
-                          imagePath: imageUrl,
+                          base64Image: imageUrl, 
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -228,14 +228,38 @@ class _KategoriGunungState extends State<KategoriGunung> {
     );
   }
 
-  // Card Gunung (This widget remains unchanged)
+
   Widget buildMountainCard(
     BuildContext context, {
     required String title,
     required String height,
-    required String imagePath,
+    required String base64Image, 
     required VoidCallback onPressed,
   }) {
+    Widget imageWidget;
+    if (base64Image.isNotEmpty) {
+      try {
+        final cleanBase64 = base64Image.split(',').last;
+        final imageBytes = base64.decode(cleanBase64);
+        imageWidget = Image.memory(
+          imageBytes,
+          width: double.infinity,
+          height: 139,
+          fit: BoxFit.cover,
+        );
+      } catch (e) {
+        imageWidget = Container(
+          color: Colors.grey[300],
+          child: const Icon(Icons.broken_image, color: Colors.grey, size: 50),
+        );
+      }
+    } else {
+      imageWidget = Container(
+        color: Colors.grey[300],
+        child: const Icon(Icons.image_not_supported, color: Colors.grey, size: 50),
+      );
+    }
+
     return Container(
       margin: const EdgeInsets.only(bottom: 19),
       width: double.infinity,
@@ -244,18 +268,7 @@ class _KategoriGunungState extends State<KategoriGunung> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              imagePath,
-              width: double.infinity,
-              height: 139,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.image_not_supported, color: Colors.grey),
-                );
-              },
-            ),
+            child: imageWidget, 
           ),
           Container(
             decoration: BoxDecoration(

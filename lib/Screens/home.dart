@@ -75,7 +75,6 @@ class Home extends StatelessWidget {
               ),
             ),
 
-            // Peralatan - DIPERBAIKI: Mengirim parameter jenis
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -110,7 +109,6 @@ class Home extends StatelessWidget {
               ),
             ),
 
-            // Logistik - DIPERBAIKI: Menggunakan EquipmentListPage dengan parameter jenis
             InkWell(
               onTap: () {
                 Navigator.push(

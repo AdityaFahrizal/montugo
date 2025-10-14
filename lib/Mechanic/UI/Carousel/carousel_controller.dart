@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:montugo/Screens/models/mountain_models.dart';
+import 'dart:convert'; 
+import 'dart:typed_data'; 
 
 class CarouselControllerWidget extends StatelessWidget {
   const CarouselControllerWidget({super.key});
@@ -9,8 +11,7 @@ class CarouselControllerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      // Ambil data dari koleksi 'gunung', limit 3 untuk carousel
-      stream: FirebaseFirestore.instance.collection('gunung').limit(3).snapshots(),
+      stream: FirebaseFirestore.instance.collection('gunung').limit(4).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
@@ -25,7 +26,7 @@ class CarouselControllerWidget extends StatelessWidget {
           );
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const SizedBox(height: 160); // Tampilkan kosong jika tidak ada data
+          return const SizedBox(height: 160); 
         }
 
         var mountainDocs = snapshot.data!.docs;
@@ -33,13 +34,33 @@ class CarouselControllerWidget extends StatelessWidget {
         return CarouselSlider(
           items: mountainDocs.map((doc) {
             final data = doc.data() as Map<String, dynamic>;
-            final mountainId = doc.id; // Ini adalah ID dokumen dari Firestore
+            final mountainId = doc.id;
 
-            // Ambil data dengan fallback default jika ada yang null
             final name = data['nama'] as String? ?? 'Nama tidak ada';
             final height = data['ketinggian'] as String? ?? 'Ketinggian tidak ada';
-            final imagePath = data['image'] as String? ?? 'assets/images/JawaBarat.jpg'; // Pastikan field ini ada di firestore
+            final base64Image = data['image'] as String? ?? ''; 
 
+            Widget imageWidget;
+            if (base64Image.isNotEmpty) {
+              try {
+                final cleanBase64 = base64Image.split(',').last;
+                final Uint8List decodedBytes = base64.decode(cleanBase64);
+                imageWidget = Image.memory(
+                  decodedBytes,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                );
+              } catch (e) {
+                imageWidget = const Center(
+                  child: Icon(Icons.broken_image, color: Colors.white, size: 40),
+                );
+              }
+            } else {
+              imageWidget = const Center(
+                child: Icon(Icons.image_not_supported, color: Colors.white, size: 40),
+              );
+            }
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -49,20 +70,10 @@ class CarouselControllerWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     child: Stack(
                       children: [
-                        // Gambar background dari asset
                         Positioned.fill(
-                          child: Image.asset(
-                            imagePath, 
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Center(
-                                child: Icon(Icons.broken_image, color: Colors.white),
-                              );
-                            },
-                          ),
+                          child: imageWidget, 
                         ),
 
-                        // Overlay gradient
                         Positioned.fill(
                           child: Container(
                             decoration: BoxDecoration(
@@ -78,7 +89,6 @@ class CarouselControllerWidget extends StatelessWidget {
                           ),
                         ),
 
-                        // Teks dan tombol
                         Padding(
                           padding: const EdgeInsets.all(12),
                           child: Column(
@@ -102,7 +112,6 @@ class CarouselControllerWidget extends StatelessWidget {
                               ),
                               const Spacer(),
 
-                              // Tombol "See details"
                               Align(
                                 alignment: Alignment.bottomRight,
                                 child: ElevatedButton(
@@ -118,7 +127,6 @@ class CarouselControllerWidget extends StatelessWidget {
                                     ),
                                   ),
                                   onPressed: () {
-                                    // Navigasi ke halaman detail dinamis dengan ID gunung
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

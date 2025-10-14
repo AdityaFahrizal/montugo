@@ -3,18 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:montugo/Screens/models/equipment_models.dart';
 
-// Nama kelas tetap EquipmentListPage
+
 class EquipmentListPage extends StatelessWidget {
-  // Constructor diubah kembali untuk menerima parameter 'jenis'
   final String jenis;
   const EquipmentListPage({required this.jenis, super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Judul AppBar menjadi dinamis berdasarkan parameter 'jenis'
     String title = "Daftar $jenis";
 
     return Scaffold(
@@ -35,7 +32,6 @@ class EquipmentListPage extends StatelessWidget {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('barang')
-            // Filter menggunakan parameter 'jenis' yang diterima
             .where('jenis', isEqualTo: jenis)
             .orderBy('kategori')
             .snapshots(),
@@ -47,7 +43,6 @@ class EquipmentListPage extends StatelessWidget {
             return Center(child: Text("Error: ${snapshot.error}"));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            // Pesan menjadi dinamis
             return Center(
               child: Text(
                 "Belum ada $jenis yang ditambahkan.",
@@ -84,7 +79,7 @@ class EquipmentListPage extends StatelessWidget {
                     fit: BoxFit.cover,
                   );
                 } catch (e) {
-                  // Placeholder
+                  
                 }
               }
 

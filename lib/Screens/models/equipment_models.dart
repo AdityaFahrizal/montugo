@@ -6,7 +6,6 @@ import 'dart:typed_data';
 import 'dart:developer' as developer;
 
 class EquipmentDetailPage extends StatelessWidget {
-  // Mengubah nama variabel agar konsisten
   final String barangId;
 
   const EquipmentDetailPage({super.key, required this.barangId});
@@ -30,8 +29,8 @@ class EquipmentDetailPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('barang') // Menggunakan koleksi 'barang'
-            .doc(barangId) // Menggunakan variabel yang sudah diperbaiki
+            .collection('barang') 
+            .doc(barangId) 
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -46,7 +45,6 @@ class EquipmentDetailPage extends StatelessWidget {
 
           var data = snapshot.data!.data() as Map<String, dynamic>;
 
-          // Widget to build image from Base64 or show a placeholder
           Widget buildImage(String? base64String) {
             Widget placeholder = Container(
                 height: 250,

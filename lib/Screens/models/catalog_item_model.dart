@@ -1,39 +1,29 @@
 class CatalogItemModel {
-  final String imagePath;
   final String title;
-  final String price;
-  final String description;
   final String category;
+  final String description;
+  final String price;
+  final String imagePath;
   final String url;
 
   CatalogItemModel({
-    required this.imagePath,
     required this.title,
-    required this.price,
-    required this.description,
     required this.category,
+    required this.description,
+    required this.price,
+    required this.imagePath,
     required this.url,
   });
 
-  factory CatalogItemModel.fromMap(Map<String, dynamic> data) {
+  
+  factory CatalogItemModel.fromMap(Map<String, dynamic> map) {
     return CatalogItemModel(
-      imagePath: data['imagePath'] ?? '',
-      title: data['nama'] ?? '',
-      price: data['harga'] ?? '',
-      description: data['deskripsi'] ?? '',
-      category: data['kategori'] ?? '',
-      url: data['link'] ?? '',
+      title: map['nama'] ?? 'Judul Tidak Tersedia',
+      category: map['kategori'] ?? 'Lainnya',
+      description: map['deskripsi'] ?? 'Deskripsi tidak tersedia.',
+      price: map['harga'] ?? 'Harga tidak tersedia',
+      imagePath: map['imagePath'] ?? '', 
+      url: map['link'] ?? '', 
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'imagePath': imagePath,
-      'nama': title,
-      'harga': price,
-      'deskripsi': description,
-      'kategori': category,
-      'link': url,
-    };
   }
 }

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:montugo/Screens/models/berita_models.dart'; // Corrected Import
+import 'package:montugo/Screens/models/berita_models.dart'; 
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:convert'; 
+import 'dart:typed_data'; 
 
 class NewsSection extends StatelessWidget {
   const NewsSection({super.key});
 
   void _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      // Cannot launch URL
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
     }
   }
 
@@ -33,7 +32,7 @@ class NewsSection extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 230, // Adjusted height for the new card design
+          height: 230, 
           child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('berita').snapshots(),
             builder: (context, snapshot) {
@@ -48,8 +47,9 @@ class NewsSection extends StatelessWidget {
               }
 
               final newsItems = snapshot.data!.docs.map((doc) {
-                // Correctly use NewsItemModel from berita_models.dart
-                return NewsItemModel.fromMap(doc.data() as Map<String, dynamic>);
+                final data = doc.data() as Map<String, dynamic>;
+                data['imagePath'] = data['image']; 
+                return NewsItemModel.fromMap(data);
               }).toList();
 
               return ListView.builder(
@@ -77,11 +77,49 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget imageWidget;
+    if (item.imagePath.isNotEmpty) {
+      try {
+        final cleanBase64 = item.imagePath.split(',').last;
+        final Uint8List decodedBytes = base64.decode(cleanBase64);
+        imageWidget = Image.memory(
+          decodedBytes,
+          height: 110,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        );
+      } catch (e) {
+        imageWidget = Container(
+          height: 110,
+          color: Colors.grey[200],
+          child: Center(
+            child: Icon(
+              Icons.broken_image_outlined,
+              color: Colors.grey[400],
+              size: 40,
+            ),
+          ),
+        );
+      }
+    } else {
+      imageWidget = Container(
+        height: 110,
+        color: Colors.grey[200],
+        child: Center(
+          child: Icon(
+            Icons.image_not_supported_outlined,
+            color: Colors.grey[400],
+            size: 40,
+          ),
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 220, // <<< Reduced width
-        margin: const EdgeInsets.fromLTRB(8, 8, 8, 16), // Added bottom margin for shadow
+        width: 220, 
+        margin: const EdgeInsets.fromLTRB(8, 8, 8, 16),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -102,24 +140,7 @@ class NewsCard extends StatelessWidget {
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
               ),
-              child: Image.network(
-                item.imagePath,
-                height: 110, // <<< Reduced image height
-                width: double.infinity,
-                fit: BoxFit.cover,
-                // A better error builder
-                errorBuilder: (context, error, stackTrace) => Container(
-                  height: 110,
-                  color: Colors.grey[200],
-                  child: Center(
-                    child: Icon(
-                      Icons.broken_image_outlined,
-                      color: Colors.grey[400],
-                      size: 40,
-                    ),
-                  ),
-                ),
-              ),
+              child: imageWidget, 
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
@@ -129,21 +150,21 @@ class NewsCard extends StatelessWidget {
                   Text(
                     item.title,
                     style: GoogleFonts.poppins(
-                      fontSize: 14, // <<< Adjusted font size
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: const Color(0xFF333333)
                     ),
-                    maxLines: 2, // <<< Allow two lines for title
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 6),
                   Text(
                     item.description,
                     style: GoogleFonts.poppins(
-                      fontSize: 11, // <<< Adjusted font size
+                      fontSize: 11,
                       color: Colors.grey[600],
                     ),
-                    maxLines: 1, // <<< Only one line for description
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],

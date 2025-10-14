@@ -74,28 +74,7 @@ flutter:
   assets:
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
-    - assets/images/equipmentImage/Pole.png
-    - assets/images/equipmentImage/Gorpcore.jpg
-    - assets/images/equipmentImage/sepatu.jpg
-    - assets/images/equipmentImage/carrier.jpg
-    - assets/images/logisticImage/tenda.jpg
-    - assets/images/logisticImage/Sleeping.jpg
-    - assets/images/logisticImage/emergency.jpg
-    - assets/images/logisticImage/poncho.png
-    - assets/images/logisticImage/sarung.png
-    - assets/images/logisticImage/lampu.png
-    - assets/images/logisticImage/p3k.png
-    - assets/images/logisticImage/kompor.png
-    - assets/images/logisticImage/cookset.png
     - assets/images/JawaBarat.jpg
-    - assets/images/mountainImage/JawaBaratImage/Papandayan.jpg
-    - assets/images/mountainImage/JawaBaratImage/Gede.jpg
-    - assets/images/mountainImage/JawaBaratImage/ciremai.jpg
-    - assets/images/mountainImage/JawaTengahImage/Prau.jpg
-    - assets/images/mountainImage/JawaTengahImage/Sindoroo.jpg
-    - assets/images/mountainImage/JawaTengahImage/merapii.jpg
-    - assets/images/mountainImage/JawaTimurImage/bromo.jpg
-    - assets/images/mountainImage/JawaTimurImage/semeru.jpg
     - assets/images/Info.png
     - assets/images/logo.png
     - assets/images/bg_logo.png
