@@ -52,6 +52,16 @@ class _MountainDetailState extends State<MountainDetail> {
         FirebaseFirestore.instance.collection('gunung').doc(widget.mountainId);
   }
 
+  // Helper function to safely parse coordinate values
+  double _parseCoordinate(dynamic value, {required double defaultValue}) {
+    if (value is num) {
+      return value.toDouble();
+    } else if (value is String) {
+      return double.tryParse(value) ?? defaultValue;
+    }
+    return defaultValue;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -73,9 +83,9 @@ class _MountainDetailState extends State<MountainDetail> {
             name: 'FirestoreDebug');
 
         final latitude =
-            data['latitude'] is num ? data['latitude'] as double : -8.108;
+            _parseCoordinate(data['latitude'], defaultValue: -8.108);
         final longitude =
-            data['longitude'] is num ? data['longitude'] as double : 112.923;
+            _parseCoordinate(data['longitude'], defaultValue: 112.923);
         final namaGunung = data['nama'] as String? ?? 'Nama tidak tersedia';
 
         Widget buildImage(String? base64String) {
@@ -153,8 +163,6 @@ class _MountainDetailState extends State<MountainDetail> {
                 ],
               ),
               const SizedBox(height: 20),
-
-              // Description
               Text(
                 "Deskripsi",
                 style: GoogleFonts.istokWeb(
@@ -207,9 +215,12 @@ class _MountainDetailState extends State<MountainDetail> {
                                   color: Color.fromARGB(255, 54, 69, 79)),
                               Text(namaGunung,
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ))
-                            ])),
+                                  fontWeight: FontWeight.bold,
+                                )
+                              )
+                            ]
+                          )
+                        ),
                       ],
                     ),
                   ],

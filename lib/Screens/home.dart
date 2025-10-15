@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Mechanic/UI/Carousel/carousel_controller.dart';
-import 'package:montugo/Screens/categoryEquipment.dart'; // Hanya import ini yang dibutuhkan
+import 'package:montugo/Screens/categoryEquipment.dart'; 
 import 'package:montugo/Screens/Information/Rescue/rescue.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
 import 'package:montugo/Screens/Berita/berita.dart';
@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(children: [
         const SizedBox(
-          height: 35,
+          height: 50,
         ),
         const CarouselControllerWidget(),
         const SizedBox(
@@ -80,7 +80,8 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const EquipmentListPage(jenis: "Peralatan")),
+                      builder: (context) =>
+                          const EquipmentListPage(jenis: "Peralatan")),
                 );
               },
               borderRadius: BorderRadius.circular(10),
@@ -114,7 +115,8 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const EquipmentListPage(jenis: "Logistik")),
+                      builder: (context) =>
+                          const EquipmentListPage(jenis: "Logistik")),
                 );
               },
               borderRadius: BorderRadius.circular(10),
@@ -181,15 +183,11 @@ class Home extends StatelessWidget {
         const SizedBox(
           height: 19,
         ),
-
         const NewsSection(),
-
         const SizedBox(
           height: 19,
         ),
-
         const TipsAndTricks(),
-
       ]),
     );
   }
