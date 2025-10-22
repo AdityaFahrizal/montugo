@@ -22,11 +22,11 @@ class CustomBottomNavbar extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: "Home",
+          label: "Beranda",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.shopping_bag),
-          label: "Catalog",
+          label: "Katalog",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.info),

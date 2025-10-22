@@ -313,7 +313,7 @@ class _KategoriGunungState extends State<KategoriGunung> {
                       textStyle: const TextStyle(fontSize: 12),
                     ),
                     onPressed: onPressed,
-                    child: const Text("See details"),
+                    child: const Text("Lihat Detail"),
                   ),
                 ),
               ],

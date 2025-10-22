@@ -40,7 +40,7 @@ class EquipmentListPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
+            return Center(child: Text("Terjadi kesalahan: ${snapshot.error}"));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return Center(
@@ -128,7 +128,7 @@ class EquipmentListPage extends StatelessWidget {
                         ),
                       ),
                       subtitle: Text(
-                        "${data['bahan'] ?? '-'}${data['harga'] ?? 'Harga tidak tersedia'}",
+                        "${data['bahan'] ?? '-'} ${data['harga'] ?? 'Harga tidak tersedia'}",
                         style: GoogleFonts.istokWeb(fontSize: 14, color: Colors.black54),
                       ),
                       isThreeLine: true,

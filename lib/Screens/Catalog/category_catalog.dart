@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Screens/models/catalog_item_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:convert'; 
+import 'dart:convert';
 import 'dart:typed_data';
 
 class CategoryCatalog extends StatefulWidget {
@@ -33,7 +33,7 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black), 
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Column(
         children: [
@@ -44,7 +44,8 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
           const SizedBox(height: 15),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('katalog').snapshots(),
+              stream:
+                  FirebaseFirestore.instance.collection('katalog').snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
@@ -53,20 +54,23 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text('Tidak ada item di katalog.'));
+                  return const Center(
+                      child: Text('Tidak ada item di katalog.'));
                 }
 
                 final catalogItems = snapshot.data!.docs.map((doc) {
                   final data = doc.data() as Map<String, dynamic>;
-                  data['imagePath'] = data['image']; 
+                  data['imagePath'] = data['image'];
                   return CatalogItemModel.fromMap(data);
                 }).toList();
 
-                List<CatalogItemModel> filteredItems = catalogItems.where((item) {
-                  final matchesCategory =
-                      _selectedCategory == 'All' || item.category == _selectedCategory;
-                  final matchesSearch =
-                      item.title.toLowerCase().contains(_searchQuery.toLowerCase());
+                List<CatalogItemModel> filteredItems =
+                    catalogItems.where((item) {
+                  final matchesCategory = _selectedCategory == 'All' ||
+                      item.category == _selectedCategory;
+                  final matchesSearch = item.title
+                      .toLowerCase()
+                      .contains(_searchQuery.toLowerCase());
                   return matchesCategory && matchesSearch;
                 }).toList();
 
@@ -122,11 +126,11 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildCategoryButton('All'),
+        _buildCategoryButton('Semua'),
         const SizedBox(width: 12),
-        _buildCategoryButton('Equipment'),
+        _buildCategoryButton('Peralatan'),
         const SizedBox(width: 12),
-        _buildCategoryButton('Logistic'),
+        _buildCategoryButton('Logistik'),
       ],
     );
   }
@@ -221,7 +225,7 @@ class CatalogListItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: imageWidget, 
+                child: imageWidget,
               ),
               const SizedBox(width: 12),
               Expanded(

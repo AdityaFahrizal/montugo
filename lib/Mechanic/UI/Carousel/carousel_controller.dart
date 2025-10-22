@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:montugo/Screens/models/mountain_models.dart';
-import 'dart:convert'; 
-import 'dart:typed_data'; 
+import 'dart:convert';
+import 'dart:typed_data';
 
 class CarouselControllerWidget extends StatelessWidget {
   const CarouselControllerWidget({super.key});
@@ -11,7 +11,8 @@ class CarouselControllerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('gunung').limit(4).snapshots(),
+      stream:
+          FirebaseFirestore.instance.collection('gunung').limit(4).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
@@ -22,11 +23,11 @@ class CarouselControllerWidget extends StatelessWidget {
         if (snapshot.hasError) {
           return const SizedBox(
             height: 160,
-            child: Center(child: Text("Gagal memuat data carousel")), 
+            child: Center(child: Text("Gagal memuat data carousel")),
           );
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const SizedBox(height: 160); 
+          return const SizedBox(height: 160);
         }
 
         var mountainDocs = snapshot.data!.docs;
@@ -37,8 +38,9 @@ class CarouselControllerWidget extends StatelessWidget {
             final mountainId = doc.id;
 
             final name = data['nama'] as String? ?? 'Nama tidak ada';
-            final height = data['ketinggian'] as String? ?? 'Ketinggian tidak ada';
-            final base64Image = data['image'] as String? ?? ''; 
+            final height =
+                data['ketinggian'] as String? ?? 'Ketinggian tidak ada';
+            final base64Image = data['image'] as String? ?? '';
 
             Widget imageWidget;
             if (base64Image.isNotEmpty) {
@@ -53,12 +55,14 @@ class CarouselControllerWidget extends StatelessWidget {
                 );
               } catch (e) {
                 imageWidget = const Center(
-                  child: Icon(Icons.broken_image, color: Colors.white, size: 40),
+                  child:
+                      Icon(Icons.broken_image, color: Colors.white, size: 40),
                 );
               }
             } else {
               imageWidget = const Center(
-                child: Icon(Icons.image_not_supported, color: Colors.white, size: 40),
+                child: Icon(Icons.image_not_supported,
+                    color: Colors.white, size: 40),
               );
             }
             return Builder(
@@ -71,9 +75,8 @@ class CarouselControllerWidget extends StatelessWidget {
                     child: Stack(
                       children: [
                         Positioned.fill(
-                          child: imageWidget, 
+                          child: imageWidget,
                         ),
-
                         Positioned.fill(
                           child: Container(
                             decoration: BoxDecoration(
@@ -88,7 +91,6 @@ class CarouselControllerWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.all(12),
                           child: Column(
@@ -111,7 +113,6 @@ class CarouselControllerWidget extends StatelessWidget {
                                 ),
                               ),
                               const Spacer(),
-
                               Align(
                                 alignment: Alignment.bottomRight,
                                 child: ElevatedButton(
@@ -130,13 +131,14 @@ class CarouselControllerWidget extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => MountainDetailPage(
+                                        builder: (context) =>
+                                            MountainDetailPage(
                                           mountainId: mountainId,
                                         ),
                                       ),
                                     );
                                   },
-                                  child: const Text("See details"),
+                                  child: const Text("Lihat Detail"),
                                 ),
                               )
                             ],

@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Text(
-                "Menu informasi",
+                "Menu Informasi",
                 style: GoogleFonts.istokWeb(
                     fontWeight: FontWeight.bold, fontSize: 20),
               ),
@@ -173,7 +173,7 @@ class Home extends StatelessWidget {
                     Icon(Icons.health_and_safety,
                         size: 28, color: Colors.black87),
                     SizedBox(height: 4),
-                    Text("Safety", style: TextStyle(fontSize: 12)),
+                    Text("Keselamatan", style: TextStyle(fontSize: 12)),
                   ],
                 ),
               ),

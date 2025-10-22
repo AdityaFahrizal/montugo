@@ -45,7 +45,7 @@ class TipsAndTricks extends StatelessWidget {
             children: [
               Text(
                 "Tips & Trik Mendaki",
-                style: GoogleFonts.poppins( 
+                style: GoogleFonts.istokWeb( 
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFF36454F),
@@ -60,7 +60,7 @@ class TipsAndTricks extends StatelessWidget {
                 },
                 child: Text(
                   "Lihat Semua",
-                  style: GoogleFonts.poppins( 
+                  style: GoogleFonts.istokWeb( 
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF36454F),
@@ -127,7 +127,7 @@ class TipCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             title,
-            style: GoogleFonts.poppins( 
+            style: GoogleFonts.istokWeb( 
               fontWeight: FontWeight.w600,
               fontSize: 14,
               color: const Color(0xFF36454F),
@@ -138,7 +138,7 @@ class TipCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             desc,
-            style: GoogleFonts.roboto( 
+            style: GoogleFonts.istokWeb( 
               fontSize: 12,
               color: Colors.black54,
               height: 1.4,

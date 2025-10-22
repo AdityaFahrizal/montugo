@@ -29,8 +29,8 @@ class EquipmentDetailPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('barang') 
-            .doc(barangId) 
+            .collection('barang')
+            .doc(barangId)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -50,7 +50,8 @@ class EquipmentDetailPage extends StatelessWidget {
                 height: 250,
                 color: Colors.grey[200],
                 child: const Center(
-                    child: Icon(Icons.image_not_supported, color: Colors.grey, size: 50)));
+                    child: Icon(Icons.image_not_supported,
+                        color: Colors.grey, size: 50)));
 
             if (base64String == null || base64String.isEmpty) {
               return placeholder;
@@ -64,12 +65,14 @@ class EquipmentDetailPage extends StatelessWidget {
                 width: double.infinity,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
-                  developer.log('Error rendering image from memory: $error', name: 'ImageError');
+                  developer.log('Error rendering image from memory: $error',
+                      name: 'ImageError');
                   return placeholder;
                 },
               );
             } catch (e) {
-              developer.log('Could not decode base64 string: $e', name: 'ImageError');
+              developer.log('Could not decode base64 string: $e',
+                  name: 'ImageError');
               return placeholder;
             }
           }
@@ -98,13 +101,16 @@ class EquipmentDetailPage extends StatelessWidget {
                 Text(
                   "Deskripsi",
                   style: GoogleFonts.istokWeb(
-                      fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.black87),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   data['deskripsi'] ?? 'Deskripsi tidak tersedia.',
                   textAlign: TextAlign.justify,
-                  style: GoogleFonts.istokWeb(fontSize: 15, height: 1.6, color: Colors.black54),
+                  style: GoogleFonts.istokWeb(
+                      fontSize: 15, height: 1.6, color: Colors.black54),
                 ),
               ],
             ),
@@ -122,10 +128,13 @@ class EquipmentDetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            _buildInfoRow(Icons.category_outlined, "Kategori", data['kategori'] ?? '-'),
+            _buildInfoRow(
+                Icons.category_outlined, "Kategori", data['kategori'] ?? '-'),
             _buildInfoRow(Icons.scale_outlined, "Berat", data['berat'] ?? '-'),
-            _buildInfoRow(Icons.paid_outlined, "Harga", data['harga'].toString() ?? '-'),
-            _buildInfoRow(Icons.texture_outlined, "Bahan", data['bahan'] ?? '-'),
+            _buildInfoRow(
+                Icons.paid_outlined, "Harga", data['harga'].toString() ?? '-'),
+            _buildInfoRow(
+                Icons.texture_outlined, "Bahan", data['bahan'] ?? '-'),
           ],
         ),
       ),
@@ -136,21 +145,26 @@ class EquipmentDetailPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(icon, color: const Color.fromARGB(255, 54, 69, 79), size: 22),
-          const SizedBox(width: 15),
-          Text(
-            "$label:",
-            style: GoogleFonts.istokWeb(fontWeight: FontWeight.bold, fontSize: 15),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon,
+                  color: const Color.fromARGB(255, 54, 69, 79), size: 22),
+              const SizedBox(width: 15),
+              Text(
+                "$label:",
+                style: GoogleFonts.istokWeb(
+                    fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+            ],
           ),
-          const Spacer(),
-          Flexible(
-            child: Text(
-              value,
-              textAlign: TextAlign.end,
-              style: GoogleFonts.istokWeb(fontSize: 15, color: Colors.black54),
-              overflow: TextOverflow.ellipsis,
-            ),
+          Text(
+            value,
+            textAlign: TextAlign.end,
+            style: GoogleFonts.istokWeb(fontSize: 15, color: Colors.black54),
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
