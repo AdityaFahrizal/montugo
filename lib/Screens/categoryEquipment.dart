@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:montugo/Screens/models/equipment_models.dart';
+import 'package:intl/intl.dart';
 
 
 class EquipmentListPage extends StatelessWidget {
@@ -109,30 +110,14 @@ class EquipmentListPage extends StatelessWidget {
                       ),
                     ),
                   Card(
+                    color: Colors.white,
                     elevation: 3,
                     margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: imageWidget,
-                      ),
-                      title: Text(
-                        data['nama'] ?? 'Nama tidak tersedia',
-                        style: GoogleFonts.istokWeb(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        ),
-                      ),
-                      subtitle: Text(
-                        "${data['bahan'] ?? '-'} ${data['harga'] ?? 'Harga tidak tersedia'}",
-                        style: GoogleFonts.istokWeb(fontSize: 14, color: Colors.black54),
-                      ),
-                      isThreeLine: true,
-                      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -141,6 +126,41 @@ class EquipmentListPage extends StatelessWidget {
                           ),
                         );
                       },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: imageWidget,
+                            ),
+                            const SizedBox(width: 15),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data['nama'] ?? 'Nama tidak tersedia',
+                                    style: GoogleFonts.istokWeb(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    data['deskripsi'] ?? 'Deskripsi tidak tersedia',
+                                    style: GoogleFonts.istokWeb(fontSize: 14, color: Colors.black54),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],

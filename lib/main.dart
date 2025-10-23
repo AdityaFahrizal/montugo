@@ -1,52 +1,34 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart'; 
-import 'package:montugo/Mechanic/UI/NavigationBar/custom_bottom_navbar.dart';
-import 'package:montugo/Screens/Catalog/category_catalog.dart';
-import 'package:montugo/Screens/FaQ/faq.dart';
-import 'package:montugo/Screens/home.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:montugo/Mechanic/UI/NavigationBar/bottom_nav_bar.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding); 
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
   runApp(const MyApp());
-  FlutterNativeSplash.remove(); 
+  FlutterNativeSplash.remove();
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _pages = const [
-    Home(),
-    CategoryCatalog(),
-    FaqPage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+    ));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: _pages[_selectedIndex],
-        backgroundColor: Colors.white,
-        bottomNavigationBar: CustomBottomNavbar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        )),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+      ),
+      home: const BottomNavBar(),
     );
   }
 }

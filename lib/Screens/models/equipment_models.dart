@@ -122,6 +122,7 @@ class EquipmentDetailPage extends StatelessWidget {
 
   Widget _buildInfoCard(Map<String, dynamic> data) {
     return Card(
+      color: Colors.white,
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(

@@ -11,17 +11,18 @@ class Rescue extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Informasi Keselamatan",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            fontSize: 20,
+            color: Colors.black,
           ),
         ),
-        backgroundColor: const Color(0xFF36454F),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 2,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
       ),
-      body: const Keselamatan(), 
+      body: const Keselamatan(),
     );
   }
 }

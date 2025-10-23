@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Screens/models/mountain_models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:convert'; 
+import 'dart:convert';
 
 class Categorymountain extends StatelessWidget {
   const Categorymountain({super.key});
@@ -16,15 +16,15 @@ class Categorymountain extends StatelessWidget {
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: Colors.black, 
+            color: Colors.black,
           ),
         ),
-        backgroundColor: Colors.white, 
-        elevation: 0, 
-        iconTheme: const IconThemeData(color: Colors.black), 
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: const KategoriGunung(),
-      backgroundColor: Colors.white, 
+      backgroundColor: Colors.white,
     );
   }
 }
@@ -49,7 +49,6 @@ class _KategoriGunungState extends State<KategoriGunung> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-
             Container(
               height: 48,
               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -79,9 +78,9 @@ class _KategoriGunungState extends State<KategoriGunung> {
               ),
             ),
             const SizedBox(height: 15),
-
             StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('gunung').snapshots(),
+              stream:
+                  FirebaseFirestore.instance.collection('gunung').snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -94,12 +93,14 @@ class _KategoriGunungState extends State<KategoriGunung> {
                 }
 
                 var allMountains = snapshot.data!.docs;
-                
+
                 final provinsiList = allMountains
-                    .map((doc) => (doc.data() as Map<String, dynamic>)['provinsi'] as String)
+                    .map((doc) =>
+                        (doc.data() as Map<String, dynamic>)['provinsi']
+                            as String)
                     .toSet()
                     .toList();
-                
+
                 var filteredMountains = allMountains.where((doc) {
                   final data = doc.data() as Map<String, dynamic>;
                   final cocokKeyword = data['nama']
@@ -113,105 +114,112 @@ class _KategoriGunungState extends State<KategoriGunung> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(16)),
-                          ),
-                          builder: (context) {
-                            return Container(
-                              padding: const EdgeInsets.all(16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Filter Provinsi",
-                                    style: GoogleFonts.istokWeb(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: const Color.fromARGB(255, 54, 69, 79),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  ListTile(
-                                    leading: const Icon(Icons.public, color: Color.fromARGB(255, 54, 69, 79)),
-                                    title: const Text("Semua Provinsi"),
-                                    onTap: () {
-                                      setState(() {
-                                        provinsiDipilih = null;
-                                      });
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  ...provinsiList.map((prov) => ListTile(
-                                        leading: const Icon(Icons.terrain, color: Color.fromARGB(255, 54, 69, 79)),
-                                        title: Text(prov),
-                                        onTap: () {
-                                          setState(() {
-                                            provinsiDipilih = prov;
-                                          });
-                                          Navigator.pop(context);
-                                        },
-                                      )),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey.shade400),
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            )
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              provinsiDipilih ?? "Pilih Provinsi",
-                              style: GoogleFonts.istokWeb(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: const Color.fromARGB(255, 54, 69, 79),
-                              ),
+                    Card(
+                      color: Colors.white,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16)),
                             ),
-                            const Icon(Icons.keyboard_arrow_down, color: Color.fromARGB(255, 54, 69, 79)),
-                          ],
+                            builder: (context) {
+                              return Container(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Filter Provinsi",
+                                      style: GoogleFonts.istokWeb(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color.fromARGB(
+                                            255, 54, 69, 79),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    ListTile(
+                                      leading: const Icon(Icons.public,
+                                          color: Color.fromARGB(
+                                              255, 54, 69, 79)),
+                                      title: const Text("Semua Provinsi"),
+                                      onTap: () {
+                                        setState(() {
+                                          provinsiDipilih = null;
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    ...provinsiList.map((prov) => ListTile(
+                                          leading: const Icon(Icons.terrain,
+                                              color: Color.fromARGB(
+                                                  255, 54, 69, 79)),
+                                          title: Text(prov),
+                                          onTap: () {
+                                            setState(() {
+                                              provinsiDipilih = prov;
+                                            });
+                                            Navigator.pop(context);
+                                          },
+                                        )),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                provinsiDipilih ?? "Pilih Provinsi",
+                                style: GoogleFonts.istokWeb(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color:
+                                      const Color.fromARGB(255, 54, 69, 79),
+                                ),
+                              ),
+                              const Icon(Icons.keyboard_arrow_down,
+                                  color:
+                                      Color.fromARGB(255, 54, 69, 79)),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 20),
-
                     Column(
                       children: filteredMountains.map((doc) {
                         final data = doc.data() as Map<String, dynamic>;
-                        final imageUrl = data['image'] as String? ?? ''; 
-                        final nama = data['nama'] as String? ?? 'Nama tidak tersedia';
-                        final tinggi = data['ketinggian'] as String? ?? 'Data tidak tersedia';
-                        
+                        final imageUrl = data['image'] as String? ?? '';
+                        final nama =
+                            data['nama'] as String? ?? 'Nama tidak tersedia';
+                        final tinggi = data['ketinggian'] as String? ??
+                            'Data tidak tersedia';
+
                         return buildMountainCard(
                           context,
                           title: nama,
                           height: tinggi,
-                          base64Image: imageUrl, 
+                          base64Image: imageUrl,
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MountainDetailPage(mountainId: doc.id),
+                                builder: (context) =>
+                                    MountainDetailPage(mountainId: doc.id),
                               ),
                             );
                           },
@@ -228,12 +236,11 @@ class _KategoriGunungState extends State<KategoriGunung> {
     );
   }
 
-
   Widget buildMountainCard(
     BuildContext context, {
     required String title,
     required String height,
-    required String base64Image, 
+    required String base64Image,
     required VoidCallback onPressed,
   }) {
     Widget imageWidget;
@@ -268,7 +275,7 @@ class _KategoriGunungState extends State<KategoriGunung> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: imageWidget, 
+            child: imageWidget,
           ),
           Container(
             decoration: BoxDecoration(

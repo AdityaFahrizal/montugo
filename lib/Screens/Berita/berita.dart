@@ -20,17 +20,14 @@ class NewsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+        Padding(padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
           child: Text(
-            'Berita & Informasi',
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF36454F),
-            ),
-          ),
-        ),
+                "Berita & Informasi",
+                style: GoogleFonts.istokWeb( 
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF36454F),
+        )),),
         SizedBox(
           height: 230, 
           child: StreamBuilder<QuerySnapshot>(

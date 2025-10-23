@@ -40,18 +40,20 @@ class FaqPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA), 
+      backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
         title: Text(
           "Informasi (FaQ)",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            fontSize: 22,
+            color: Colors.black,
           ),
         ),
-        backgroundColor: const Color(0xFF36454F), 
-        elevation: 2,
+        backgroundColor: Colors.white,
+        elevation: 0,
         centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -130,22 +132,23 @@ class _FaqItemState extends State<FaqItem> with SingleTickerProviderStateMixin {
                 ),
                 const SizedBox(width: 8),
                 AnimatedRotation(
-                  turns: _isExpanded ? 0.5 : 0, 
+                  turns: _isExpanded ? 0.5 : 0,
                   duration: const Duration(milliseconds: 300),
                   child: const Icon(
-                    Icons.keyboard_arrow_down, 
+                    Icons.keyboard_arrow_down,
                     color: Colors.black54,
                     size: 28,
                   ),
                 ),
               ],
             ),
-
             AnimatedSize(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               child: Container(
-                padding: _isExpanded ? const EdgeInsets.only(top: 16) : EdgeInsets.zero,
+                padding: _isExpanded
+                    ? const EdgeInsets.only(top: 16)
+                    : EdgeInsets.zero,
                 alignment: Alignment.centerLeft,
                 child: !_isExpanded
                     ? const SizedBox.shrink()

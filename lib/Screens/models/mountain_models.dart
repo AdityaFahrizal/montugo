@@ -18,13 +18,15 @@ class MountainDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
         title: Text(
           "Detail Gunung",
           style: GoogleFonts.istokWeb(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: const Color.fromARGB(255, 0, 0, 0),
+            color: Colors.black,
           ),
         ),
       ),
@@ -235,6 +237,7 @@ class _MountainDetailState extends State<MountainDetail> {
 
   Widget infoItem(IconData icon, String text) {
     return Card(
+      color: Colors.white,
       elevation: 2,
       shadowColor: Colors.black26,
       margin: const EdgeInsets.symmetric(vertical: 6),

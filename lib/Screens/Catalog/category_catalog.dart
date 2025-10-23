@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:intl/intl.dart';
 
 class CategoryCatalog extends StatefulWidget {
   const CategoryCatalog({super.key});
@@ -14,7 +15,7 @@ class CategoryCatalog extends StatefulWidget {
 }
 
 class _CategoryCatalogState extends State<CategoryCatalog> {
-  String _selectedCategory = 'All';
+  String _selectedCategory = 'Semua';
   String _searchQuery = '';
 
   @override
@@ -44,8 +45,7 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
           const SizedBox(height: 15),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection('katalog').snapshots(),
+              stream: FirebaseFirestore.instance.collection('katalog').snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
@@ -66,7 +66,7 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
 
                 List<CatalogItemModel> filteredItems =
                     catalogItems.where((item) {
-                  final matchesCategory = _selectedCategory == 'All' ||
+                  final matchesCategory = _selectedCategory == 'Semua' ||
                       item.category == _selectedCategory;
                   final matchesSearch = item.title
                       .toLowerCase()
@@ -116,6 +116,7 @@ class _CategoryCatalogState extends State<CategoryCatalog> {
             hintText: "Cari di sini...",
             border: InputBorder.none,
             prefixIcon: Icon(Icons.search),
+            contentPadding: EdgeInsets.symmetric(vertical: 14.0)
           ),
         ),
       ),
@@ -209,8 +210,14 @@ class CatalogListItem extends StatelessWidget {
         child: Icon(Icons.image_not_supported, size: 40, color: Colors.grey),
       );
     }
+    
+    final formatCurrency = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');
+    final price = double.tryParse(item.price);
+    final formattedPrice = price != null ? formatCurrency.format(price) : 'Harga tidak tersedia';
+
 
     return Card(
+      color: Colors.white,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 4,
       shape: RoundedRectangleBorder(
@@ -241,7 +248,7 @@ class CatalogListItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      item.price,
+                      formattedPrice,
                       style: GoogleFonts.istokWeb(
                         fontSize: 14,
                         color: Colors.grey[600],

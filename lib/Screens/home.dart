@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montugo/Mechanic/UI/Carousel/carousel_controller.dart';
-import 'package:montugo/Screens/categoryEquipment.dart'; 
+import 'package:montugo/Screens/categoryEquipment.dart';
 import 'package:montugo/Screens/Information/Rescue/rescue.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
 import 'package:montugo/Screens/Berita/berita.dart';
@@ -19,28 +19,31 @@ class Home extends StatelessWidget {
         ),
         const CarouselControllerWidget(),
         const SizedBox(
-          height: 17,
+          height: 12,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
               child: Text(
                 "Menu Informasi",
                 style: GoogleFonts.istokWeb(
-                    fontWeight: FontWeight.bold, fontSize: 20),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF36454F),
+                ),
               ),
-            ),
+            )
           ],
         ),
         const SizedBox(
-          height: 19,
+          height: 12,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Gunung
+
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -181,11 +184,11 @@ class Home extends StatelessWidget {
           ],
         ),
         const SizedBox(
-          height: 19,
+          height: 12,
         ),
         const NewsSection(),
         const SizedBox(
-          height: 19,
+          height: 12,
         ),
         const TipsAndTricks(),
       ]),
