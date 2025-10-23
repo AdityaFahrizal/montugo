@@ -27,6 +27,13 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: const Color(0xFF36454F),
+          secondary: const Color(0xFF36454F),
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFF36454F),
+        ),
       ),
       home: const BottomNavBar(),
     );
