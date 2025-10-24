@@ -15,11 +15,11 @@ class Home extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(children: [
         const SizedBox(
-          height: 50,
+          height: 45,
         ),
         const CarouselControllerWidget(),
         const SizedBox(
-          height: 12,
+          height: 8,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -38,12 +38,11 @@ class Home extends StatelessWidget {
           ],
         ),
         const SizedBox(
-          height: 12,
+          height: 10,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -184,13 +183,16 @@ class Home extends StatelessWidget {
           ],
         ),
         const SizedBox(
-          height: 12,
+          height: 10,
         ),
         const NewsSection(),
         const SizedBox(
-          height: 12,
+          height: 10,
         ),
         const TipsAndTricks(),
+        const SizedBox(
+          height: 10,
+        )
       ]),
     );
   }

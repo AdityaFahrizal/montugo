@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:montugo/Mechanic/UI/NavigationBar/bottom_nav_bar.dart';
+import 'package:montugo/Screens/welcome_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool acceptedTerms = prefs.getBool('accepted_terms') ?? false;
+  runApp(MyApp(acceptedTerms: acceptedTerms));
   FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool acceptedTerms;
+  const MyApp({super.key, required this.acceptedTerms});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class MyApp extends StatelessWidget {
           cursorColor: Color(0xFF36454F),
         ),
       ),
-      home: const BottomNavBar(),
+      home: acceptedTerms ? BottomNavBar() : WelcomeScreen(),
     );
   }
 }
