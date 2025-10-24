@@ -5,7 +5,7 @@ import 'package:montugo/Screens/categoryEquipment.dart';
 import 'package:montugo/Screens/Information/Rescue/rescue.dart';
 import 'package:montugo/Screens/categoryMountain.dart';
 import 'package:montugo/Screens/Berita/berita.dart';
-import 'package:montugo/Screens/tips_and_tricks.dart';
+import 'package:montugo/Screens/Information/Tips/tips_and_tricks.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

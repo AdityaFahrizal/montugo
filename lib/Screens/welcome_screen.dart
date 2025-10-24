@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:montugo/Mechanic/UI/NavigationBar/bottom_nav_bar.dart';
-import 'package:montugo/Screens/pdf_viewer_screen.dart';
+import 'package:montugo/Screens/models/pdf_viewer_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
