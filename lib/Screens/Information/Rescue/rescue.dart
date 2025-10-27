@@ -89,7 +89,7 @@ class Keselamatan extends StatelessWidget {
       "icon": Icons.phone_in_talk_outlined,
       "title": "Nomor Darurat & Kontak Basecamp",
       "desc":
-          "Catat nomor darurat basecamp sebelum mendaki. Simpan di ponsel & catatan fisik karena sinyal sering hilang."
+          "Catat nomor darurat basecamp sebelum mendaki. Simpan di ponsel & catatan fisik karena sinyal sering hilang. SAR atau BASARNAS (115)"
     },
   ];
 

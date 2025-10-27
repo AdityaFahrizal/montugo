@@ -54,7 +54,6 @@ class _MountainDetailState extends State<MountainDetail> {
         FirebaseFirestore.instance.collection('gunung').doc(widget.mountainId);
   }
 
-  // Helper function to safely parse coordinate values
   double _parseCoordinate(dynamic value, {required double defaultValue}) {
     if (value is num) {
       return value.toDouble();
@@ -217,12 +216,9 @@ class _MountainDetailState extends State<MountainDetail> {
                                   color: Color.fromARGB(255, 54, 69, 79)),
                               Text(namaGunung,
                                   style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                )
-                              )
-                            ]
-                          )
-                        ),
+                                    fontWeight: FontWeight.bold,
+                                  ))
+                            ])),
                       ],
                     ),
                   ],

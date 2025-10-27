@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:developer' as developer;
+import 'package:intl/intl.dart';
 
 class EquipmentDetailPage extends StatelessWidget {
   final String barangId;
@@ -121,6 +122,25 @@ class EquipmentDetailPage extends StatelessWidget {
   }
 
   Widget _buildInfoCard(Map<String, dynamic> data) {
+    final formatCurrency = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
+
+    String formattedPrice = 'Harga tidak tersedia';
+    if (data['harga'] != null) {
+      if (data['harga'] is num) {
+        formattedPrice = formatCurrency.format(data['harga']);
+      } else if (data['harga'] is String) {
+        try {
+          final price = double.parse(data['harga']);
+          formattedPrice = formatCurrency.format(price);
+        } catch (e) {
+        }
+      }
+    }
+
     return Card(
       color: Colors.white,
       elevation: 2,
@@ -133,7 +153,7 @@ class EquipmentDetailPage extends StatelessWidget {
                 Icons.category_outlined, "Kategori", data['kategori'] ?? '-'),
             _buildInfoRow(Icons.scale_outlined, "Berat", data['berat'] ?? '-'),
             _buildInfoRow(
-                Icons.paid_outlined, "Harga", data['harga'].toString() ?? '-'),
+                Icons.paid_outlined, "Harga", formattedPrice),
             _buildInfoRow(
                 Icons.texture_outlined, "Bahan", data['bahan'] ?? '-'),
           ],

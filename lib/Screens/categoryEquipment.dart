@@ -4,8 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:montugo/Screens/models/equipment_models.dart';
-import 'package:intl/intl.dart';
-
 
 class EquipmentListPage extends StatelessWidget {
   final String jenis;
@@ -66,10 +64,13 @@ class EquipmentListPage extends StatelessWidget {
                 width: 100,
                 height: 100,
                 color: Colors.grey[200],
-                child: const Icon(Icons.image_not_supported, color: Colors.grey, size: 40),
+                child: const Icon(Icons.image_not_supported,
+                    color: Colors.grey, size: 40),
               );
 
-              if (data.containsKey('image') && data['image'] != null && (data['image'] as String).isNotEmpty) {
+              if (data.containsKey('image') &&
+                  data['image'] != null &&
+                  (data['image'] as String).isNotEmpty) {
                 try {
                   final cleanBase64 = (data['image'] as String).split(',').last;
                   final Uint8List decodedBytes = base64.decode(cleanBase64);
@@ -79,16 +80,15 @@ class EquipmentListPage extends StatelessWidget {
                     height: 100,
                     fit: BoxFit.cover,
                   );
-                } catch (e) {
-                  
-                }
+                } catch (e) {}
               }
 
               bool showHeader = false;
               if (index == 0) {
                 showHeader = true;
               } else {
-                var prevData = documents[index - 1].data() as Map<String, dynamic>;
+                var prevData =
+                    documents[index - 1].data() as Map<String, dynamic>;
                 if (data['kategori'] != prevData['kategori']) {
                   showHeader = true;
                 }
@@ -112,7 +112,8 @@ class EquipmentListPage extends StatelessWidget {
                   Card(
                     color: Colors.white,
                     elevation: 3,
-                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -122,7 +123,8 @@ class EquipmentListPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EquipmentDetailPage(barangId: barangId),
+                            builder: (context) =>
+                                EquipmentDetailPage(barangId: barangId),
                           ),
                         );
                       },
@@ -148,8 +150,10 @@ class EquipmentListPage extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    data['deskripsi'] ?? 'Deskripsi tidak tersedia',
-                                    style: GoogleFonts.istokWeb(fontSize: 14, color: Colors.black54),
+                                    data['deskripsi'] ??
+                                        'Deskripsi tidak tersedia',
+                                    style: GoogleFonts.istokWeb(
+                                        fontSize: 14, color: Colors.black54),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -157,7 +161,8 @@ class EquipmentListPage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                            const Icon(Icons.arrow_forward_ios,
+                                size: 16, color: Colors.grey),
                           ],
                         ),
                       ),
